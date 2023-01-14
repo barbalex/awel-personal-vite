@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 
 import App from './components/App'
 import './styles.css'
-import getDb from './src/getDb'
 import createStore from './store'
 import watchMutations from './src/watchMutations'
 
@@ -33,13 +32,6 @@ const run = async () => {
   const { addError, setDb, setUsername } = store
   watchMutations({ store })
 
-  let db
-  try {
-    db = await getDb(store)
-  } catch (error) {
-    addError(error)
-  }
-  setDb(db)
 
   const user = await window.electronAPI.getUsername()
   if (user) setUsername(user)
