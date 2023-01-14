@@ -1,8 +1,11 @@
 const fetchSettings = ({ store }) => {
-  const { db, setSettings, addError } = store
+  const { setSettings, addError } = store
   let value = {}
   try {
-    value = db.prepare(`SELECT * from settings where id=?`).get(1)
+    value = window.electronAPI.queryWithParam(
+      `SELECT * from settings where id=?`,
+      1,
+    )
   } catch (error) {
     return addError(error)
   }

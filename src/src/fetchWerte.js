@@ -1,8 +1,8 @@
 const fetchWerte = ({ table, store }) => {
-  const { db, setWerte, addError } = store
+  const { setWerte, addError } = store
   let values = []
   try {
-    values = db.prepare(`SELECT * from ${table}`).all()
+    values = window.electronAPI.query(`SELECT * from ${table}`)
   } catch (error) {
     addError(error)
   }
