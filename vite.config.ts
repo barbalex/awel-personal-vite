@@ -16,46 +16,56 @@ export default defineConfig(({ command }) => {
   return {
     resolve: {
       alias: {
-        '@': path.join(__dirname, 'src')
+        '@': path.join(__dirname, 'src'),
       },
     },
     plugins: [
       react(),
       electron({
-        include: [
-          'electron'
-        ],
+        include: ['electron'],
         transformOptions: {
           sourcemap,
         },
         plugins: [
-          ...(!!process.env.VSCODE_DEBUG
+          ...(process.env.VSCODE_DEBUG
             ? [
-              // Will start Electron via VSCode Debug
-              customStart(() => debounce(() => console.log(/* For `.vscode/.debug.script.mjs` */'[startup] Electron App'))),
-            ]
+                // Will start Electron via VSCode Debug
+                customStart(() =>
+                  debounce(() =>
+                    console.log(
+                      /* For `.vscode/.debug.script.mjs` */ '[startup] Electron App',
+                    ),
+                  ),
+                ),
+              ]
             : []),
           // Allow use `import.meta.env.VITE_SOME_KEY` in Electron-Main
           loadViteEnv(),
         ],
       }),
       // Use Node.js API in the Renderer-process
-      renderer({
-        nodeIntegration: true,
-      }),
+      // uncommented, errored, see: https://github.com/electron-vite/vite-plugin-electron/issues/90#issuecomment-1274288490
+      // renderer({
+      //   nodeIntegration: false,
+      // }),
     ],
-    server: !!process.env.VSCODE_DEBUG ? (() => {
-      const url = new URL(pkg.debug.env.VITE_DEV_SERVER_URL)
-      return {
-        host: url.hostname,
-        port: +url.port,
-      }
-    })() : undefined,
+    server: process.env.VSCODE_DEBUG
+      ? (() => {
+          const url = new URL(pkg.debug.env.VITE_DEV_SERVER_URL)
+          return {
+            host: url.hostname,
+            port: +url.port,
+          }
+        })()
+      : undefined,
     clearScreen: false,
   }
 })
 
-function debounce<Fn extends (...args: any[]) => void>(fn: Fn, delay = 299): Fn {
+function debounce<Fn extends (...args: any[]) => void>(
+  fn: Fn,
+  delay = 299,
+): Fn {
   let t: NodeJS.Timeout
   return ((...args: Parameters<Fn>) => {
     clearTimeout(t)
