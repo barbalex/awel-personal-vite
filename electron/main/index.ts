@@ -9,6 +9,7 @@ const {
 } = require('electron')
 const fs = require('fs-extra')
 const path = require('path')
+const Database = require('better-sqlite3')
 // const { username } = require('username')
 
 // The built directory structure
@@ -119,6 +120,36 @@ const createWindow = () => {
   })
 }
 
+let db
+let dbPath = getUserPath().dbPath || 'C:/Users/alexa/personal.db'
+const chooseDbOptions = {
+  title: 'Datenbank für AWEL-Personal wählen',
+  properties: ['openFile'],
+  filters: [{ name: 'sqlite-Datenbanken', extensions: ['db'] }],
+}
+new Database(dbPath, { fileMustExist: true })
+  .then((_db) => {
+    // TODO:
+    db = _db
+  })
+  .catch((error) => {
+    if (
+      (error.code && error.code === 'SQLITE_CANTOPEN') ||
+      error.message.includes('directory does not exist')
+    ) {
+      // user needs to choose db file
+      const result = await openDialogGetPath(undefined, chooseDbOptions)
+      dbPath = result.filePaths[0]
+      db = new Database(dbPath, { fileMustExist: true })
+      config.dbPath = dbPath
+      saveConfig(undefined, config)
+    } else {
+      // TODO: how to surface this error?
+      // store.addError(error)
+      // return console.log('index.js, Error opening db file:', error)
+    }
+  })
+
 app.whenReady().then(createWindow)
 
 // Quit when all windows are closed.
@@ -160,21 +191,33 @@ ipcMain.handle('get-user-data-path', async () => {
   return path
 })
 
-ipcMain.handle('save-config', (event, data) => {
+const saveConfig = (event, data) => {
   const userPath = app.getPath('userData')
   const dataFilePath = path.join(userPath, 'awelPersonalConfig.json')
   fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2))
   return null
-})
+}
+ipcMain.handle('save-config', saveConfig)
 
-ipcMain.handle('get-config', () => {
+ipcMain.handle('query-with-param', (event, sql, param) =>
+  db.prepare(sql).all(param),
+)
+ipcMain.handle('query', (event, sql) => db.prepare(sql).all())
+ipcMain.handle('edit-with-param', (event, sql, param) =>
+  db.prepare(sql).run(param),
+)
+ipcMain.handle('edit', (event, sql) => db.prepare(sql).run())
+
+const getUserPath = () => {
   const userPath = app.getPath('userData')
   const dataFilePath = path.join(userPath, 'awelPersonalConfig.json')
   if (!fs.existsSync(dataFilePath)) return {}
   const configFile = fs.readFileSync(dataFilePath, 'utf-8') || {}
   if (!configFile) return {}
   return JSON.parse(configFile)
-})
+}
+
+ipcMain.handle('get-config', () => getUserPath)
 
 ipcMain.handle('reload-main-window', () => {
   win.reload()
@@ -205,10 +248,11 @@ ipcMain.handle('save-dialog-get-path', async (event, dialogOptions) => {
   const { filePath } = await dialog.showSaveDialog(dialogOptions)
   return filePath
 })
-ipcMain.handle('open-dialog-get-path', async (event, dialogOptions) => {
+const openDialogGetPath = async (event, dialogOptions) => {
   const { filePath } = await dialog.showOpenDialog(dialogOptions)
   return filePath
-})
+}
+ipcMain.handle('open-dialog-get-path', openDialogGetPath)
 ipcMain.handle('get-username', async () => {
   let user
   try {
