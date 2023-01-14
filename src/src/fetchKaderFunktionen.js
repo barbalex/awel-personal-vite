@@ -1,8 +1,8 @@
 const fetchKaderFunktionen = ({ store }) => {
-  const { db, setKaderFunktionen, addError } = store
+  const { setKaderFunktionen, addError } = store
   let funktionen = []
   try {
-    funktionen = db.prepare('SELECT * from kaderFunktionen').all()
+    funktionen = window.electronAPI.query('SELECT * from kaderFunktionen')
   } catch (error) {
     addError(error)
   }

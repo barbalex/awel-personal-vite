@@ -1,8 +1,8 @@
 const fetchLinks = ({ store }) => {
-  const { db, setLinks, addError } = store
+  const { setLinks, addError } = store
   let links = []
   try {
-    links = db.prepare('SELECT * from links').all()
+    links = window.electronAPI.query('SELECT * from links')
   } catch (error) {
     addError(error)
   }

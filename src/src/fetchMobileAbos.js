@@ -1,8 +1,8 @@
 const fetchMobileAbos = ({ store }) => {
-  const { db, setMobileAbos, addError } = store
+  const { setMobileAbos, addError } = store
   let mobileAbos = []
   try {
-    mobileAbos = db.prepare('SELECT * from mobileAbos').all()
+    mobileAbos = window.electronAPI.query('SELECT * from mobileAbos')
   } catch (error) {
     addError(error)
   }
