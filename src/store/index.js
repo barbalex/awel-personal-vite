@@ -978,11 +978,10 @@ const store = () =>
         deleteAnwesenheitstag({ tag, personId }) {
           // write to db
           try {
-            self.db
-              .prepare(
-                'delete from anwesenheitstage where idPerson = ? and tag = ?',
-              )
-              .run(personId, tag)
+            window.electronAPI.editWithParam(
+              'delete from anwesenheitstage where idPerson = @idPerson and tag = @tag',
+              { idPerson: personId, tag },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1001,11 +1000,15 @@ const store = () =>
           // 1. create new link in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into links (idPerson, url, letzteMutationUser, letzteMutationZeit) values (?, ?, ?, ?)',
-              )
-              .run(personId, url, self.username, Date.now())
+            window.electronAPI.editWithParam(
+              'insert into links (idPerson, url, letzteMutationUser, letzteMutationZeit) values (@idPerson, @url, @letzteMutationUser, @letzteMutationZeit)',
+              {
+                idPerson: personId,
+                url,
+                letzteMutationUser: self.username,
+                letzteMutationZeit: Date.now(),
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1043,11 +1046,14 @@ const store = () =>
           // 1. create new link in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into schluessel (idPerson, letzteMutationUser, letzteMutationZeit) values (?,?,?)',
-              )
-              .run(personId, self.username, Date.now())
+            info = window.electronAPI.editWithParam(
+              'insert into schluessel (idPerson, letzteMutationUser, letzteMutationZeit) values (@idPerson,@letzteMutationUser,@letzteMutationZeit)',
+              {
+                idPerson: personId,
+                letzteMutationUser: self.username,
+                letzteMutationZeit: Date.now(),
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1084,11 +1090,14 @@ const store = () =>
           // 1. create new link in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into mobileAbos (idPerson,letzteMutationUser, letzteMutationZeit) values (?,?,?)',
-              )
-              .run(personId, self.username, Date.now())
+            info = window.electronAPI.editWithParam(
+              'insert into mobileAbos (idPerson,letzteMutationUser, letzteMutationZeit) values (@idPerson,@letzteMutationUser,@letzteMutationZeit)',
+              {
+                idPerson: personId,
+                letzteMutationUser: self.username,
+                letzteMutationZeit: Date.now(),
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1106,11 +1115,14 @@ const store = () =>
           // 1. create new link in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into telefones (idPerson,letzteMutationUser, letzteMutationZeit) values (?,?,?)',
-              )
-              .run(personId, self.username, Date.now())
+            info = window.electronAPI.editWithParam(
+              'insert into telefones (idPerson,letzteMutationUser, letzteMutationZeit) values (@idPerson,@letzteMutationUser,@letzteMutationZeit)',
+              {
+                idPerson: personId,
+                letzteMutationUser: self.username,
+                letzteMutationZeit: Date.now(),
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
