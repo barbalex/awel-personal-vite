@@ -1178,11 +1178,15 @@ const store = () =>
           // 1. create new funktion in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into funktionen (idPerson, funktion, letzteMutationUser, letzteMutationZeit) values (?, ?, ?, ?)',
-              )
-              .run(personId, funktion, self.username, Date.now())
+            info = window.electronAPI.editWithParam(
+              'insert into funktionen (idPerson, funktion, letzteMutationUser, letzteMutationZeit) values (@idPerson, @funktion, @letzteMutationUser, @letzteMutationZeit)',
+              {
+                idPerson: personId,
+                funktion,
+                letzteMutationUser: self.username,
+                letzteMutationZeit: Date.now(),
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1200,11 +1204,10 @@ const store = () =>
         deleteFunktion({ funktion, personId }) {
           // write to db
           try {
-            self.db
-              .prepare(
-                'delete from funktionen where idPerson = ? and funktion = ?',
-              )
-              .run(personId, funktion)
+            window.electronAPI.editWithParam(
+              'delete from funktionen where idPerson = @idPerson and funktion = @funktion',
+              { idPerson: personId, funktion },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1223,11 +1226,15 @@ const store = () =>
           // 1. create new kaderFunktion in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into kaderFunktionen (idPerson, funktion, letzteMutationUser, letzteMutationZeit) values (?, ?, ?, ?)',
-              )
-              .run(personId, funktion, self.username, Date.now())
+            info = window.electronAPI.editWithParam(
+              'insert into kaderFunktionen (idPerson, funktion, letzteMutationUser, letzteMutationZeit) values (@idPerson, @funktion, @letzteMutationUser, @letzteMutationZeit)',
+              {
+                idPerson: personId,
+                funktion,
+                letzteMutationUser: self.username,
+                letzteMutationZeit: Date.now(),
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1245,11 +1252,10 @@ const store = () =>
         deleteKaderFunktion({ funktion, personId }) {
           // write to db
           try {
-            self.db
-              .prepare(
-                'delete from kaderFunktionen where idPerson = ? and funktion = ?',
-              )
-              .run(personId, funktion)
+            window.electronAPI.editWithParam(
+              'delete from kaderFunktionen where idPerson = @idPerson and funktion = @funktion',
+              { idPerson: personId, funktion },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1275,16 +1281,15 @@ const store = () =>
         }) {
           // 1. update in db
           try {
-            self.db
-              .prepare(
-                `update ${table} set ${field} = @value, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({
+            window.electronAPI.editWithParam(
+              `update ${table} set ${field} = @value, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              {
                 value,
                 id,
                 user: self.username,
                 time: Date.now(),
-              })
+              },
+            )
           } catch (error) {
             if (setErrors) {
               return setErrors({
@@ -1329,15 +1334,14 @@ const store = () =>
         updatePersonsMutation(idPerson) {
           // in db
           try {
-            self.db
-              .prepare(
-                `update personen set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({
+            window.electronAPI.editWithParam(
+              `update personen set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              {
                 user: self.username,
                 time: Date.now(),
                 id: idPerson,
-              })
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1350,15 +1354,14 @@ const store = () =>
         updateAmtMutation(idAmt) {
           // in db
           try {
-            self.db
-              .prepare(
-                `update aemter set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({
+            window.electronAPI.editWithParam(
+              `update aemter set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              {
                 user: self.username,
                 time: Date.now(),
                 id: idAmt,
-              })
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1371,15 +1374,14 @@ const store = () =>
         updateAbteilungsMutation(idAbteilung) {
           // in db
           try {
-            self.db
-              .prepare(
-                `update abteilungen set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({
+            window.electronAPI.editWithParam(
+              `update abteilungen set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              {
                 user: self.username,
                 time: Date.now(),
                 id: idAbteilung,
-              })
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1392,15 +1394,14 @@ const store = () =>
         updateBereichsMutation(idBereich) {
           // in db
           try {
-            self.db
-              .prepare(
-                `update bereiche set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({
+            window.electronAPI.editWithParam(
+              `update bereiche set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              {
                 user: self.username,
                 time: Date.now(),
                 id: idBereich,
-              })
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1413,15 +1414,14 @@ const store = () =>
         updateSektionsMutation(idSektion) {
           // in db
           try {
-            self.db
-              .prepare(
-                `update sektionen set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({
+            window.electronAPI.editWithParam(
+              `update sektionen set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              {
                 user: self.username,
                 time: Date.now(),
                 id: idSektion,
-              })
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1436,9 +1436,10 @@ const store = () =>
         },
         setSettingsKey({ key, value }) {
           try {
-            self.db
-              .prepare(`update settings set ${key} = ? where id = 1`)
-              .run(value)
+            window.electronAPI.editWithParam(
+              `update settings set ${key} = ? where id = 1`,
+              value,
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
