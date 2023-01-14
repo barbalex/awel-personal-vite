@@ -1,0 +1,93 @@
+@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+@import '../node_modules/react-reflex/styles.css';
+@import '../node_modules/react-datepicker/dist/react-datepicker.css';
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+@container (max-width: 860px) {
+  #person-form-wrapper {
+    grid-template-columns: repeat(1, 100%);
+    grid-template-areas: 'personalien' 'verzeichnis' 'anstellung' 'funktionen' 'zuletzt';
+  }
+  #person-form-wrapper-filter {
+    grid-template-columns: repeat(1, 100%);
+    grid-template-areas: 'personalien' 'verzeichnis' 'anstellung' 'funktionen';
+  }
+}
+@container (min-width: 861px) {
+  #person-form-wrapper {
+    grid-template-columns: repeat(2, 50%);
+    grid-template-areas:
+      'personalien verzeichnis'
+      'anstellung funktionen'
+      'zuletzt zuletzt';
+  }
+  #person-form-wrapper-filter {
+    grid-template-columns: repeat(2, 50%);
+    grid-template-areas:
+      'personalien verzeichnis'
+      'anstellung funktionen';
+  }
+}
+
+@container (max-width: 1500px) {
+  #person-mutation-wrapper {
+    grid-template-columns: repeat(1, 100%);
+    grid-template-areas: 'areaPerson' 'areaTel' 'areaIt' 'areaWeiterleiten';
+  }
+}
+@container (min-width: 1501px) {
+  #person-mutation-wrapper {
+    grid-template-columns: repeat(2, 50%);
+    grid-template-areas:
+      'areaPerson areaTel'
+      'areaPerson areaIt'
+      'areaWeiterleiten areaWeiterleiten';
+  }
+}
+
+@media print {
+  /*
+   * hide everything BUT what shall be printed
+   */
+  body * {
+    visibility: hidden;
+  }
+
+  .printer-content,
+  .printer-content * {
+    visibility: visible !important;
+  }
+
+  .printer-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  /**
+   * ensure html and body
+   * have no margins, no padding,
+   * grow and overflow as needed
+   */
+  html,
+  body,
+  #root {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    width: auto !important;
+    overflow: visible !important;
+  }
+}
