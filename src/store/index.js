@@ -145,7 +145,6 @@ const store = () =>
     .volatile(() => ({
       deletionCallback: null,
       errors: [],
-      db: null,
       navigate: undefined,
     }))
     .views((self) => ({
@@ -290,9 +289,6 @@ const store = () =>
         },
         setPathname(val) {
           self.pathname = val
-        },
-        setDb(val) {
-          self.db = val
         },
         setDirty(val) {
           self.dirty = val
@@ -473,11 +469,10 @@ const store = () =>
           // 1. create new Amt in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into aemter (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)',
-              )
-              .run({ user: self.username, zeit: Date.now() })
+            info = window.electronAPI.editWithParam(
+              `insert into aemter (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)`,
+              { user: self.username, zeit: Date.now() },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -494,11 +489,10 @@ const store = () =>
           // 1. create new Abteilung in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into abteilungen (letzteMutationUser, letzteMutationZeit, amt) values (@user, @zeit, @amt)',
-              )
-              .run({ user: self.username, zeit: Date.now(), amt: 1 })
+            info = window.electronAPI.editWithParam(
+              `insert into abteilungen (letzteMutationUser, letzteMutationZeit, amt) values (@user, @zeit, @amt)', 1)`,
+              { user: self.username, zeit: Date.now(), amt: 1 },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -515,11 +509,10 @@ const store = () =>
           // 1. create new Bereich in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into bereiche (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)',
-              )
-              .run({ user: self.username, zeit: Date.now() })
+            info = window.electronAPI.editWithParam(
+              `insert into bereiche (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)`,
+              { user: self.username, zeit: Date.now() },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -536,11 +529,10 @@ const store = () =>
           // 1. create new Sektion in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into sektionen (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)',
-              )
-              .run({ user: self.username, zeit: Date.now() })
+            info = window.electronAPI.editWithParam(
+              `insert into sektionen (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)`,
+              { user: self.username, zeit: Date.now() },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -610,11 +602,9 @@ const store = () =>
               // do nothing
             }
             try {
-              info = self.db
-                .prepare(
-                  'insert into mutations (time, user, op, tableName, rowId, field, value, previousValue, reverts) values (@time, @username, @op, @tableName, @rowId, @field, @value, @previousValue, @reverts)',
-                )
-                .run({
+              info = window.electronAPI.editWithParam(
+                `insert into mutations (time, user, op, tableName, rowId, field, value, previousValue, reverts) values (@time, @username, @op, @tableName, @rowId, @field, @value, @previousValue, @reverts)`,
+                {
                   username,
                   time,
                   tableName,
@@ -624,7 +614,8 @@ const store = () =>
                   value,
                   previousValue,
                   reverts: self.revertingMutationId,
-                })
+                },
+              )
             } catch (error) {
               self.addError(error)
               return console.log(error)
@@ -653,14 +644,13 @@ const store = () =>
           // 1. create new value in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                `insert into ${table} (letzteMutationUser,letzteMutationZeit) values (@letzteMutationUser,@letzteMutationZeit)`,
-              )
-              .run({
+            info = window.electronAPI.editWithParam(
+              `insert into ${table} (letzteMutationUser,letzteMutationZeit) values (@letzteMutationUser,@letzteMutationZeit)`,
+              {
                 letzteMutationUser: self.username,
                 letzteMutationZeit: Date.now(),
-              })
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -676,9 +666,10 @@ const store = () =>
         setWertDeleted({ id, table }) {
           // write to db
           try {
-            self.db
-              .prepare(`update ${table} set deleted = 1 where id = ?;`)
-              .run(id)
+            window.electronAPI.editWithParam(
+              `update ${table} set deleted = 1 where id = ?;`,
+              id,
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -691,7 +682,7 @@ const store = () =>
         deleteWert({ id, table }) {
           // write to db
           try {
-            self.db.prepare(`delete from ${table} where id = ${id}`).run()
+            window.electronAPI.edit(`delete from ${table} where id = ${id}`)
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -706,11 +697,10 @@ const store = () =>
         setPersonDeleted(id) {
           // write to db
           try {
-            self.db
-              .prepare(
-                `update personen set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({ id, user: self.username, time: Date.now() })
+            window.electronAPI.editWithParam(
+              `update personen set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              { id, user: self.username, time: Date.now() },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -725,7 +715,10 @@ const store = () =>
         deletePerson(id) {
           // write to db
           try {
-            self.db.prepare('delete from personen where id = ?').run(id)
+            window.electronAPI.editWithParam(
+              'delete from personen where id = ?',
+              id,
+            )
           } catch (error) {
             self.addError(error)
             // roll back update
@@ -746,11 +739,10 @@ const store = () =>
         setAmtDeleted(id) {
           // write to db
           try {
-            self.db
-              .prepare(
-                `update aemter set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({ id, user: self.username, time: Date.now() })
+            window.electronAPI.editWithParam(
+              `update aemter set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              { id, user: self.username, time: Date.now() },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -765,11 +757,10 @@ const store = () =>
         setAbteilungDeleted(id) {
           // write to db
           try {
-            self.db
-              .prepare(
-                `update abteilungen set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({ id, user: self.username, time: Date.now() })
+            window.electronAPI.editWithParam(
+              `update abteilungen set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              { id, user: self.username, time: Date.now() },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -784,7 +775,10 @@ const store = () =>
         deleteAmt(id) {
           // write to db
           try {
-            self.db.prepare('delete from aemter where id = ?').run(id)
+            window.electronAPI.editWithParam(
+              'delete from aemter where id = ?',
+              id,
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -804,7 +798,10 @@ const store = () =>
         deleteAbteilung(id) {
           // write to db
           try {
-            self.db.prepare('delete from abteilungen where id = ?').run(id)
+            window.electronAPI.editWithParam(
+              'delete from abteilungen where id = ?',
+              id,
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -824,11 +821,10 @@ const store = () =>
         setBereichDeleted(id) {
           // write to db
           try {
-            self.db
-              .prepare(
-                `update bereiche set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({ id, user: self.username, time: Date.now() })
+            window.electronAPI.editWithParam(
+              `update bereiche set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              { id, user: self.username, time: Date.now() },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -843,7 +839,10 @@ const store = () =>
         deleteBereich(id) {
           // write to db
           try {
-            self.db.prepare('delete from bereiche where id = ?').run(id)
+            window.electronAPI.editWithParam(
+              'delete from bereiche where id = ?',
+              id,
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -863,11 +862,10 @@ const store = () =>
         setSektionDeleted(id) {
           // write to db
           try {
-            self.db
-              .prepare(
-                `update sektionen set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              )
-              .run({ id, user: self.username, time: Date.now() })
+            window.electronAPI.editWithParam(
+              `update sektionen set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
+              { id, user: self.username, time: Date.now() },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -882,7 +880,10 @@ const store = () =>
         deleteSektion(id) {
           // write to db
           try {
-            self.db.prepare('delete from sektionen where id = ?').run(id)
+            window.electronAPI.editWithParam(
+              'delete from sektionen where id = ?',
+              id,
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -903,11 +904,15 @@ const store = () =>
           // 1. create new etikett in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into etiketten (idPerson, etikett, letzteMutationUser, letzteMutationZeit) values (?, ?, ?, ?)',
-              )
-              .run(personId, etikett, self.username, Date.now())
+            info = window.electronAPI.editWithParam(
+              'insert into etiketten (idPerson, etikett, letzteMutationUser, letzteMutationZeit) values (@idPerson, @etikett, @letzteMutationUser, @letzteMutationZeit)',
+              {
+                idPerson: personId,
+                etikett,
+                letzteMutationUser: self.username,
+                letzteMutationZeit: Date.now(),
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -925,11 +930,10 @@ const store = () =>
         deleteEtikett({ etikett, personId }) {
           // write to db
           try {
-            self.db
-              .prepare(
-                'delete from etiketten where idPerson = ? and etikett = ?',
-              )
-              .run(personId, etikett)
+            window.electronAPI.editWithParam(
+              'delete from etiketten where idPerson = @idPerson and etikett = @etikett',
+              { idPerson: personId, etikett },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -948,11 +952,15 @@ const store = () =>
           // 1. create new anwesenheitstag in db, returning id
           let info
           try {
-            info = self.db
-              .prepare(
-                'insert into anwesenheitstage (idPerson, tag, letzteMutationUser, letzteMutationZeit) values (?, ?, ?, ?)',
-              )
-              .run(personId, tag, self.username, Date.now())
+            info = window.electronAPI.editWithParam(
+              'insert into anwesenheitstage (idPerson, tag, letzteMutationUser, letzteMutationZeit) values (@idPerson, @tag, @letzteMutationUser, @letzteMutationZeit)',
+              {
+                idPerson: personId,
+                tag,
+                letzteMutationUser: self.username,
+                letzteMutationZeit: Date.now(),
+              },
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1015,7 +1023,10 @@ const store = () =>
         deleteLink({ id, personId }) {
           // write to db
           try {
-            self.db.prepare('delete from links where id = ?').run(id)
+            window.electronAPI.editWithParam(
+              'delete from links where id = ?',
+              id,
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1053,7 +1064,10 @@ const store = () =>
         deleteSchluessel({ id, personId }) {
           // write to db
           try {
-            self.db.prepare('delete from schluessel where id = ?').run(id)
+            window.electronAPI.editWithParam(
+              'delete from schluessel where id = ?',
+              id,
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1113,7 +1127,10 @@ const store = () =>
         deleteMobileAbo({ id, personId }) {
           // write to db
           try {
-            self.db.prepare('delete from mobileAbos where id = ?').run(id)
+            window.electronAPI.editWithParam(
+              'delete from mobileAbos where id = ?',
+              id,
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
@@ -1129,7 +1146,10 @@ const store = () =>
         deleteTelefon({ id, personId }) {
           // write to db
           try {
-            self.db.prepare('delete from telefones where id = ?').run(id)
+            window.electronAPI.editWithParam(
+              'delete from telefones where id = ?',
+              id,
+            )
           } catch (error) {
             self.addError(error)
             return console.log(error)
