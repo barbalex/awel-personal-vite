@@ -1,8 +1,8 @@
 const fetchEtiketten = ({ store }) => {
-  const { db, setEtiketten, addError } = store
+  const { setEtiketten, addError } = store
   let etiketten = []
   try {
-    etiketten = db.prepare('SELECT * from etiketten').all()
+    etiketten = window.electronAPI.query('SELECT * from etiketten')
   } catch (error) {
     addError(error)
   }

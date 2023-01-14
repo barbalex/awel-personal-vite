@@ -1,8 +1,8 @@
 const fetchBereiche = ({ store }) => {
-  const { db, setBereiche, addError } = store
+  const { setBereiche, addError } = store
   let bereiche = []
   try {
-    bereiche = db.prepare('SELECT * from bereiche').all()
+    bereiche = window.electronAPI.query('SELECT * from bereiche')
   } catch (error) {
     addError(error)
   }
