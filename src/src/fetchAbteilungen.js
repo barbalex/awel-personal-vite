@@ -1,8 +1,8 @@
 const fetchAbteilungen = ({ store }) => {
-  const { db, setAbteilungen, addError } = store
+  const { setAbteilungen, addError } = store
   let abteilungen = []
   try {
-    abteilungen = db.prepare('SELECT * from abteilungen').all()
+    abteilungen = window.electronAPI.query('SELECT * from abteilungen')
   } catch (error) {
     addError(error)
   }

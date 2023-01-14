@@ -1,8 +1,10 @@
 const fetchAnwesenheitstage = ({ store }) => {
-  const { db, setAnwesenheitstage, addError } = store
+  const { setAnwesenheitstage, addError } = store
   let anwesenheitstage = []
   try {
-    anwesenheitstage = db.prepare('SELECT * from anwesenheitstage').all()
+    anwesenheitstage = window.electronAPI.query(
+      'SELECT * from anwesenheitstage',
+    )
   } catch (error) {
     addError(error)
   }
