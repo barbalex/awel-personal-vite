@@ -120,6 +120,15 @@ const createWindow = () => {
   })
 }
 
+const getUserPath = () => {
+  const userPath = app.getPath('userData')
+  const dataFilePath = path.join(userPath, 'awelPersonalConfig.json')
+  if (!fs.existsSync(dataFilePath)) return {}
+  const configFile = fs.readFileSync(dataFilePath, 'utf-8') || {}
+  if (!configFile) return {}
+  return JSON.parse(configFile)
+}
+
 let db
 let dbPath = getUserPath().dbPath || 'C:/Users/alexa/personal.db'
 const chooseDbOptions = {
@@ -127,28 +136,26 @@ const chooseDbOptions = {
   properties: ['openFile'],
   filters: [{ name: 'sqlite-Datenbanken', extensions: ['db'] }],
 }
-new Database(dbPath, { fileMustExist: true })
-  .then((_db) => {
-    // TODO:
-    db = _db
-  })
-  .catch((error) => {
-    if (
-      (error.code && error.code === 'SQLITE_CANTOPEN') ||
-      error.message.includes('directory does not exist')
-    ) {
-      // user needs to choose db file
-      const result = await openDialogGetPath(undefined, chooseDbOptions)
+try {
+  db = new Database(dbPath, { fileMustExist: true })
+} catch (error) {
+  if (
+    (error.code && error.code === 'SQLITE_CANTOPEN') ||
+    error.message.includes('directory does not exist')
+  ) {
+    // user needs to choose db file
+    openDialogGetPath(undefined, chooseDbOptions).then((result) => {
       dbPath = result.filePaths[0]
       db = new Database(dbPath, { fileMustExist: true })
       config.dbPath = dbPath
       saveConfig(undefined, config)
-    } else {
-      // TODO: how to surface this error?
-      // store.addError(error)
-      // return console.log('index.js, Error opening db file:', error)
-    }
-  })
+    })
+  } else {
+    // TODO: how to surface this error?
+    // store.addError(error)
+    // return console.log('index.js, Error opening db file:', error)
+  }
+}
 
 app.whenReady().then(createWindow)
 
@@ -207,15 +214,6 @@ ipcMain.handle('edit-with-param', (event, sql, param) =>
   db.prepare(sql).run(param),
 )
 ipcMain.handle('edit', (event, sql) => db.prepare(sql).run())
-
-const getUserPath = () => {
-  const userPath = app.getPath('userData')
-  const dataFilePath = path.join(userPath, 'awelPersonalConfig.json')
-  if (!fs.existsSync(dataFilePath)) return {}
-  const configFile = fs.readFileSync(dataFilePath, 'utf-8') || {}
-  if (!configFile) return {}
-  return JSON.parse(configFile)
-}
 
 ipcMain.handle('get-config', () => getUserPath)
 

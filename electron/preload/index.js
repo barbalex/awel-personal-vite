@@ -15,7 +15,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getUsername: () => ipcRenderer.invoke('get-username'),
   queryWithParam: (sql, param) =>
     ipcRenderer.invoke('query-with-param', sql, param),
-  query: (sql) => ipcRenderer.invoke('query-with-param', sql),
+  query: (sql) => ipcRenderer.invoke('query', sql),
   editWithParam: (sql, param) =>
     ipcRenderer.invoke('edit-with-param', sql, param),
   edit: (sql) => ipcRenderer.invoke('edit', sql),

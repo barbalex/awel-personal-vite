@@ -29,9 +29,8 @@ const root = createRoot(container)
 
 const run = async () => {
   const store = createStore().create()
-  const { addError, setDb, setUsername } = store
+  const { setUsername } = store
   watchMutations({ store })
-
 
   const user = await window.electronAPI.getUsername()
   if (user) setUsername(user)
