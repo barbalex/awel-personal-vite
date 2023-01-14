@@ -1,8 +1,8 @@
 const fetchMutations = ({ store }) => {
-  const { db, setMutations, addError } = store
+  const { setMutations, addError } = store
   let mutations = []
   try {
-    mutations = db.prepare('SELECT * from mutations').all()
+    mutations = window.electronAPI.query('SELECT * from mutations')
   } catch (error) {
     addError(error)
   }

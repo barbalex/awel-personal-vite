@@ -1,8 +1,8 @@
 const fetchSchluessel = ({ store }) => {
-  const { db, setSchluessel, addError } = store
+  const { setSchluessel, addError } = store
   let schluessel = []
   try {
-    schluessel = db.prepare('SELECT * from schluessel').all()
+    schluessel = window.electronAPI.query('SELECT * from schluessel')
   } catch (error) {
     addError(error)
   }
