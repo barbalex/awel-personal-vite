@@ -34,10 +34,13 @@ export default types
     fetch() {
       // ensure data is always fresh
       const store = getParent(self, 2)
-      const { db, addError, setWatchMutations } = store
+      const { addError, setWatchMutations } = store
       let amt = []
       try {
-        amt = db.prepare('SELECT * from aemter where id = ?').get(self.id)
+        amt = window.electronAPI.queryWithParam(
+          'SELECT * from aemter where id = ?',
+          self.id,
+        )
       } catch (error) {
         addError(error)
       }

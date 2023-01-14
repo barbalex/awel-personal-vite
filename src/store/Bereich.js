@@ -37,10 +37,13 @@ export default types
     fetch() {
       // ensure data is always fresh
       const store = getParent(self, 2)
-      const { db, addError, setWatchMutations } = store
+      const { addError, setWatchMutations } = store
       let bereich = []
       try {
-        bereich = db.prepare('SELECT * from bereiche where id = ?').get(self.id)
+        bereich = window.electronAPI.queryWithParam(
+          'SELECT * from bereiche where id = ?',
+          self.id,
+        )
       } catch (error) {
         addError(error)
       }
