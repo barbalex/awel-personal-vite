@@ -1,8 +1,8 @@
-const fetchEtiketten = ({ store }) => {
+const fetchEtiketten = async ({ store }) => {
   const { setEtiketten, addError } = store
   let etiketten = []
   try {
-    etiketten = window.electronAPI.query('SELECT * from etiketten')
+    etiketten = await window.electronAPI.query('SELECT * from etiketten')
   } catch (error) {
     addError(error)
   }

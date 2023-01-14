@@ -1,8 +1,8 @@
-const fetchWerte = ({ table, store }) => {
+const fetchWerte = async ({ table, store }) => {
   const { setWerte, addError } = store
   let values = []
   try {
-    values = window.electronAPI.query(`SELECT * from ${table}`)
+    values = await window.electronAPI.query(`SELECT * from ${table}`)
   } catch (error) {
     addError(error)
   }

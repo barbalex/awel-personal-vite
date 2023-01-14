@@ -1,8 +1,8 @@
-const fetchLinks = ({ store }) => {
+const fetchLinks = async ({ store }) => {
   const { setLinks, addError } = store
   let links = []
   try {
-    links = window.electronAPI.query('SELECT * from links')
+    links = await window.electronAPI.query('SELECT * from links')
   } catch (error) {
     addError(error)
   }

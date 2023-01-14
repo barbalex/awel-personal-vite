@@ -1,8 +1,8 @@
-const fetchBereiche = ({ store }) => {
+const fetchBereiche = async ({ store }) => {
   const { setBereiche, addError } = store
   let bereiche = []
   try {
-    bereiche = window.electronAPI.query('SELECT * from bereiche')
+    bereiche = await window.electronAPI.query('SELECT * from bereiche')
   } catch (error) {
     addError(error)
   }

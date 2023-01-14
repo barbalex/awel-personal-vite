@@ -1,8 +1,8 @@
-const fetchMutations = ({ store }) => {
+const fetchMutations = async ({ store }) => {
   const { setMutations, addError } = store
   let mutations = []
   try {
-    mutations = window.electronAPI.query('SELECT * from mutations')
+    mutations = await window.electronAPI.query('SELECT * from mutations')
   } catch (error) {
     addError(error)
   }

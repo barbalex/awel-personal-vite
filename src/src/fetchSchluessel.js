@@ -1,8 +1,8 @@
-const fetchSchluessel = ({ store }) => {
+const fetchSchluessel = async ({ store }) => {
   const { setSchluessel, addError } = store
   let schluessel = []
   try {
-    schluessel = window.electronAPI.query('SELECT * from schluessel')
+    schluessel = await window.electronAPI.query('SELECT * from schluessel')
   } catch (error) {
     addError(error)
   }

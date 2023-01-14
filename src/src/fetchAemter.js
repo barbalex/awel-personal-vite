@@ -1,8 +1,8 @@
-const fetchAemter = ({ store }) => {
+const fetchAemter = async ({ store }) => {
   const { setAemter, addError } = store
   let aemter = []
   try {
-    aemter = window.electronAPI.query('SELECT * from aemter')
+    aemter = await window.electronAPI.query('SELECT * from aemter')
   } catch (error) {
     addError(error)
   }

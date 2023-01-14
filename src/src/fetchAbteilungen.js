@@ -1,8 +1,8 @@
-const fetchAbteilungen = ({ store }) => {
+const fetchAbteilungen = async ({ store }) => {
   const { setAbteilungen, addError } = store
   let abteilungen = []
   try {
-    abteilungen = window.electronAPI.query('SELECT * from abteilungen')
+    abteilungen = await window.electronAPI.query('SELECT * from abteilungen')
   } catch (error) {
     addError(error)
   }

@@ -1,8 +1,8 @@
-const fetchAnwesenheitstage = ({ store }) => {
+const fetchAnwesenheitstage = async ({ store }) => {
   const { setAnwesenheitstage, addError } = store
   let anwesenheitstage = []
   try {
-    anwesenheitstage = window.electronAPI.query(
+    anwesenheitstage = await window.electronAPI.query(
       'SELECT * from anwesenheitstage',
     )
   } catch (error) {

@@ -1,8 +1,8 @@
-const fetchSettings = ({ store }) => {
+const fetchSettings = async ({ store }) => {
   const { setSettings, addError } = store
   let value = {}
   try {
-    value = window.electronAPI.queryWithParam(
+    value = await window.electronAPI.queryWithParam(
       `SELECT * from settings where id=?`,
       1,
     )

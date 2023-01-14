@@ -1,8 +1,8 @@
-const fetchKaderFunktionen = ({ store }) => {
+const fetchKaderFunktionen = async ({ store }) => {
   const { setKaderFunktionen, addError } = store
   let funktionen = []
   try {
-    funktionen = window.electronAPI.query('SELECT * from kaderFunktionen')
+    funktionen = await window.electronAPI.query('SELECT * from kaderFunktionen')
   } catch (error) {
     addError(error)
   }
