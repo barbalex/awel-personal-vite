@@ -45,7 +45,7 @@ const revertMutation = ({ self, mutationId }) => {
       // 2. remove dataset
       // write to db
       try {
-        db.prepare(`delete from ${tableName} where id = ${rowId}`).run()
+        window.electronAPI.edit(`delete from ${tableName} where id = ${rowId}`)
       } catch (error) {
         self.addError(error)
         return console.log(error)
@@ -79,7 +79,8 @@ const revertMutation = ({ self, mutationId }) => {
         .map(() => '?')
         .join()})`
       try {
-        db.prepare(sql).run(...objectValues)
+        // TODO: does this work?
+        window.electronAPI.edit(sql)
       } catch (error) {
         self.addError(error)
         return console.log(error)
