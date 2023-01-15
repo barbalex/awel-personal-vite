@@ -6,7 +6,6 @@ const fetchPersonen = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  console.log('fetchPersonen, personen:', personen)
   setPersonen(personen)
 }
 

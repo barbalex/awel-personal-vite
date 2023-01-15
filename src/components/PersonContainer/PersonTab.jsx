@@ -1,21 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
-import { observer } from 'mobx-react-lite'
 import classnames from 'classnames'
 import styled from 'styled-components'
 import { useOutletContext } from 'react-router-dom'
 
 import Person from './Person'
-import PersonPrint from './PersonPrint'
-import PersonMutationPrint from './PersonMutationPrint'
-import PersonPrintFunktionen from './PersonPrintFunktionen'
-import PersonPrintPensionierte from './PersonPrintPensionierte'
-import PersonPrintKader from './PersonPrintKader'
-import PersonPrintVerzTel from './PersonPrintVerzTel'
-import PersonPrintVerzMobiltel from './PersonPrintVerzMobiltel'
-import PersonPrintVerzKurzzeichen from './PersonPrintVerzKurzzeichen'
 import PersonMutation from './PersonMutation'
-import storeContext from '../../storeContext'
 
 const Container = styled.div`
   height: 100%;
@@ -43,35 +33,8 @@ const StyledTabPane = styled(TabPane)`
 
 const PersonTab = () => {
   const [listRef] = useOutletContext()
-  const store = useContext(storeContext)
-  const { activePrintForm } = store
 
   const [tab, setTab] = useState('datenblatt')
-
-  if (activePrintForm === 'personalblatt') {
-    return <PersonPrint />
-  }
-  if (activePrintForm === 'personMutation') {
-    return <PersonMutationPrint />
-  }
-  if (activePrintForm === 'personFunktionen') {
-    return <PersonPrintFunktionen />
-  }
-  if (activePrintForm === 'personPensionierte') {
-    return <PersonPrintPensionierte />
-  }
-  if (activePrintForm === 'personKader') {
-    return <PersonPrintKader />
-  }
-  if (activePrintForm === 'personVerzTel') {
-    return <PersonPrintVerzTel />
-  }
-  if (activePrintForm === 'personVerzMobiltel') {
-    return <PersonPrintVerzMobiltel />
-  }
-  if (activePrintForm === 'personVerzKurzzeichen') {
-    return <PersonPrintVerzKurzzeichen />
-  }
 
   return (
     <Container>
@@ -109,4 +72,4 @@ const PersonTab = () => {
   )
 }
 
-export default observer(PersonTab)
+export default PersonTab
