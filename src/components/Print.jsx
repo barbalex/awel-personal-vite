@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import { observer } from 'mobx-react-lite'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import storeContext from '../storeContext'
 import PersonPrint from './PersonContainer/PersonPrint'
@@ -12,7 +12,6 @@ import PersonPrintKader from './PersonContainer/PersonPrintKader'
 import PersonPrintVerzTel from './PersonContainer/PersonPrintVerzTel'
 import PersonPrintVerzMobiltel from './PersonContainer/PersonPrintVerzMobiltel'
 import PersonPrintVerzKurzzeichen from './PersonContainer/PersonPrintVerzKurzzeichen'
-// import useDetectPrint from '../src/useDetectPrint'
 
 const A4Portrait = createGlobalStyle`
   @page {
@@ -27,19 +26,12 @@ const A4Landscape = createGlobalStyle`
 
 const Print = () => {
   const { report, personId } = useParams()
-  const navigate = useNavigate()
 
   const store = useContext(storeContext)
 
   useEffect(() => {
     window.onbeforeunload = () => store.personPages.reset()
   }, [store.personPages])
-  // const isPrinting = useDetectPrint()
-
-  console.log('Print: ', {
-    report,
-    personId,
-  })
 
   if (personId) {
     if (report === 'personalblatt') {
@@ -107,9 +99,6 @@ const Print = () => {
       </>
     )
   }
-
-  console.log('Print: no printForm found')
-  // navigate(`/personen${personId ? `/${personId}` : ''}`)
 
   return null
 }
