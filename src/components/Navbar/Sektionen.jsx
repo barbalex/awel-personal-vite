@@ -24,7 +24,7 @@ const StyledButton = styled(Button)`
 
 const Sektion = () => {
   const navigate = useNavigate()
-  const { sektionId = 0 } = useParams()
+  const { sektionId = 0, report } = useParams()
   const { pathname } = useLocation()
 
   const store = useContext(storeContext)
@@ -36,7 +36,6 @@ const Sektion = () => {
     setDeletionMessage,
     setDeletionTitle,
     setDeletionCallback,
-    activePrintForm,
   } = store
 
   const showTab = useCallback(
@@ -97,7 +96,7 @@ const Sektion = () => {
     sektionenFiltered.length !== sektionenSum
       ? `${sektionenFiltered.length}/${sektionenSum}`
       : sektionenFiltered.length
-  const active = pathname.startsWith('/Sektionen') && !activePrintForm
+  const active = pathname.startsWith('/Sektionen') && !report
   const existsActiveSektion = active && !!+sektionId
 
   return (

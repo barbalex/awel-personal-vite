@@ -40,7 +40,7 @@ const PersonContainer = () => {
   console.log('PersonContainer, pathname:', pathname)
 
   const store = useContext(storeContext)
-  const { showFilter, personen, activePrintForm } = store
+  const { showFilter, personen } = store
   const person = personen.find((p) => p.id === personId)
   // pass list the active person's props to enable instant updates
   const personJson = person ? person.toJSON() : {}
@@ -51,11 +51,6 @@ const PersonContainer = () => {
   useEffect(() => {
     person?.fetch()
   }, [person])
-
-  console.log('PersonContainer: ', {
-    personId,
-    activePrintForm,
-  })
 
   return (
     <Container>

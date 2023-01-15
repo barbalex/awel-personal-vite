@@ -24,7 +24,7 @@ const StyledButton = styled(Button)`
 
 const Amt = () => {
   const navigate = useNavigate()
-  const { amtId = 0 } = useParams()
+  const { amtId = 0, report } = useParams()
   const { pathname } = useLocation()
 
   const store = useContext(storeContext)
@@ -36,7 +36,6 @@ const Amt = () => {
     setDeletionMessage,
     setDeletionTitle,
     setDeletionCallback,
-    activePrintForm,
   } = store
 
   const showTab = useCallback(
@@ -95,7 +94,7 @@ const Amt = () => {
     aemterFiltered.length !== aemterSum
       ? `${aemterFiltered.length}/${aemterSum}`
       : aemterFiltered.length
-  const active = pathname.startsWith('/Aemter') && !activePrintForm
+  const active = pathname.startsWith('/Aemter') && !report
   const existsActiveAmt = active && +amtId
 
   return (
