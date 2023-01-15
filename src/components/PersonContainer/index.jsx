@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { ReflexContainer, ReflexSplitter, ReflexElement } from 'react-reflex'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
-import { Outlet, useParams } from 'react-router-dom'
+import { Outlet, useParams, useLocation } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary'
 import List from './List'
@@ -35,6 +35,9 @@ const StyledReflexElement = styled(ReflexElement)`
 const PersonContainer = () => {
   const { personId: personidInUrl = 0 } = useParams()
   const personId = personidInUrl ? +personidInUrl : undefined
+  const { pathname } = useLocation()
+
+  console.log('PersonContainer, pathname:', pathname)
 
   const store = useContext(storeContext)
   const { showFilter, personen, activePrintForm } = store

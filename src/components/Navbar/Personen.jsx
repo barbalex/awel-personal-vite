@@ -25,7 +25,7 @@ const StyledButton = styled(Button)`
 
 const Person = () => {
   const navigate = useNavigate()
-  const { personId = 0 } = useParams()
+  const { personId = 0, report } = useParams()
   const { pathname } = useLocation()
 
   const store = useContext(storeContext)
@@ -36,17 +36,14 @@ const Person = () => {
     setDeletionMessage,
     setDeletionTitle,
     setDeletionCallback,
-    setActivePrintForm,
-    activePrintForm,
   } = store
 
   const showTab = useCallback(
     (e) => {
       e.preventDefault()
-      setActivePrintForm(null)
       navigate('/Personen')
     },
-    [navigate, setActivePrintForm],
+    [navigate],
   )
   const deletePerson = useCallback(() => {
     const activePerson = personen.find((p) => p.id === +personId)
@@ -101,7 +98,7 @@ const Person = () => {
     personenFiltered.length !== personenSum
       ? `${personenFiltered.length}/${personenSum}`
       : personenFiltered.length
-  const active = pathname.startsWith('/Personen') && !activePrintForm
+  const active = pathname.startsWith('/Personen') && !report
 
   return (
     <StyledNavItem active={active}>

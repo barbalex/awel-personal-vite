@@ -68,13 +68,7 @@ const PersonList = ({ dimensions, listRef }) => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const {
-    showFilter,
-    setShowFilter,
-    showMutationNoetig,
-    setActivePrintForm,
-    activePrintForm,
-  } = store
+  const { showFilter, setShowFilter, showMutationNoetig } = store
   // eslint-disable-next-line no-restricted-globals
   const height = isNaN(dimensions.height) ? 250 : dimensions.height
   // eslint-disable-next-line no-restricted-globals
@@ -103,7 +97,6 @@ const PersonList = ({ dimensions, listRef }) => {
                 onClick={() => {
                   navigate(`/Personen/${row.id}`)
                   if (showFilter) setShowFilter(false)
-                  if (activePrintForm) setActivePrintForm(null)
                 }}
                 active={!showFilter && +personId === row.id}
               >

@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import { observer } from 'mobx-react-lite'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import storeContext from '../storeContext'
 import PersonPrint from './PersonContainer/PersonPrint'
@@ -12,7 +12,7 @@ import PersonPrintKader from './PersonContainer/PersonPrintKader'
 import PersonPrintVerzTel from './PersonContainer/PersonPrintVerzTel'
 import PersonPrintVerzMobiltel from './PersonContainer/PersonPrintVerzMobiltel'
 import PersonPrintVerzKurzzeichen from './PersonContainer/PersonPrintVerzKurzzeichen'
-import useDetectPrint from '../src/useDetectPrint'
+// import useDetectPrint from '../src/useDetectPrint'
 
 const A4Portrait = createGlobalStyle`
   @page {
@@ -26,21 +26,23 @@ const A4Landscape = createGlobalStyle`
 `
 
 const Print = () => {
-  const { printForm, personId } = useParams()
+  const { report, personId } = useParams()
+  const navigate = useNavigate()
 
   const store = useContext(storeContext)
-  const { activePrintForm, printing, setPrinting } = store
-  const isPrinting = useDetectPrint()
+
+  useEffect(() => {
+    window.onbeforeunload = () => store.personPages.reset()
+  }, [store.personPages])
+  // const isPrinting = useDetectPrint()
 
   console.log('Print: ', {
-    activePrintForm,
-    printForm,
-    printing,
-    isPrinting,
+    report,
+    personId,
   })
 
   if (personId) {
-    if (activePrintForm === 'personalblatt') {
+    if (report === 'personalblatt') {
       return (
         <>
           <A4Portrait />
@@ -48,7 +50,7 @@ const Print = () => {
         </>
       )
     }
-    if (activePrintForm === 'personMutation') {
+    if (report === 'personMutation') {
       return (
         <>
           <A4Portrait />
@@ -57,7 +59,7 @@ const Print = () => {
       )
     }
   }
-  if (activePrintForm === 'personFunktionen') {
+  if (report === 'personFunktionen') {
     return (
       <>
         <A4Landscape />
@@ -65,7 +67,7 @@ const Print = () => {
       </>
     )
   }
-  if (activePrintForm === 'personPensionierte') {
+  if (report === 'personPensionierte') {
     return (
       <>
         <A4Landscape />
@@ -73,7 +75,7 @@ const Print = () => {
       </>
     )
   }
-  if (activePrintForm === 'personKader') {
+  if (report === 'personKader') {
     return (
       <>
         <A4Landscape />
@@ -81,7 +83,7 @@ const Print = () => {
       </>
     )
   }
-  if (activePrintForm === 'personVerzTel') {
+  if (report === 'personVerzTel') {
     return (
       <>
         <A4Landscape />
@@ -89,7 +91,7 @@ const Print = () => {
       </>
     )
   }
-  if (activePrintForm === 'personVerzMobiltel') {
+  if (report === 'personVerzMobiltel') {
     return (
       <>
         <A4Landscape />
@@ -97,7 +99,7 @@ const Print = () => {
       </>
     )
   }
-  if (activePrintForm === 'personVerzKurzzeichen') {
+  if (report === 'personVerzKurzzeichen') {
     return (
       <>
         <A4Landscape />
@@ -106,8 +108,8 @@ const Print = () => {
     )
   }
 
-  console.log('Print: no printForm found', { printing, isPrinting })
-  setPrinting(false)
+  console.log('Print: no printForm found')
+  // navigate(`/personen${personId ? `/${personId}` : ''}`)
 
   return null
 }
