@@ -9,7 +9,6 @@ const fetchSettings = async ({ store }) => {
   } catch (error) {
     return addError(error)
   }
-  console.log('fetchSettings, value:', value)
   setSettings(value)
 }
 

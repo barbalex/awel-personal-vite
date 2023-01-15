@@ -1,20 +1,12 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { ReflexContainer, ReflexSplitter, ReflexElement } from 'react-reflex'
-import styled, { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 import { Outlet, useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary'
 import List from './List'
 import storeContext from '../../storeContext'
-import PersonPrint from './PersonPrint'
-import PersonMutationPrint from './PersonMutationPrint'
-import PersonPrintFunktionen from './PersonPrintFunktionen'
-import PersonPrintPensionierte from './PersonPrintPensionierte'
-import PersonPrintKader from './PersonPrintKader'
-import PersonPrintVerzTel from './PersonPrintVerzTel'
-import PersonPrintVerzMobiltel from './PersonPrintVerzMobiltel'
-import PersonPrintVerzKurzzeichen from './PersonPrintVerzKurzzeichen'
 import Navbar from '../Navbar'
 import useDetectPrint from '../../src/useDetectPrint'
 
@@ -39,23 +31,13 @@ const StyledReflexElement = styled(ReflexElement)`
     height: calc(100% - 42px);
   }
 `
-const A4Portrait = createGlobalStyle`
-  @page {
-    size: A4 portrait;
-  }
-`
-const A4Landscape = createGlobalStyle`
-  @page {
-    size: A4 landscape;
-  }
-`
 
 const PersonContainer = () => {
   const { personId: personidInUrl = 0 } = useParams()
   const personId = personidInUrl ? +personidInUrl : undefined
 
   const store = useContext(storeContext)
-  const { showFilter, personen, activePrintForm, printing } = store
+  const { showFilter, personen, activePrintForm } = store
   const person = personen.find((p) => p.id === personId)
   // pass list the active person's props to enable instant updates
   const personJson = person ? person.toJSON() : {}
@@ -70,78 +52,7 @@ const PersonContainer = () => {
   console.log('PersonContainer: ', {
     personId,
     activePrintForm,
-    printing,
-    isPrinting,
   })
-
-  if (printing || isPrinting) {
-    if (personId) {
-      if (activePrintForm === 'personalblatt') {
-        return (
-          <>
-            <A4Portrait />
-            <PersonPrint />
-          </>
-        )
-      }
-      if (activePrintForm === 'personMutation') {
-        return (
-          <>
-            <A4Portrait />
-            <PersonMutationPrint />
-          </>
-        )
-      }
-    }
-    if (activePrintForm === 'personFunktionen') {
-      return (
-        <>
-          <A4Landscape />
-          <PersonPrintFunktionen />
-        </>
-      )
-    }
-    if (activePrintForm === 'personPensionierte') {
-      return (
-        <>
-          <A4Landscape />
-          <PersonPrintPensionierte />
-        </>
-      )
-    }
-    if (activePrintForm === 'personKader') {
-      return (
-        <>
-          <A4Landscape />
-          <PersonPrintKader />
-        </>
-      )
-    }
-    if (activePrintForm === 'personVerzTel') {
-      return (
-        <>
-          <A4Landscape />
-          <PersonPrintVerzTel />
-        </>
-      )
-    }
-    if (activePrintForm === 'personVerzMobiltel') {
-      return (
-        <>
-          <A4Landscape />
-          <PersonPrintVerzMobiltel />
-        </>
-      )
-    }
-    if (activePrintForm === 'personVerzKurzzeichen') {
-      return (
-        <>
-          <A4Landscape />
-          <PersonPrintVerzKurzzeichen />
-        </>
-      )
-    }
-  }
 
   return (
     <Container>
