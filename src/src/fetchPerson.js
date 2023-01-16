@@ -1,9 +1,9 @@
 const fetchPerson = async ({ store, id }) => {
   const { addError, setWatchMutations, setPerson } = store
 
-  let person = []
+  let result = []
   try {
-    person = await window.electronAPI.queryWithParam(
+    result = await window.electronAPI.queryWithParam(
       'SELECT * from personen where id = ?',
       id,
     )
@@ -11,9 +11,11 @@ const fetchPerson = async ({ store, id }) => {
     addError(error)
   }
 
-  console.log('fetchPerson, person:', person)
+  const person = result[0]
+  if (!person) return
+
   setWatchMutations(false)
-  setPerson(person[0])
+  setPerson(person)
   setWatchMutations(true)
 }
 
