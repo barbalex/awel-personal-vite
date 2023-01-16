@@ -368,10 +368,22 @@ const store = () =>
           self.personen = personen
           self.watchMutations = true
         },
+        setAmt(amt) {
+          const ownAmt = self.aemter.find((a) => a.id === amt.id)
+          Object.keys(amt).forEach((key) => (ownAmt[key] = amt[key]))
+        },
         setAemter(aemter) {
           self.watchMutations = false
           self.aemter = aemter
           self.watchMutations = true
+        },
+        setAbteilung(abteilung) {
+          const ownAbteilung = self.abteilungen.find(
+            (a) => a.id === abteilung.id,
+          )
+          Object.keys(abteilung).forEach(
+            (key) => (ownAbteilung[key] = abteilung[key]),
+          )
         },
         setAbteilungen(abteilungen) {
           self.watchMutations = false
