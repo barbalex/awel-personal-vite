@@ -33,26 +33,3 @@ export default types
       types.union(types.string, types.integer, types.null),
     ),
   })
-  .actions((self) => ({
-    fetch() {
-      // ensure data is always fresh
-      const store = getParent(self, 2)
-      const { addError, setWatchMutations } = store
-      let bereich = []
-      try {
-        bereich = window.electronAPI.queryWithParam(
-          'SELECT * from bereiche where id = ?',
-          self.id,
-        )
-      } catch (error) {
-        addError(error)
-      }
-      setWatchMutations(false)
-      Object.keys(bereich).forEach((field) => {
-        if (self[field] !== bereich[field]) {
-          self[field] = ifIsNumericAsNumber(bereich[field])
-        }
-      })
-      setWatchMutations(true)
-    },
-  }))
