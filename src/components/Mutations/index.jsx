@@ -97,7 +97,7 @@ const getValueToShow = (value) => {
 
 const Mutations = () => {
   const store = useContext(storeContext)
-  const { mutations: rawMutations, db } = store
+  const { mutations: rawMutations } = store
 
   const [zeitFilter, setZeitFilter] = useState(null)
   const [userFilter, setUserFilter] = useState(null)
@@ -148,7 +148,7 @@ const Mutations = () => {
 
   useEffect(() => {
     fetchMutations({ store })
-  }, [db, store])
+  }, [store])
 
   const mutations = sortBy(rawMutations.slice(), 'id')
     .reverse()

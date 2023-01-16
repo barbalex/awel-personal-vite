@@ -28,7 +28,6 @@ const StammdatenContainer = () => {
   const { tableName, tableId } = useParams()
 
   const store = useContext(storeContext)
-  const { db } = store
 
   const data = store[tableName]
   const dat = data.find((d) => d.id === +tableId)
@@ -52,7 +51,7 @@ const StammdatenContainer = () => {
     fetchWerte({ store, table: 'landWerte' })
     fetchWerte({ store, table: 'mutationArtWerte' })
     fetchWerte({ store, table: 'standortWerte' })
-  }, [db, store])
+  }, [store])
 
   const listRef = useRef(null)
 

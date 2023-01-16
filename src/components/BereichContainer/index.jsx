@@ -35,7 +35,7 @@ const BereichContainer = () => {
   const bereichId = +bereichIdInUrl
 
   const store = useContext(storeContext)
-  const { showFilter, bereiche, db } = store
+  const { showFilter, bereiche } = store
   const bereich = bereiche.find((p) => p.id === bereichId)
   // pass list the active bereich's props to enable instant updates
   const bereichJson = bereich ? bereich.toJSON() : {}
@@ -45,7 +45,7 @@ const BereichContainer = () => {
     fetchAbteilungen({ store })
     fetchPersonen({ store })
     fetchWerte({ store, table: 'kostenstelleWerte' })
-  }, [db, store])
+  }, [store])
 
   useEffect(() => {
     bereich?.fetch()
@@ -69,7 +69,7 @@ const BereichContainer = () => {
             </ReflexElement>
             <ReflexSplitter />
             <StyledReflexElement showfilter={showFilter}>
-              {!!bereichId && <Outlet context={[listRef]}/>}
+              {!!bereichId && <Outlet context={[listRef]} />}
             </StyledReflexElement>
           </ReflexContainer>
         </ErrorBoundary>
