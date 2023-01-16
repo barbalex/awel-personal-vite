@@ -9,6 +9,7 @@ import List from './List'
 import storeContext from '../../storeContext'
 import Navbar from '../Navbar'
 import useDetectPrint from '../../src/useDetectPrint'
+import fetchPerson from '../../src/fetchPerson'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
 // above does not work
@@ -46,8 +47,8 @@ const PersonContainer = () => {
   const listRef = useRef(null)
 
   useEffect(() => {
-    person?.fetch()
-  }, [person])
+    fetchPerson({ store, id: personId })
+  }, [person, personId, store])
 
   return (
     <Container>

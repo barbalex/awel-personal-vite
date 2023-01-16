@@ -12,6 +12,7 @@ import fetchAbteilungen from '../../src/fetchAbteilungen'
 import fetchWerte from '../../src/fetchWerte'
 import storeContext from '../../storeContext'
 import Navbar from '../Navbar'
+import fetchBereich from '../../src/fetchBereich'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
 // above does not work
@@ -48,8 +49,8 @@ const BereichContainer = () => {
   }, [store])
 
   useEffect(() => {
-    bereich?.fetch()
-  }, [bereich])
+    fetchBereich({ store, id: bereichId })
+  }, [bereich, bereichId, store])
 
   const listRef = useRef(null)
 
