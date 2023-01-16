@@ -9,7 +9,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openDialogGetPath: (options) =>
     ipcRenderer.invoke('open-dialog-get-path', options),
   openUrl: (path) => ipcRenderer.invoke('open-url', path),
-  saveFile: (path, data) => ipcRenderer.invoke('SAVE_FILE', path, data),
+  saveFile: (path, data) => ipcRenderer.invoke('save-file', path, data),
   saveDialogGetPath: (options) =>
     ipcRenderer.invoke('save-dialog-get-path', options),
   getUsername: () => ipcRenderer.invoke('get-username'),
