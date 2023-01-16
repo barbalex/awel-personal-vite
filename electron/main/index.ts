@@ -187,7 +187,7 @@ app.on('activate', () => {
 
 // exceljs workbook.xlsx.writeFile does not work
 // so export in main thread
-ipcMain.on('SAVE_FILE', (event, path, data) => {
+ipcMain.handle('save-file', (event, path, data) => {
   fs.outputFile(path, data)
     .then(() => event.sender.send('SAVED_FILE'))
     .catch((error) => event.sender.send('ERROR', error.message))

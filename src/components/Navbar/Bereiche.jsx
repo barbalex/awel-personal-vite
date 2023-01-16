@@ -24,7 +24,7 @@ const StyledButton = styled(Button)`
 
 const Bereich = () => {
   const navigate = useNavigate()
-  const { bereichId =0} = useParams()
+  const { bereichId = 0, report } = useParams()
   const { pathname } = useLocation()
 
   const store = useContext(storeContext)
@@ -36,7 +36,6 @@ const Bereich = () => {
     setDeletionMessage,
     setDeletionTitle,
     setDeletionCallback,
-    activePrintForm,
   } = store
 
   const showTab = useCallback(
@@ -97,7 +96,7 @@ const Bereich = () => {
     bereicheFiltered.length !== bereicheSum
       ? `${bereicheFiltered.length}/${bereicheSum}`
       : bereicheFiltered.length
-  const active = pathname.startsWith('/Bereiche') && !activePrintForm
+  const active = pathname.startsWith('/Bereiche') && !report
   const existsActiveBereich = active && !!+bereichId
 
   return (

@@ -86,7 +86,7 @@ const StyledRowsContainer = styled.div`
    * need overflow while building list
    * so list does not flow outside padding
    */
-  overflow-y: ${props => (props.building ? 'auto' : 'hidden')};
+  overflow-y: ${(props) => (props.building ? 'auto' : 'hidden')};
   overflow-x: hidden;
   /* grow to fill page and thus move single rows to top */
   flex-grow: 2;
@@ -212,7 +212,7 @@ const PersonPrintPensioniertePage = ({ pageIndex }) => {
 
   if (!rows) return null
 
-  const personen = personenFilteredSorted.filter(p => rows.includes(p.id))
+  const personen = personenFilteredSorted.filter((p) => rows.includes(p.id))
 
   return (
     <Container>
@@ -220,7 +220,7 @@ const PersonPrintPensioniertePage = ({ pageIndex }) => {
         {pageIndex === 0 && (
           <>
             <LogoImg src={LogoAwel} />
-            <PageTitle page={page} />
+            <PageTitle />
           </>
         )}
         <StyledHeader>

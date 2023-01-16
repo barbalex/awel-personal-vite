@@ -125,8 +125,6 @@ const store = () =>
       filterFulltext: types.maybe(
         types.union(types.string, types.integer, types.null),
       ),
-      activePrintForm: types.maybe(types.union(types.string, types.null)),
-      printing: types.optional(types.boolean, false),
       personPages: types.optional(PersonPages, {
         pages: [],
         activePageIndex: 0,
@@ -448,16 +446,6 @@ const store = () =>
         },
         setShowMutationNoetig(show) {
           self.showMutationNoetig = show
-        },
-        setPrinting(val) {
-          self.printing = val
-        },
-        resetActivePrintForm() {
-          self.activePrintForm = undefined
-        },
-        setActivePrintForm(val) {
-          self.personPages.reset()
-          self.activePrintForm = val
         },
         revertMutation(mutationId) {
           revertMutation({ self, mutationId })

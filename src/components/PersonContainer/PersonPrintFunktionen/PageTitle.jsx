@@ -2,6 +2,7 @@ import React, { useContext, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { Input } from 'reactstrap'
 import { observer } from 'mobx-react-lite'
+import { useLocation } from 'react-router-dom'
 
 import storeContext from '../../../storeContext'
 
@@ -14,17 +15,21 @@ const StyledTitle = styled.h4`
   font-family: Arial Black;
 `
 
-const PageTitle = ({ page }) => {
+const PageTitle = () => {
+  const { pathname } = useLocation()
   const store = useContext(storeContext)
   const { title, setTitle } = store.personPages
 
   const [edit, setEdit] = useState(title ? false : true)
 
   const onClickTitle = useCallback(() => setEdit(true), [])
-  const onChange = useCallback(e => setTitle(e.target.value || ''), [setTitle])
+  const onChange = useCallback(
+    (e) => setTitle(e.target.value || ''),
+    [setTitle],
+  )
   const onBlur = useCallback(() => setEdit(false), [])
   const onKeyPress = useCallback(
-    e => {
+    (e) => {
       if (e.key === 'Enter') {
         onBlur(e)
       }
@@ -32,9 +37,11 @@ const PageTitle = ({ page }) => {
     [onBlur],
   )
 
+  const isPrinting = pathname.startsWith('/Personen/print/')
+
   return (
     <Container>
-      {edit && !store.printing ? (
+      {edit && !isPrinting ? (
         <Input
           type="text"
           placeholder="Titel erfassen"

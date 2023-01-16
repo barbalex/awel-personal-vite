@@ -13,7 +13,7 @@ import {
   DropdownItem,
 } from 'reactstrap'
 import { FaTimes, FaEdit, FaFilter } from 'react-icons/fa'
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation, useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary'
 import storeContext from '../../storeContext'
@@ -54,6 +54,7 @@ const StyledDropdown = styled(Dropdown)`
 
 const Filter = () => {
   const { pathname } = useLocation()
+  const { report } = useParams()
 
   const store = useContext(storeContext)
   const {
@@ -70,7 +71,6 @@ const Filter = () => {
     setShowMutationNoetig,
     existsFilter,
     personPages,
-    activePrintForm,
     setFilterPersonKader,
     setFilterPersonAktivJetzt,
     setFilterPersonAktivJetztMitTel,
@@ -105,12 +105,12 @@ const Filter = () => {
           'personVerzTel',
           'personVerzMobiltel',
           'personVerzKurzzeichen',
-        ].includes(activePrintForm)
+        ].includes(report)
       ) {
         personPages.initiate()
       }
     },
-    [activePrintForm, personPages],
+    [report, personPages],
   )
   const onKeyPressFilterFulltext = useCallback(
     (e) => {
@@ -130,11 +130,11 @@ const Filter = () => {
         'personVerzTel',
         'personVerzMobiltel',
         'personVerzKurzzeichen',
-      ].includes(activePrintForm)
+      ].includes(report)
     ) {
       personPages.initiate()
     }
-  }, [activePrintForm, personPages, setFilterFulltext])
+  }, [report, personPages, setFilterFulltext])
   const toggleFilterDropdown = useCallback(
     (e) => {
       setFilterDropdownIsOpen(!filterDropdownIsOpen)

@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { observer } from 'mobx-react-lite'
+import React from 'react'
+import { useParams } from 'react-router-dom'
 
 import PersonPrint from './PersonPrint'
 import PersonMutationPrint from './PersonMutationPrint'
@@ -9,42 +9,40 @@ import PersonPrintKader from './PersonPrintKader'
 import PersonPrintVerzTel from './PersonPrintVerzTel'
 import PersonPrintVerzMobiltel from './PersonPrintVerzMobiltel'
 import PersonPrintVerzKurzzeichen from './PersonPrintVerzKurzzeichen'
-import storeContext from '../../storeContext'
 
 const PersonPrintPreview = () => {
-  const store = useContext(storeContext)
-  const { activePrintForm } = store
+  const { report } = useParams()
 
-  console.log('PersonTab: activePrintForm:', activePrintForm)
+  console.log('PersonPrintPreview: report:', report)
 
-  if (activePrintForm === 'personalblatt') {
+  if (report === 'personalblatt') {
     return <PersonPrint />
   }
-  if (activePrintForm === 'personMutation') {
+  if (report === 'personMutation') {
     return <PersonMutationPrint />
   }
-  if (activePrintForm === 'personFunktionen') {
+  if (report === 'personFunktionen') {
     return <PersonPrintFunktionen />
   }
-  if (activePrintForm === 'personPensionierte') {
+  if (report === 'personPensionierte') {
     return <PersonPrintPensionierte />
   }
-  if (activePrintForm === 'personKader') {
+  if (report === 'personKader') {
     return <PersonPrintKader />
   }
-  if (activePrintForm === 'personVerzTel') {
+  if (report === 'personVerzTel') {
     return <PersonPrintVerzTel />
   }
-  if (activePrintForm === 'personVerzMobiltel') {
+  if (report === 'personVerzMobiltel') {
     return <PersonPrintVerzMobiltel />
   }
-  if (activePrintForm === 'personVerzKurzzeichen') {
+  if (report === 'personVerzKurzzeichen') {
     return <PersonPrintVerzKurzzeichen />
   }
 
-  console.log('PersonPrintPreview: no activePrintForm')
+  console.log('PersonPrintPreview: no report')
 
   return null
 }
 
-export default observer(PersonPrintPreview)
+export default PersonPrintPreview

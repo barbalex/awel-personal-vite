@@ -9,7 +9,7 @@ import {
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { FaPrint, FaRegFilePdf } from 'react-icons/fa'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 
 import storeContext from '../../storeContext'
 
@@ -27,14 +27,11 @@ const StyledButton = styled(Button)`
 
 const Berichte = () => {
   const navigate = useNavigate()
-  const { personId = 0 } = useParams()
+  const { personId = 0, report } = useParams()
+  const { pathname } = useLocation()
 
   const store = useContext(storeContext)
   const {
-    setPrinting,
-    activePrintForm,
-    setActivePrintForm,
-    resetActivePrintForm,
     setFilter,
     emptyFilter,
     setFilterPersonKader,
@@ -45,27 +42,28 @@ const Berichte = () => {
   } = store
   const showPD = !!+personId
 
-  const onClickPD = useCallback(
-    () => setActivePrintForm('personalblatt'),
-    [setActivePrintForm],
-  )
-  const onClickMutationsFormular = useCallback(
-    () => setActivePrintForm('personMutation'),
-    [setActivePrintForm],
-  )
+  const onClickPD = useCallback(() => {
+    navigate(`/Personen/${personId}/print-preview/personalblatt`)
+  }, [navigate, personId])
+  const onClickMutationsFormular = useCallback(() => {
+    navigate(`/Personen/${personId}/print-preview/personMutation`)
+  }, [navigate, personId])
+
   const onClickPrint = useCallback(() => {
-    setPrinting(true)
+    const previousPathname = pathname
+    navigate(`/Personen/print/${report}`)
     setTimeout(async () => {
       window.print()
-      setPrinting(false)
+      navigate(previousPathname)
     })
-  }, [setPrinting])
+  }, [navigate, pathname, report])
+
   const onClickCreatePdf = useCallback(() => {
     const printToPDFOptions = {
       marginsType: 0,
       printBackground: true,
     }
-    const isPersonMutation = !!+personId && activePrintForm === 'personMutation'
+    const isPersonMutation = !!+personId && report === 'personMutation'
     const dialogOptions = {
       title: 'pdf speichern',
       filters: [
@@ -79,43 +77,23 @@ const Berichte = () => {
       dialogOptions.defaultPath = settings.mutationFormPath
     }
 
-    setPrinting(true)
+    const previousPathname = pathname
+    navigate(`/Personen/print/${report}${personId ? `/${personId}` : ''}`)
     setTimeout(async () => {
       try {
         await window.electronAPI.printToPdf(printToPDFOptions, dialogOptions)
       } catch (error) {
         console.log('print-to-pdf ERROR', error)
-        setPrinting(false)
-        resetActivePrintForm()
+        navigate(previousPathname)
         throw new Error({ message: error })
       }
-
-      // await ipcRenderer.invoke('print-to-pdf', printToPDFOptions, dialogOptions)
-      // ipcRenderer.once('ERROR', (error) => {
-      //   console.log('print-to-pdf ERROR', error)
-      //   setPrinting(false)
-      //   resetActivePrintForm()
-      //   throw new Error(error)
-      // })
-      // ipcRenderer.once('PRINTED-TO-PDF', () => {
-      //   console.log('print-to-pdf PRINTED-TO-PDF')
-      //   setPrinting(false)
-      //   resetActivePrintForm()
-      // })
       console.log('pdf print is over')
-      setPrinting(false)
-      resetActivePrintForm()
+      navigate(previousPathname)
     })
-  }, [
-    activePrintForm,
-    personId,
-    resetActivePrintForm,
-    setPrinting,
-    settings.mutationFormPath,
-  ])
+  }, [report, navigate, pathname, personId, settings.mutationFormPath])
 
   return (
-    <StyledUncontrolledDropdown nav inNavbar active={!!activePrintForm}>
+    <StyledUncontrolledDropdown nav inNavbar active={!!report}>
       <DropdownToggle nav caret>
         Berichte
       </DropdownToggle>
@@ -123,8 +101,7 @@ const Berichte = () => {
         <DropdownItem header>Vorlagen: übernehmen Filter</DropdownItem>
         <DropdownItem
           onClick={() => {
-            navigate('/Personen')
-            setActivePrintForm('personFunktionen')
+            navigate('/Personen/print-preview/personFunktionen')
             store.personPages.initiate()
           }}
         >
@@ -138,7 +115,7 @@ const Berichte = () => {
             emptyFilter()
             setFilterPersonKader(true)
             setTimeout(() => {
-              setActivePrintForm('personKader')
+              navigate('/Personen/print-preview/personKader')
               store.personPages.initiate()
             }, 1000)
           }}
@@ -154,7 +131,7 @@ const Berichte = () => {
               value: { status: 'pensioniert' },
             })
             setTimeout(() => {
-              setActivePrintForm('personPensionierte')
+              navigate('/Personen/print-preview/personPensionierte')
               store.personPages.initiate()
             }, 1000)
           }}
@@ -167,7 +144,7 @@ const Berichte = () => {
             emptyFilter()
             setFilterPersonAktivJetztMitKurzzeichen(true)
             setTimeout(() => {
-              setActivePrintForm('personVerzKurzzeichen')
+              navigate('/Personen/print-preview/personVerzKurzzeichen')
               store.personVerzeichnis.initiate('personVerzKurzzeichen')
             }, 1000)
           }}
@@ -180,7 +157,7 @@ const Berichte = () => {
             emptyFilter()
             setFilterPersonAktivJetztMitTel(true)
             setTimeout(() => {
-              setActivePrintForm('personVerzTel')
+              navigate('/Personen/print-preview/personVerzTel')
               store.personVerzeichnis.initiate()
             }, 1000)
           }}
@@ -193,7 +170,7 @@ const Berichte = () => {
             emptyFilter()
             setFilterPersonAktivJetztMitMobiltel(true)
             setTimeout(() => {
-              setActivePrintForm('personVerzMobiltel')
+              navigate('/Personen/print-preview/personVerzMobiltel')
               store.personVerzeichnis.initiate()
             }, 1000)
           }}
@@ -211,7 +188,7 @@ const Berichte = () => {
           </>
         )}
       </DropdownMenu>
-      {!!activePrintForm && (
+      {!!report && (
         <>
           <StyledButton title="drucken" onClick={onClickPrint}>
             <FaPrint />

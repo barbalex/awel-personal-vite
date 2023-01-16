@@ -3,9 +3,9 @@ import { observer } from 'mobx-react-lite'
 import { Col, FormGroup, Label, FormFeedback } from 'reactstrap'
 import Textarea from 'react-textarea-autosize'
 import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
 
 import storeContext from '../../storeContext'
-import useDetectPrint from '../../src/useDetectPrint'
 
 const NonRowLabel = styled(Label)`
   margin-bottom: 3px;
@@ -54,15 +54,16 @@ const SharedTextarea = ({
   title = '',
   row = false,
 }) => {
+  const { report } = useParams()
+
   const store = useContext(storeContext)
-  const { showFilter, setDirty, printing } = store
-  const isPrinting = useDetectPrint()
+  const { showFilter, setDirty } = store
 
   const [stateValue, setStateValue] = useState(
     value || value === 0 ? value : '',
   )
   // TODO: test if correct
-  const isPdf = printing || isPrinting
+  const isPdf = !!report
 
   const onBlur = useCallback(
     (event) => {

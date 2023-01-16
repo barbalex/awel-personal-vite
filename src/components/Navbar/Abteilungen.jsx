@@ -23,7 +23,7 @@ const StyledButton = styled(Button)`
 `
 
 const Abteilung = () => {
-  const { abteilungId = 0 } = useParams()
+  const { abteilungId = 0, report } = useParams()
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
@@ -36,7 +36,6 @@ const Abteilung = () => {
     setDeletionMessage,
     setDeletionTitle,
     setDeletionCallback,
-    activePrintForm,
   } = store
 
   const showTab = useCallback(
@@ -99,7 +98,7 @@ const Abteilung = () => {
     abteilungenFiltered.length !== abteilungenSum
       ? `${abteilungenFiltered.length}/${abteilungenSum}`
       : abteilungenFiltered.length
-  const active = pathname.startsWith('/Abteilungen') && !activePrintForm
+  const active = pathname.startsWith('/Abteilungen') && !report
   const existsActiveAbteilung = active && !!+abteilungId
 
   return (

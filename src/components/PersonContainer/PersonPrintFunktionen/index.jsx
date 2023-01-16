@@ -36,7 +36,7 @@ const PersonPrintFunktionenPages = () => {
   const store = useContext(storeContext)
   const { pages, modal, reset, building } = store.personPages
 
-  console.log('PersonPrintFunktionenPages', { pages, modal, reset, building })
+  // console.log('PersonPrintFunktionenPages', { pages, modal, reset, building })
 
   return (
     <ErrorBoundary>

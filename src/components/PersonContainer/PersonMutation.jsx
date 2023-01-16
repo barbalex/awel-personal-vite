@@ -14,7 +14,7 @@ import Linkify from 'react-linkify'
 import { MdEdit } from 'react-icons/md'
 import { FaSave } from 'react-icons/fa'
 import { Button, ButtonGroup } from 'reactstrap'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary'
 import Input from '../shared/Input'
@@ -105,6 +105,7 @@ const WRRightEditing = styled.div`
 
 const PersonMutation = () => {
   const { personId: personIdInUrl = 0 } = useParams()
+  const navigate = useNavigate()
 
   const store = useContext(storeContext)
   const {
@@ -122,7 +123,6 @@ const PersonMutation = () => {
     updateField,
     settings,
     setSettingsKey,
-    setActivePrintForm,
   } = store
 
   let person
@@ -659,7 +659,9 @@ const PersonMutation = () => {
                     <ButtonGroup>
                       <StyledButton
                         outline={true}
-                        onClick={() => setActivePrintForm('personMutation')}
+                        onClick={() =>
+                          navigate(`/Personen/print-preview/personMutation`)
+                        }
                         className="no-print"
                         title="drucken"
                       >
