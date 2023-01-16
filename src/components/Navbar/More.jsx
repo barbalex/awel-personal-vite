@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react'
+import React, { useContext, useCallback, useState, useEffect } from 'react'
 import {
   UncontrolledDropdown,
   DropdownToggle,
@@ -40,9 +40,8 @@ const Svg = styled.div`
   }
 `
 
-const onClickIssues = () => 
+const onClickIssues = () =>
   window.electronAPI.openUrl('https://github.com/barbalex/awel-personal/issues')
-
 
 const More = () => {
   const navigate = useNavigate()
@@ -65,8 +64,11 @@ const More = () => {
     [setShowMutationNoetig, showMutationNoetig],
   )
   const showMutations = useCallback(() => navigate('mutations'), [navigate])
-  const config = await window.electronAPI.getConfig()
-  console.log('config:', config)
+
+  const [dbPath, setDbPath] = useState('')
+  useEffect(() => {
+    window.electronAPI.getConfig().then((config) => setDbPath(config?.dbPath))
+  }, [])
 
   return (
     <MoreMenu nav inNavbar>
@@ -77,7 +79,7 @@ const More = () => {
         <DropdownItem onClick={chooseDbConnection}>
           Datenbank wählen
           <br />
-          <DbPath>{`Aktuell: ${config?.dbPath}`}</DbPath>
+          <DbPath>{`Aktuell: ${dbPath}`}</DbPath>
         </DropdownItem>
         {!pathname.startsWith('/mutations') && (
           <div>

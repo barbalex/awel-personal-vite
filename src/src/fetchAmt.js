@@ -1,4 +1,4 @@
-const fetchAmt = ({store, id})=>{
+const fetchAmt = async ({ store, id }) => {
   const { addError, setWatchMutations, setAmt } = store
 
   let amt = []
@@ -10,9 +10,9 @@ const fetchAmt = ({store, id})=>{
   } catch (error) {
     addError(error)
   }
-  
+
   setWatchMutations(false)
-  setAmt(amt)
+  setAmt(amt[0])
   setWatchMutations(true)
 }
 

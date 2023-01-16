@@ -12,7 +12,7 @@ const fetchAbteilung = async ({ store, id }) => {
   }
 
   setWatchMutations(false)
-  setAbteilung(abteilung)
+  setAbteilung(abteilung[0])
   setWatchMutations(true)
 }
 

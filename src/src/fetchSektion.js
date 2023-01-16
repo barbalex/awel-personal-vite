@@ -12,7 +12,7 @@ const fetchSektion = async ({ store, id }) => {
   }
 
   setWatchMutations(false)
-  setSektion(sektion)
+  setSektion(sektion[0])
   setWatchMutations(true)
 }
 

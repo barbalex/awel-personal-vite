@@ -12,7 +12,7 @@ const fetchBereich = async ({ store, id }) => {
   }
 
   setWatchMutations(false)
-  setBereich(bereich)
+  setBereich(bereich[0])
   setWatchMutations(true)
 }
 

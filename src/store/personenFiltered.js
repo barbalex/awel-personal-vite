@@ -19,7 +19,6 @@ const personenFiltered = ({ self }) => {
     filterPersonAktivJetztMitTel,
     filterPersonAktivJetztMitMobiltel,
     filterPersonAktivJetztMitKurzzeichen,
-    db,
   } = self
   let { personen } = self
   if (filterPersonKader) {
@@ -231,12 +230,10 @@ const personenFiltered = ({ self }) => {
   let personenIdsFulltextFiltered = []
   if (self.filterFulltext) {
     try {
-      personenIdsFulltextFiltered = db
-        .prepare(
-          `SELECT id from personenFts where data like '%${self.filterFulltext}%'`,
-        )
-        .all()
-        .map((p) => p.id)
+      const result = window.electronAPI.query(
+        `SELECT id from personenFts where data like '%${self.filterFulltext}%'`,
+      )
+      personenIdsFulltextFiltered = result.map((p) => p.id)
     } catch (error) {
       self.addError(error)
       return []
