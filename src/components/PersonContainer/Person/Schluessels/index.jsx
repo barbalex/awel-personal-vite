@@ -92,6 +92,7 @@ const SchluesselsComponent = ({ row = true }) => {
   const onClickForm = useCallback(() => {
     let success = false
     if (settings.schluesselFormPath) {
+      // TODO: test
       success = window.electronAPI.openUrl(settings.schluesselFormPath)
       if (!success) console.log('File could not be opened')
       return

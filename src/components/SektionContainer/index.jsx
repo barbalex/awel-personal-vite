@@ -33,7 +33,7 @@ const SektionContainer = () => {
   const { sektionId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const { showFilter, sektionen, db } = store
+  const { showFilter, sektionen } = store
   const sektion = sektionen.find((p) => p.id === +sektionId)
   // pass list the active sektion's props to enable instant updates
   const sektionJson = sektion ? sektion.toJSON() : {}
@@ -43,7 +43,7 @@ const SektionContainer = () => {
     fetchAbteilungen({ store })
     fetchPersonen({ store })
     fetchWerte({ store, table: 'kostenstelleWerte' })
-  }, [db, store])
+  }, [store])
 
   useEffect(() => {
     sektion?.fetch()

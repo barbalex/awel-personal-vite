@@ -1,20 +1,19 @@
 import fetchAnwesenheitstage from './fetchAnwesenheitstage'
 
-const addPerson = ({ store }) => {
-  const { db, username, addError, navigate } = store
+const addPerson = async ({ store }) => {
+  const { username, addError, navigate } = store
   // 1. create new Person in db, returning id
   let info
   try {
-    info = db
-      .prepare(
-        'insert into personen (letzteMutationUser, letzteMutationZeit, land, status) values (@user, @zeit, @land, @status)',
-      )
-      .run({
+    info = await window.electronAPI.editWithParam(
+      'insert into personen (letzteMutationUser, letzteMutationZeit, land, status) values (@user, @zeit, @land, @status)',
+      {
         user: username,
         zeit: Date.now(),
         land: 'Schweiz',
         status: 'aktiv',
-      })
+      },
+    )
   } catch (error) {
     addError(error)
     return console.log(error)
