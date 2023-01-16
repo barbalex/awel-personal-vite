@@ -83,38 +83,6 @@ export default types
       types.union(types.string, types.integer, types.null),
     ),
   })
-  .actions((self) => ({
-    fetch() {
-      // ensure data is always fresh
-      // when printing there seems to be a situation when self is not alive any more
-      // probably solved by loading data in index.js instead of effect in Person.js
-      if (!isAlive(self)) {
-        console.log('This persons model is dead')
-        return
-      }
-      try {
-        const store = getParent(self, 2)
-        const { db, addError, setWatchMutations } = store
-        let person = []
-        try {
-          person = db
-            .prepare('SELECT * from personen where id = ?')
-            .get(self.id)
-        } catch (error) {
-          addError(error)
-        }
-        setWatchMutations(false)
-        Object.keys(person).forEach((field) => {
-          if (self[field] !== person[field]) {
-            self[field] = ifIsNumericAsNumber(person[field])
-          }
-        })
-        setWatchMutations(true)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-  }))
   .views((self) => ({
     get kostenstelle() {
       const store = getParent(self, 2)

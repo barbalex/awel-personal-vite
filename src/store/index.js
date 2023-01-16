@@ -363,6 +363,10 @@ const store = () =>
         setWatchMutations(val) {
           self.watchMutations = val
         },
+        setPerson(person) {
+          const ownPerson = self.sektionen.find((a) => a.id === person.id)
+          Object.keys(person).forEach((key) => (ownPerson[key] = person[key]))
+        },
         setPersonen(personen) {
           self.watchMutations = false
           self.personen = personen
@@ -390,10 +394,22 @@ const store = () =>
           self.abteilungen = abteilungen
           self.watchMutations = true
         },
+        setBereich(bereich) {
+          const ownBereich = self.bereiche.find((a) => a.id === bereich.id)
+          Object.keys(bereich).forEach(
+            (key) => (ownBereich[key] = bereich[key]),
+          )
+        },
         setBereiche(bereiche) {
           self.watchMutations = false
           self.bereiche = bereiche
           self.watchMutations = true
+        },
+        setSektion(sektion) {
+          const ownSektion = self.sektionen.find((a) => a.id === sektion.id)
+          Object.keys(sektion).forEach(
+            (key) => (ownSektion[key] = sektion[key]),
+          )
         },
         setSektionen(sektionen) {
           self.watchMutations = false

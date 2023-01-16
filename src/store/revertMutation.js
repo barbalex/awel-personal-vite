@@ -5,7 +5,7 @@ import findIndex from 'lodash/findIndex'
 import ifIsNumericAsNumber from '../src/ifIsNumericAsNumber'
 
 const revertMutation = ({ self, mutationId }) => {
-  const { mutations, db } = self
+  const { mutations } = self
   const mutation = mutations.find((m) => m.id === mutationId)
   if (!mutation) {
     throw new Error(`Keine Mutation mit id ${mutationId} gefunden`)
