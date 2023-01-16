@@ -1,7 +1,7 @@
 import chooseDb from './chooseDb'
 
 const chooseDbConnection = async () => {
-  const config = window.electronAPI.getConfig()
+  const config = await window.electronAPI.getConfig()
   let dbPath
   try {
     dbPath = await chooseDb()
@@ -9,7 +9,7 @@ const chooseDbConnection = async () => {
     return console.log('Error after choosing db:', chooseError)
   }
   config.dbPath = dbPath
-  window.electronAPI.saveConfig(config)
+  await window.electronAPI.saveConfig(config)
   window.electronAPI.reloadMainWindow()
 }
 

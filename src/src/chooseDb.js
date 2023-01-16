@@ -5,7 +5,7 @@ const options = {
 }
 
 const chooseDb = async () => {
-  const path = window.electronAPI.openDialogGetPath(options)
+  const path = await window.electronAPI.openDialogGetPath(options)
   return path.filePaths[0]
 }
 
