@@ -121,10 +121,13 @@ const createWindow = () => {
 }
 
 const getUserPath = () => {
-  const userPath = app.getPath('userData')
-  const dataFilePath = path.join(userPath, 'awelPersonalConfig.json')
+  const userDataPath = app.getPath('userData')
+  console.log('getUserPath, userDataPath: ', userDataPath)
+  const dataFilePath = path.join(userDataPath, 'awelPersonalConfig.json')
+  console.log('getUserPath, dataFilePath: ', dataFilePath)
   if (!fs.existsSync(dataFilePath)) return {}
   const configFile = fs.readFileSync(dataFilePath, 'utf-8') || {}
+  console.log('getUserPath, configFile: ', configFile)
   if (!configFile) return {}
   return JSON.parse(configFile)
 }
@@ -215,7 +218,7 @@ ipcMain.handle('edit-with-param', (event, sql, param) =>
 )
 ipcMain.handle('edit', (event, sql) => db.prepare(sql).run())
 
-ipcMain.handle('get-config', () => getUserPath)
+ipcMain.handle('get-config', () => getUserPath())
 
 ipcMain.handle('reload-main-window', () => {
   win.reload()

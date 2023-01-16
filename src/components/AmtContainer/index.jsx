@@ -10,6 +10,7 @@ import fetchAemter from '../../src/fetchAemter'
 import fetchWerte from '../../src/fetchWerte'
 import storeContext from '../../storeContext'
 import Navbar from '../Navbar'
+import fetchAmt from '../../src/fetchAmt'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
 // above does not work
@@ -30,7 +31,7 @@ const StyledReflexElement = styled(ReflexElement)`
 const AmtContainer = () => {
   const { amtId = 0 } = useParams()
   const store = useContext(storeContext)
-  const { showFilter, aemter, db } = store
+  const { showFilter, aemter } = store
   const amt = aemter.find((p) => p.id === +amtId)
   // pass list the active amt's props to enable instant updates
   const amtJson = amt ? amt.toJSON() : {}
@@ -38,11 +39,11 @@ const AmtContainer = () => {
   useEffect(() => {
     fetchAemter({ store })
     fetchWerte({ store, table: 'kostenstelleWerte' })
-  }, [db, store])
+  }, [store])
 
   useEffect(() => {
-    amt?.fetch()
-  }, [amt])
+    fetchAmt({ store, id: amtId })
+  }, [amtId, store])
 
   const listRef = useRef(null)
 

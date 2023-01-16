@@ -11,6 +11,7 @@ import fetchAbteilungen from '../../src/fetchAbteilungen'
 import fetchWerte from '../../src/fetchWerte'
 import storeContext from '../../storeContext'
 import Navbar from '../Navbar'
+import fetchAbteilung from '../../src/fetchAbteilung'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
 // above does not work
@@ -32,7 +33,7 @@ const AbteilungContainer = () => {
   const { abteilungId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const { showFilter, abteilungen, db } = store
+  const { showFilter, abteilungen } = store
   const abteilung = abteilungen.find((p) => p.id === +abteilungId)
   // pass list the active abteilung's props to enable instant updates
   const abteilungJson = abteilung ? abteilung.toJSON() : {}
@@ -41,11 +42,11 @@ const AbteilungContainer = () => {
     fetchAbteilungen({ store })
     fetchAemter({ store })
     fetchWerte({ store, table: 'kostenstelleWerte' })
-  }, [db, store])
+  }, [store])
 
   useEffect(() => {
-    abteilung?.fetch()
-  }, [abteilung])
+    fetchAbteilung({ store, id: abteilungId })
+  }, [abteilungId, store])
 
   const listRef = useRef(null)
 

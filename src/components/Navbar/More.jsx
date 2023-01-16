@@ -40,9 +40,9 @@ const Svg = styled.div`
   }
 `
 
-const onClickIssues = () => {
+const onClickIssues = () => 
   window.electronAPI.openUrl('https://github.com/barbalex/awel-personal/issues')
-}
+
 
 const More = () => {
   const navigate = useNavigate()
@@ -54,7 +54,6 @@ const More = () => {
     setShowDeleted,
     showMutationNoetig,
     setShowMutationNoetig,
-    db,
   } = store
 
   const toggleShowDeleted = useCallback(
@@ -66,6 +65,8 @@ const More = () => {
     [setShowMutationNoetig, showMutationNoetig],
   )
   const showMutations = useCallback(() => navigate('mutations'), [navigate])
+  const config = await window.electronAPI.getConfig()
+  console.log('config:', config)
 
   return (
     <MoreMenu nav inNavbar>
@@ -76,7 +77,7 @@ const More = () => {
         <DropdownItem onClick={chooseDbConnection}>
           Datenbank wählen
           <br />
-          <DbPath>{`Aktuell: ${db?.name}`}</DbPath>
+          <DbPath>{`Aktuell: ${config?.dbPath}`}</DbPath>
         </DropdownItem>
         {!pathname.startsWith('/mutations') && (
           <div>
