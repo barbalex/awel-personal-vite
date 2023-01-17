@@ -6,6 +6,7 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 
 import storeContext from '../../storeContext'
+import addSektionModule from '../../src/addSektion'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -32,7 +33,6 @@ const Sektion = () => {
     showDeleted,
     sektionenFiltered,
     sektionen,
-    addSektion,
     setDeletionMessage,
     setDeletionTitle,
     setDeletionCallback,
@@ -45,7 +45,10 @@ const Sektion = () => {
     },
     [navigate],
   )
-  // const addSektion = useCallback(() => addSektion())
+  const addSektion = useCallback(
+    () => addSektionModule({ store, navigate }),
+    [navigate, store],
+  )
   const deleteSektion = useCallback(() => {
     const activeSektion = sektionen.find((p) => p.id === +sektionId)
     if (activeSektion.deleted === 1) {

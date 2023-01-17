@@ -492,44 +492,11 @@ const store = () =>
         addBereich(val) {
           self.bereiche.push(val)
         },
-        addSektion() {
-          // 1. create new Sektion in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              `insert into sektionen (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)`,
-              { user: self.username, zeit: Date.now() },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.sektionen.push({
-            id: info.lastInsertRowid,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          self.navigate(`/Sektionen/${info.lastInsertRowid}`)
+        addSektion(val) {
+          self.sektionen.push(val)
         },
         setRevertingMutationId(val) {
           self.revertingMutationId = val
-        },
-        setWertDeleted({ id, table }) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              `update ${table} set deleted = 1 where id = ?;`,
-              id,
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
-          const dat = self[table].find((p) => p.id === id)
-          dat.deleted = 1
-          if (!self.showDeleted) self.navigate(`/Werte/${table}`)
         },
         deleteWert({ id, table }) {
           // write to db

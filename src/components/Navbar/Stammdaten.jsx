@@ -14,6 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import storeContext from '../../storeContext'
 import addWertModule from '../../src/addWert'
+import setWertDeleted from '../../src/setWertDeleted'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -69,7 +70,7 @@ const Stammdaten = () => {
       // do not true delete yet
       // only set deleted = 1
       setDeletionCallback(() => {
-        store.setWertDeleted({ id: +tableId, table: tableName })
+        setWertDeleted({ id: +tableId, table: tableName, store })
         setDeletionMessage(null)
         setDeletionTitle(null)
       })
