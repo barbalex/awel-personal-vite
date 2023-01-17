@@ -483,65 +483,14 @@ const store = () =>
         addPerson(val) {
           self.personen.push(val)
         },
-        addAmt() {
-          // 1. create new Amt in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              `insert into aemter (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)`,
-              { user: self.username, zeit: Date.now() },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.aemter.push({
-            id: info.lastInsertRowid,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          self.navigate(`/Aemter/${info.lastInsertRowid}`)
+        addAmt(val) {
+          self.aemter.push(val)
         },
-        addAbteilung() {
-          // 1. create new Abteilung in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              `insert into abteilungen (letzteMutationUser, letzteMutationZeit, amt) values (@user, @zeit, @amt)', 1)`,
-              { user: self.username, zeit: Date.now(), amt: 1 },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.abteilungen.push({
-            id: info.lastInsertRowid,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          self.navigate(`/Abteilungen/${info.lastInsertRowid}`)
+        addAbteilung(val) {
+          self.abteilungen.push(val)
         },
-        addBereich() {
-          // 1. create new Bereich in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              `insert into bereiche (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)`,
-              { user: self.username, zeit: Date.now() },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.bereiche.push({
-            id: info.lastInsertRowid,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          self.navigate(`/Bereiche/${info.lastInsertRowid}`)
+        addBereich(val) {
+          self.bereiche.push(val)
         },
         addSektion() {
           // 1. create new Sektion in db, returning id

@@ -4,12 +4,12 @@ import findLast from 'lodash/findLast'
 
 import { undoManager } from '../store'
 
-const addMutation = async ({ tableName, patch, inversePatch, store }) => {
+const addMutation = ({ tableName, patch, inversePatch, store }) => {
   // watchMutations is false while data is loaded from server
   // as these additions should not be added to mutations
   if (!self.watchMutations) return
   // need to wait for undoManager to list deletion
-  setTimeout(() => {
+  setTimeout(async () => {
     let info
     const { username } = self
     const time = Date.now()

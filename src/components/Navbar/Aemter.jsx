@@ -6,6 +6,7 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
 import storeContext from '../../storeContext'
+import addAmtModule from '../../src/addAmt'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -32,7 +33,6 @@ const Amt = () => {
     showDeleted,
     aemterFiltered,
     aemter,
-    addAmt,
     setDeletionMessage,
     setDeletionTitle,
     setDeletionCallback,
@@ -45,7 +45,10 @@ const Amt = () => {
     },
     [navigate],
   )
-  // const addAmt = useCallback(() => addAmt())
+  const addAmt = useCallback(
+    () => addAmtModule({ store, navigate }),
+    [navigate, store],
+  )
   const deleteAmt = useCallback(() => {
     const activeAmt = aemter.find((p) => p.id === +amtId)
     if (activeAmt.deleted === 1) {

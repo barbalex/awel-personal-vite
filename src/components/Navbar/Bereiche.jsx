@@ -6,6 +6,7 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 
 import storeContext from '../../storeContext'
+import addBereichModule from '../../src/addBereich'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -32,7 +33,6 @@ const Bereich = () => {
     showDeleted,
     bereicheFiltered,
     bereiche,
-    addBereich,
     setDeletionMessage,
     setDeletionTitle,
     setDeletionCallback,
@@ -45,7 +45,10 @@ const Bereich = () => {
     },
     [navigate],
   )
-  // const addBereich = useCallback(() => addBereich())
+  const addBereich = useCallback(
+    () => addBereichModule({ store, navigate }),
+    [navigate, store],
+  )
   const deleteBereich = useCallback(() => {
     const activeBereich = bereiche.find((p) => p.id === +bereichId)
     if (activeBereich.deleted === 1) {
