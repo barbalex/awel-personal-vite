@@ -364,7 +364,11 @@ const store = () =>
           self.watchMutations = val
         },
         setPerson(person) {
+          if (!person?.id) return
+
           const ownPerson = self.sektionen.find((a) => a.id === person.id)
+          if (!ownPerson) return
+
           Object.keys(person).forEach((key) => (ownPerson[key] = person[key]))
         },
         setPersonen(personen) {

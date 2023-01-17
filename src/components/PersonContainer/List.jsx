@@ -62,7 +62,7 @@ const MutationFrist = styled.div`
   padding-right: 5px;
   font-size: 1rem;
 `
-
+ 
 const PersonList = ({ dimensions, listRef }) => {
   const navigate = useNavigate()
   const { personId = 0 } = useParams()

@@ -15,6 +15,10 @@ const PersonPrintPreview = () => {
 
   console.log('PersonPrintPreview: report:', report)
 
+  if (!report) {
+    return null
+  }
+
   if (report === 'personalblatt') {
     return <PersonPrint />
   }

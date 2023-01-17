@@ -1,6 +1,9 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+const queryClient = new QueryClient()
+
 import App from './components/App'
 import './styles.css'
 import createStore from './store'
@@ -68,7 +71,9 @@ const run = async () => {
 
   root.render(
     <StoreContextProvider value={store}>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </StoreContextProvider>,
   )
 }
