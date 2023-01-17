@@ -498,21 +498,6 @@ const store = () =>
         setRevertingMutationId(val) {
           self.revertingMutationId = val
         },
-        deleteWert({ id, table }) {
-          // write to db
-          try {
-            window.electronAPI.edit(`delete from ${table} where id = ${id}`)
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
-          self[table].splice(
-            findIndex(self[table], (p) => p.id === id),
-            1,
-          )
-          self.navigate(`/Werte/${table}`)
-        },
         setPersonDeleted(id) {
           // write to db
           try {
