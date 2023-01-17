@@ -1,6 +1,6 @@
 import findIndex from 'lodash/findIndex'
 
-const deleteWert=({ id, table,store })=>{
+const deleteWert = async ({ id, table, store }) => {
   // write to db
   try {
     await window.electronAPI.edit(`delete from ${table} where id = ${id}`)
@@ -13,6 +13,7 @@ const deleteWert=({ id, table,store })=>{
     findIndex(store[table], (p) => p.id === id),
     1,
   )
-  store.navigate(`/Werte/${table}`)}
+  store.navigate(`/Werte/${table}`)
+}
 
 export default deleteWert

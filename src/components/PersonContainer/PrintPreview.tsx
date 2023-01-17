@@ -13,8 +13,6 @@ import PersonPrintVerzKurzzeichen from './PersonPrintVerzKurzzeichen'
 const PersonPrintPreview = () => {
   const { report } = useParams()
 
-  console.log('PersonPrintPreview: report:', report)
-
   if (!report) {
     return null
   }

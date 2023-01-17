@@ -498,24 +498,6 @@ const store = () =>
         setRevertingMutationId(val) {
           self.revertingMutationId = val
         },
-        setPersonDeleted(id) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              `update personen set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              { id, user: self.username, time: Date.now() },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
-          const person = self.personen.find((p) => p.id === id)
-          person.deleted = 1
-          person.letzteMutationUser = self.username
-          person.letzteMutationZeit = Date.now()
-          if (!self.showDeleted) self.navigate(`/Personen`)
-        },
         deletePerson(id) {
           // write to db
           try {

@@ -7,6 +7,7 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 
 import storeContext from '../../storeContext'
 import addPerson from '../../src/addPerson'
+import setPersonDeleted from '../../src/setPersonDeleted'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -68,7 +69,7 @@ const Person = () => {
       // do not true delete yet
       // only set person.deleted = 1
       setDeletionCallback(() => {
-        store.setPersonDeleted(+personId)
+        setPersonDeleted({ id: +personId, store })
         setDeletionMessage(null)
         setDeletionTitle(null)
       })
