@@ -13,6 +13,7 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import storeContext from '../../storeContext'
+import addWertModule from '../../src/addWert'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -42,9 +43,11 @@ const Stammdaten = () => {
   }
   const existsActiveWert = tableName?.includes('Werte') && !!+tableId
 
-  const addWert = useCallback(() => {
-    store.addWert(tableName)
-  }, [tableName, store])
+  const addWert = useCallback(
+    () => addWertModule({ table: tableName, store, navigate }),
+    [tableName, store, navigate],
+  )
+
   const deleteWert = useCallback(() => {
     const activeWert = store[tableName].find((p) => p.id === +tableId)
     if (activeWert.deleted === 1) {

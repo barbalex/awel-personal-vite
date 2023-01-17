@@ -254,7 +254,8 @@ ipcMain.handle('open-dialog-get-path', openDialogGetPath)
 ipcMain.handle('get-username', async () => {
   let user
   try {
-    user = await require('username')()
+    const { usernameSync } = require('username')
+    user = usernameSync()
     console.log('user', user)
   } catch (error) {
     return null

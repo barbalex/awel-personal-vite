@@ -1,8 +1,6 @@
 import { types, splitJsonPath } from 'mobx-state-tree'
 import { UndoManager } from 'mst-middlewares'
 import findIndex from 'lodash/findIndex'
-import flatten from 'lodash/flatten'
-import findLast from 'lodash/findLast'
 import uniqBy from 'lodash/uniqBy'
 import sortBy from 'lodash/sortBy'
 import last from 'lodash/last'
@@ -565,123 +563,8 @@ const store = () =>
           })
           self.navigate(`/Sektionen/${info.lastInsertRowid}`)
         },
-        addMutation({ tableName, patch, inversePatch }) {
-          // watchMutations is false while data is loaded from server
-          // as these additions should not be added to mutations
-          if (!self.watchMutations) return
-          // need to wait for undoManager to list deletion
-          setTimeout(() => {
-            let info
-            const { username } = self
-            const time = Date.now()
-            const { op, path, value: valueIn } = patch
-            const [index, field] = splitJsonPath(path)
-            // do not document mutation documentation
-            if (field && field.includes('letzteMutation')) return
-            let previousValue = null
-            const value =
-              valueIn !== null && typeof valueIn === 'object'
-                ? JSON.stringify(valueIn)
-                : valueIn
-            let rowId
-            switch (op) {
-              case 'add':
-                rowId = valueIn.id
-                break
-              case 'remove': {
-                /**
-                 * Problem:
-                 * - inversePatch is undefined
-                 * - patch has no value
-                 * - self[tableName][index] was already removed
-                 * so how get id or better value of removed dataset?
-                 * Solution: get this from undoManager's history
-                 * But: need to setTimeout to let undoManager catch up
-                 */
-                const historyChanges = undoManager.history
-                const historyInversePatches = flatten(
-                  historyChanges.map((c) => c.inversePatches),
-                )
-                const historyInversePatch =
-                  findLast(
-                    historyInversePatches,
-                    (p) =>
-                      p.op === 'add' && p.path === `/${tableName}/${index}`,
-                  ) || {}
-                previousValue = JSON.stringify(historyInversePatch.value)
-                rowId = historyInversePatch.value.id
-                break
-              }
-              case 'replace': {
-                const storeObject = self[tableName][index]
-                rowId = storeObject.id
-                previousValue = inversePatch.value
-                break
-              }
-              default:
-              // do nothing
-            }
-            try {
-              info = window.electronAPI.editWithParam(
-                `insert into mutations (time, user, op, tableName, rowId, field, value, previousValue, reverts) values (@time, @username, @op, @tableName, @rowId, @field, @value, @previousValue, @reverts)`,
-                {
-                  username,
-                  time,
-                  tableName,
-                  op,
-                  rowId,
-                  field,
-                  value,
-                  previousValue,
-                  reverts: self.revertingMutationId,
-                },
-              )
-            } catch (error) {
-              self.addError(error)
-              return console.log(error)
-            }
-            // 2. add to store
-            // need to call other action as this happens inside timeout
-            self.mutate({
-              id: info.lastInsertRowid,
-              time,
-              user: username,
-              op,
-              tableName,
-              rowId,
-              field,
-              value,
-              previousValue,
-              reverts: self.revertingMutationId,
-            })
-          })
-          self.revertingMutationId = null
-        },
-        mutate(mutation) {
-          self.mutations.push(mutation)
-        },
-        addWert(table) {
-          // 1. create new value in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              `insert into ${table} (letzteMutationUser,letzteMutationZeit) values (@letzteMutationUser,@letzteMutationZeit)`,
-              {
-                letzteMutationUser: self.username,
-                letzteMutationZeit: Date.now(),
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self[table].push({
-            id: info.lastInsertRowid,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          self.navigate(`/Werte/${table}/${info.lastInsertRowid}`)
+        setRevertingMutationId(val) {
+          self.revertingMutationId = val
         },
         setWertDeleted({ id, table }) {
           // write to db
