@@ -1,5 +1,3 @@
-import findIndex from 'lodash/findIndex'
-
 const deleteWert = async ({ id, table, store }) => {
   // write to db
   try {
@@ -9,15 +7,7 @@ const deleteWert = async ({ id, table, store }) => {
     return console.log(error)
   }
   // write to store
-  /**
-   * Do not use filter! Reason:
-   * rebuilds self.personen. Consequence:
-   * all other personen are re-added and listet as mutations of op 'add'
-   */
-  store[table].splice(
-    findIndex(store[table], (p) => p.id === id),
-    1,
-  )
+  store.removeWert({ id, table })
   store.navigate(`/Werte/${table}`)
 }
 
