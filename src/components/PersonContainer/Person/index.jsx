@@ -32,6 +32,7 @@ import storeContext from '../../../storeContext'
 import PersonImage from './PersonImage'
 import addFunktion from '../../../src/addFunktion'
 import deleteFunktionModule from '../../../src/deleteFunktion'
+import addKaderFunktionModule from '../../../src/addKaderFunktion'
 
 const Container = styled.div`
   hyphens: auto;
@@ -462,7 +463,7 @@ const Person = ({ listRef }) => {
           value: { ...filterKaderFunktion, ...{ funktion } },
         })
       } else {
-        store.addKaderFunktion({ funktion, personId })
+        addKaderFunktionModule({ funktion, personId, store })
       }
     },
     [showFilter, setFilter, filterKaderFunktion, store, personId],

@@ -885,32 +885,8 @@ const store = () =>
             1,
           )
         },
-        addKaderFunktion({ funktion, personId }) {
-          // 1. create new kaderFunktion in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              'insert into kaderFunktionen (idPerson, funktion, letzteMutationUser, letzteMutationZeit) values (@idPerson, @funktion, @letzteMutationUser, @letzteMutationZeit)',
-              {
-                idPerson: personId,
-                funktion,
-                letzteMutationUser: self.username,
-                letzteMutationZeit: Date.now(),
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.kaderFunktionen.push({
-            id: info.lastInsertRowid,
-            funktion,
-            idPerson: personId,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          self.updatePersonsMutation(personId)
+        addKaderFunktion(val) {
+          self.kaderFunktionen.push(val)
         },
         deleteKaderFunktion({ funktion, personId }) {
           // write to db
