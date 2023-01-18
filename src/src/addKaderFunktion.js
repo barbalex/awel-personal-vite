@@ -1,3 +1,5 @@
+import updatePersonsMutation from './updatePersonsMutation'
+
 const addKaderFunktion = async ({ funktion, personId, store }) => {
   // 1. create new kaderFunktion in db, returning id
   let info
@@ -23,7 +25,7 @@ const addKaderFunktion = async ({ funktion, personId, store }) => {
     letzteMutationUser: store.username,
     letzteMutationZeit: Date.now(),
   })
-  store.updatePersonsMutation(personId)
+  updatePersonsMutation({ personId, store })
 }
 
 export default addKaderFunktion

@@ -1,3 +1,5 @@
+import updatePersonsMutation from './updatePersonsMutation'
+
 const deleteFunktion = async ({ funktion, personId, store }) => {
   // write to db
   try {
@@ -11,7 +13,7 @@ const deleteFunktion = async ({ funktion, personId, store }) => {
   }
   // write to store
   store.deleteFunktion({ funktion, personId })
-  store.updatePersonsMutation(personId)
+  updatePersonsMutation({ personId, store })
 }
 
 export default deleteFunktion

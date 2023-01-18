@@ -1,4 +1,4 @@
-import { types, splitJsonPath } from 'mobx-state-tree'
+import { types } from 'mobx-state-tree'
 import { UndoManager } from 'mst-middlewares'
 import findIndex from 'lodash/findIndex'
 import uniqBy from 'lodash/uniqBy'
@@ -50,6 +50,7 @@ import bereicheFilteredSortedByHandelsbedarf from './bereicheFilteredSortedByHan
 import sektionenFiltered from './sektionenFiltered'
 import sektionenFilteredSortedByHandelsbedarf from './sektionenFilteredSortedByHandelsbedarf'
 import revertMutation from './revertMutation'
+import updatePersonsMutation from './updatePersonsMutation'
 
 const store = () =>
   types
@@ -729,7 +730,7 @@ const store = () =>
             letzteMutationUser: self.username,
             letzteMutationZeit: Date.now(),
           })
-          self.updatePersonsMutation(personId)
+          updatePersonsMutation({ personId, store: self })
         },
         deleteEtikett({ etikett, personId }) {
           // write to db
@@ -750,7 +751,7 @@ const store = () =>
             ),
             1,
           )
-          self.updatePersonsMutation(personId)
+          updatePersonsMutation({ personId, store: self })
         },
         addAnwesenheitstag({ tag, personId }) {
           // 1. create new anwesenheitstag in db, returning id
@@ -777,7 +778,7 @@ const store = () =>
             letzteMutationUser: self.username,
             letzteMutationZeit: Date.now(),
           })
-          self.updatePersonsMutation(personId)
+          updatePersonsMutation({ personId, store: self })
         },
         deleteAnwesenheitstag({ tag, personId }) {
           // write to db
@@ -798,7 +799,7 @@ const store = () =>
             ),
             1,
           )
-          self.updatePersonsMutation(personId)
+          updatePersonsMutation({ personId, store: self })
         },
         addLink({ url, personId }) {
           // 1. create new link in db, returning id
@@ -825,7 +826,7 @@ const store = () =>
             letzteMutationUser: self.username,
             letzteMutationZeit: Date.now(),
           })
-          self.updatePersonsMutation(personId)
+          updatePersonsMutation({ personId, store: self })
         },
         deleteLink({ id, personId }) {
           // write to db
@@ -844,7 +845,7 @@ const store = () =>
             1,
           )
           // set persons letzteMutation
-          self.updatePersonsMutation(personId)
+          updatePersonsMutation({ personId, store: self })
         },
         addSchluessel(val) {
           self.schluessel.push(val)
@@ -897,14 +898,7 @@ const store = () =>
             1,
           )
         },
-        updateField({
-          table,
-          parentModel,
-          field,
-          value,
-          id,
-          setErrors,
-        }) {
+        updateField({ table, parentModel, field, value, id, setErrors }) {
           // 2. update in store
           const storeObject = self[parentModel].find((o) => o.id === id)
           if (!storeObject) {
@@ -922,21 +916,6 @@ const store = () =>
           if (setErrors) setErrors({})
         },
         updatePersonsMutation(idPerson) {
-          // in db
-          try {
-            window.electronAPI.editWithParam(
-              `update personen set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              {
-                user: self.username,
-                time: Date.now(),
-                id: idPerson,
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // in store
           const person = self.personen.find((p) => p.id === idPerson)
           person.letzteMutationUser = self.username
           person.letzteMutationZeit = Date.now()

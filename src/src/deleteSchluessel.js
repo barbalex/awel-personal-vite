@@ -1,3 +1,5 @@
+import updatePersonsMutation from './updatePersonsMutation.js'
+
 const deleteSchluessel = async ({ id, personId, store }) => {
   // write to db
   try {
@@ -12,7 +14,7 @@ const deleteSchluessel = async ({ id, personId, store }) => {
   // write to store
   store.deleteSchluessel(id)
   // set persons letzteMutation
-  self.updatePersonsMutation(personId)
+  updatePersonsMutation({ personId, store })
 }
 
 export default deleteSchluessel

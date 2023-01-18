@@ -1,3 +1,5 @@
+import updatePersonsMutation from './updatePersonsMutation.js'
+
 const deleteMobileAbo = async ({ id, personId, store }) => {
   // write to db
   try {
@@ -12,7 +14,7 @@ const deleteMobileAbo = async ({ id, personId, store }) => {
   // write to store
   store.deleteMobileAbo(id)
   // set persons letzteMutation
-  store.updatePersonsMutation(personId)
+  updatePersonsMutation({ personId, store })
 }
 
 export default deleteMobileAbo

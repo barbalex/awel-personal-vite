@@ -1,3 +1,5 @@
+import updatePersonsMutation from './updatePersonsMutation.js'
+
 const deleteKaderFunktion = async ({ funktion, personId, store }) => {
   // write to db
   try {
@@ -11,7 +13,7 @@ const deleteKaderFunktion = async ({ funktion, personId, store }) => {
   }
   // write to store
   store.deleteKaderFunktion({ funktion, personId })
-  store.updatePersonsMutation(personId)
+  updatePersonsMutation({ personId, store })
 }
 
 export default deleteKaderFunktion

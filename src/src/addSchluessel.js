@@ -1,3 +1,5 @@
+import updatePersonsMutation from './updatePersonsMutation'
+
 const addSchluessel = async ({ personId, store }) => {
   // 1. create new link in db, returning id
   let info
@@ -21,7 +23,7 @@ const addSchluessel = async ({ personId, store }) => {
     letzteMutationUser: store.username,
     letzteMutationZeit: Date.now(),
   })
-  store.updatePersonsMutation(personId)
+  updatePersonsMutation({ personId, store })
 }
 
 export default addSchluessel

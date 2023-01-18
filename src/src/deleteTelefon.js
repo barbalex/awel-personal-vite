@@ -1,3 +1,5 @@
+import updatePersonsMutation from './updatePersonsMutation.js'
+
 const deleteTelefon = async ({ id, personId, store }) => {
   // write to db
   try {
@@ -12,7 +14,7 @@ const deleteTelefon = async ({ id, personId, store }) => {
   // write to store
   store.deleteTelefon(id)
   // set persons letzteMutation
-  store.updatePersonsMutation(personId)
+  updatePersonsMutation({ personId, store })
 }
 
 export default deleteTelefon

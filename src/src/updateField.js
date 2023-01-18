@@ -1,3 +1,5 @@
+import updatePersonsMutation from './updatePersonsMutation'
+
 const updateField = async ({
   table,
   parentModel,
@@ -51,7 +53,7 @@ const updateField = async ({
     personId
   ) {
     // set persons letzteMutation
-    store.updatePersonsMutation(personId)
+    updatePersonsMutation({ personId, store })
   }
 }
 
