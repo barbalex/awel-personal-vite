@@ -873,32 +873,8 @@ const store = () =>
             1,
           )
         },
-        addFunktion({ funktion, personId }) {
-          // 1. create new funktion in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              'insert into funktionen (idPerson, funktion, letzteMutationUser, letzteMutationZeit) values (@idPerson, @funktion, @letzteMutationUser, @letzteMutationZeit)',
-              {
-                idPerson: personId,
-                funktion,
-                letzteMutationUser: self.username,
-                letzteMutationZeit: Date.now(),
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.funktionen.push({
-            id: info.lastInsertRowid,
-            funktion,
-            idPerson: personId,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          self.updatePersonsMutation(personId)
+        addFunktion(val) {
+          self.funktionen.push(val)
         },
         deleteFunktion({ funktion, personId }) {
           // write to db

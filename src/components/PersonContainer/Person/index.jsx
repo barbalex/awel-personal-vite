@@ -30,6 +30,7 @@ import Telefones from './Telefones'
 import Zuletzt from '../../shared/Zuletzt'
 import storeContext from '../../../storeContext'
 import PersonImage from './PersonImage'
+import addFunktion from '../../../src/addFunktion'
 
 const Container = styled.div`
   hyphens: auto;
@@ -410,7 +411,7 @@ const Person = ({ listRef }) => {
     [filterAnwesenheitstage, setFilter],
   )
 
-  const addFunktion = useCallback(
+  const addFunktionModule = useCallback(
     (funktion) => {
       if (showFilter) {
         setFilter({
@@ -418,7 +419,7 @@ const Person = ({ listRef }) => {
           value: { ...filterFunktion, ...{ funktion } },
         })
       } else {
-        store.addFunktion({ funktion, personId })
+        addFunktion({ funktion, personId, store })
       }
     },
     [showFilter, setFilter, filterFunktion, store, personId],
@@ -1017,7 +1018,7 @@ const Person = ({ listRef }) => {
                   field="funktion"
                   label="Funktio&shy;nen"
                   options={funktionenOptions}
-                  add={addFunktion}
+                  add={addFunktionModule}
                   remove={deleteFunktion}
                   error={errors.funktion}
                   row={false}
@@ -1092,9 +1093,7 @@ const Person = ({ listRef }) => {
                 error={errors.bemerkungen}
               />
               {!showFilter && <Links row={false} />}
-              <Schluessels
-                row={false}
-              />
+              <Schluessels row={false} />
               <MobileAbos row={false} />
             </AreaVerzeichnis>
             {!showFilter && (
