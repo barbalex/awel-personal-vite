@@ -565,17 +565,6 @@ const store = () =>
           )
         },
         deleteAbteilung(id) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from abteilungen where id = ?',
-              id,
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
           /**
            * Do not use filter! Reason:
            * rebuilds self.abteilungen. Consequence:
@@ -585,7 +574,6 @@ const store = () =>
             findIndex(self.abteilungen, (p) => p.id === id),
             1,
           )
-          self.navigate(`/Abteilungen`)
         },
         setBereichDeleted(id) {
           // write to db
