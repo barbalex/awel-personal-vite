@@ -7,6 +7,7 @@ import { UncontrolledTooltip } from 'reactstrap'
 import { useParams } from 'react-router-dom'
 
 import storeContext from '../../../storeContext'
+import updateField from '../../../utils/updateField'
 
 const Container = styled.div`
   grid-area: areaLinks;
@@ -68,7 +69,7 @@ const PersonImage = () => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const { showFilter, updateField, personen } = store
+  const { showFilter, personen } = store
   const person = personen.find((p) => p.id === +personId) || {}
 
   // eslint-disable-next-line no-unused-vars
@@ -94,9 +95,10 @@ const PersonImage = () => {
         id: person.id,
         personId: +personId,
         setErrors,
+        store,
       })
     },
-    [person.id, personId, updateField],
+    [person.id, personId, store],
   )
   const onClickRemove = useCallback(
     (e) => {
@@ -108,10 +110,11 @@ const PersonImage = () => {
         id: person.id,
         personId: +personId,
         setErrors,
+        store,
       })
       e.preventDefault()
     },
-    [person.id, personId, updateField],
+    [person.id, personId, store],
   )
 
   if (showFilter) return null

@@ -34,6 +34,7 @@ import addFunktion from '../../../src/addFunktion'
 import deleteFunktionModule from '../../../src/deleteFunktion'
 import addKaderFunktionModule from '../../../src/addKaderFunktion'
 import deleteKaderFunktionModule from '../../../src/deleteKaderFunktion'
+import updateField from '../../../src/updateField'
 
 const Container = styled.div`
   hyphens: auto;
@@ -186,7 +187,6 @@ const Person = ({ listRef }) => {
     showMutationNoetig,
     standortWerte,
     statusWerte,
-    updateField,
   } = store
 
   let person
@@ -260,6 +260,7 @@ const Person = ({ listRef }) => {
           id: personId,
           personId,
           setErrors,
+          store,
         })
         if (field === 'mutationFrist' && newValue && !person.mutationNoetig) {
           // set mutationNoetig to true of not yet so
@@ -270,6 +271,7 @@ const Person = ({ listRef }) => {
             value: 1,
             id: personId,
             personId,
+            store,
           })
         }
         if (field === 'amt') {
@@ -283,6 +285,7 @@ const Person = ({ listRef }) => {
               id: personId,
               personId,
               setErrors,
+              store,
             })
           }
           if (person.sektion) {
@@ -295,6 +298,7 @@ const Person = ({ listRef }) => {
               id: personId,
               personId,
               setErrors,
+              store,
             })
           }
         }
@@ -308,6 +312,7 @@ const Person = ({ listRef }) => {
             id: personId,
             personId,
             setErrors,
+            store,
           })
         }
         if (['name', 'vorname'].includes(field)) {
@@ -319,16 +324,7 @@ const Person = ({ listRef }) => {
         }
       }
     },
-    [
-      person,
-      showFilter,
-      personId,
-      setFilter,
-      filterPerson,
-      updateField,
-      store.personenFilteredSortedByHandlungsbedarf,
-      listRef,
-    ],
+    [person, showFilter, personId, setFilter, filterPerson, store, listRef],
   )
   const addEtikett = useCallback(
     (etikett) => {

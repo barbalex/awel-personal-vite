@@ -2,6 +2,7 @@ import keys from 'lodash/keys'
 import lValues from 'lodash/values'
 
 import ifIsNumericAsNumber from '../src/ifIsNumericAsNumber'
+import updateField from '../src/updateField'
 
 const revertMutation = async ({ self, mutationId }) => {
   const { mutations } = self
@@ -21,7 +22,7 @@ const revertMutation = async ({ self, mutationId }) => {
         )
       }
       // 2. update value
-      self.updateField({
+      updateField({
         table: tableName,
         parentModel: tableName,
         field,
@@ -29,6 +30,7 @@ const revertMutation = async ({ self, mutationId }) => {
         // need to convert to number or it will fail
         value: ifIsNumericAsNumber(previousValue),
         id: rowId,
+        store: self,
       })
       break
     }

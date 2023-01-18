@@ -22,6 +22,7 @@ import ifIsNumericAsNumber from '../../../src/ifIsNumericAsNumber'
 import Zuletzt from '../../shared/Zuletzt'
 import storeContext from '../../../storeContext'
 import isDateField from '../../../src/isDateField'
+import updateField from '../../../src/updateField'
 
 const Container = styled.div``
 const StyledForm = styled(Form)`
@@ -44,7 +45,6 @@ const Amt = () => {
     filterAmt,
     existsFilter,
     setFilter,
-    updateField,
     setDirty,
   } = store
 
@@ -95,6 +95,7 @@ const Amt = () => {
           value: newValue,
           id: amt.id,
           setErrors,
+          store,
         })
         if (field === 'mutationFrist' && newValue && !amt.mutationNoetig) {
           // set mutationNoetig to true if not yet so
@@ -104,6 +105,7 @@ const Amt = () => {
             field: 'mutationNoetig',
             value: 1,
             id: amt.id,
+            store,
           })
         }
         if (field === 'name') {
@@ -115,16 +117,7 @@ const Amt = () => {
         }
       }
     },
-    [
-      amtId,
-      amt,
-      filterAmt,
-      listRef,
-      setFilter,
-      showFilter,
-      store.aemterFilteredSortedByHandlungsbedarf,
-      updateField,
-    ],
+    [amt, showFilter, amtId, setFilter, filterAmt, store, listRef],
   )
 
   // filter out options with empty values - makes no sense and errors

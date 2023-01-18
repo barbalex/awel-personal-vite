@@ -904,28 +904,7 @@ const store = () =>
           value,
           id,
           setErrors,
-          personId,
         }) {
-          // 1. update in db
-          try {
-            window.electronAPI.editWithParam(
-              `update ${table} set ${field} = @value, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              {
-                value,
-                id,
-                user: self.username,
-                time: Date.now(),
-              },
-            )
-          } catch (error) {
-            if (setErrors) {
-              return setErrors({
-                [field]: error.message,
-              })
-            }
-            self.addError(error)
-            return
-          }
           // 2. update in store
           const storeObject = self[parentModel].find((o) => o.id === id)
           if (!storeObject) {
@@ -940,22 +919,6 @@ const store = () =>
           storeObject[field] = value
           storeObject.letzteMutationUser = self.username
           storeObject.letzteMutationZeit = Date.now()
-          if (
-            [
-              'links',
-              'schluessel',
-              'mobileAbos',
-              'telefones',
-              'funktionen',
-              'kaderFunktionen',
-              'etiketten',
-              'anwesenheitstage',
-            ].includes(parentModel) &&
-            personId
-          ) {
-            // set persons letzteMutation
-            self.updatePersonsMutation(personId)
-          }
           if (setErrors) setErrors({})
         },
         updatePersonsMutation(idPerson) {

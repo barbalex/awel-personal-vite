@@ -12,6 +12,7 @@ import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber'
 import InputWithoutLabel from '../../../shared/InputWithoutLabel'
 import storeContext from '../../../../storeContext'
 import deleteTelefon from '../../../../src/deleteTelefon'
+import updateField from '../../../../src/updateField'
 
 const Row = styled.div`
   display: grid;
@@ -57,14 +58,8 @@ const Telefon = ({ id }) => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const {
-    showFilter,
-    telefones,
-    telefonTypWerte,
-    filterTelefon,
-    updateField,
-    setFilter,
-  } = store
+  const { showFilter, telefones, telefonTypWerte, filterTelefon, setFilter } =
+    store
   let telefon
   if (showFilter) {
     telefon = filterTelefon
@@ -101,10 +96,11 @@ const Telefon = ({ id }) => {
           id,
           setErrors,
           personId: +personId,
+          store,
         })
       }
     },
-    [filterTelefon, id, personId, setFilter, showFilter, updateField],
+    [filterTelefon, id, personId, setFilter, showFilter, store],
   )
   const onChangeSelect = useCallback(
     ({ field, value }) => {
@@ -123,10 +119,11 @@ const Telefon = ({ id }) => {
           id,
           setErrors,
           personId: +personId,
+          store,
         })
       }
     },
-    [filterTelefon, id, personId, setFilter, showFilter, updateField],
+    [filterTelefon, id, personId, setFilter, showFilter, store],
   )
   const onClickDelete = useCallback(
     () => deleteTelefon({ id, personId: +personId, store }),

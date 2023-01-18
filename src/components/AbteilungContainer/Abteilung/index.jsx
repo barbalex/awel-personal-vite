@@ -22,6 +22,7 @@ import ifIsNumericAsNumber from '../../../src/ifIsNumericAsNumber'
 import Zuletzt from '../../shared/Zuletzt'
 import storeContext from '../../../storeContext'
 import isDateField from '../../../src/isDateField'
+import updateField from '../../../src/updateField'
 
 const Container = styled.div``
 const StyledForm = styled(Form)`
@@ -45,7 +46,6 @@ const Abteilung = () => {
     filterAbteilung,
     existsFilter,
     setFilter,
-    updateField,
     setDirty,
   } = store
 
@@ -102,6 +102,7 @@ const Abteilung = () => {
           value: newValue,
           id: abteilung.id,
           setErrors,
+          store,
         })
         if (
           field === 'mutationFrist' &&
@@ -115,6 +116,7 @@ const Abteilung = () => {
             field: 'mutationNoetig',
             value: 1,
             id: abteilung.id,
+            store,
           })
         }
         if (field === 'name') {
@@ -132,8 +134,7 @@ const Abteilung = () => {
       abteilungId,
       setFilter,
       filterAbteilung,
-      updateField,
-      store.abteilungenFilteredSortedByHandlungsbedarf,
+      store,
       listRef,
     ],
   )
@@ -143,7 +144,7 @@ const Abteilung = () => {
     () =>
       sortBy(personen, ['name', 'vorname'])
         .filter((w) => !!w.name && !!w.vorname && w.deleted === 0)
-        .filter((w) => !showFilter)
+        .filter(() => !showFilter)
         .map((w) => ({
           label: `${w.name} ${w.vorname}`,
           value: w.id,

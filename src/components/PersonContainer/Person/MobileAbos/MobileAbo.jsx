@@ -11,6 +11,7 @@ import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber'
 import Textarea from '../../../shared/Textarea'
 import storeContext from '../../../../storeContext'
 import deleteMobileAbo from '../../../../src/deleteMobileAbo'
+import updateField from '../../../../src/updateField'
 
 const Row = styled.div`
   grid-column: 1;
@@ -63,7 +64,6 @@ const MobileAbo = ({ id }) => {
     mobileAboTypWerte,
     mobileAboKostenstelleWerte,
     filterMobileAbo,
-    updateField,
     setFilter,
   } = store
   let mobileAbo
@@ -111,10 +111,11 @@ const MobileAbo = ({ id }) => {
           id,
           setErrors,
           personId: +personId,
+          store,
         })
       }
     },
-    [filterMobileAbo, id, personId, setFilter, showFilter, updateField],
+    [filterMobileAbo, id, personId, setFilter, showFilter, store],
   )
   const onChangeSelect = useCallback(
     ({ field, value }) => {
@@ -133,10 +134,11 @@ const MobileAbo = ({ id }) => {
           id,
           setErrors,
           personId: +personId,
+          store,
         })
       }
     },
-    [filterMobileAbo, id, personId, setFilter, showFilter, updateField],
+    [filterMobileAbo, id, personId, setFilter, showFilter, store],
   )
   const onClickDelete = useCallback(
     () => deleteMobileAbo({ id, personId: +personId, store }),

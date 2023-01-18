@@ -22,6 +22,7 @@ import ifIsNumericAsNumber from '../../../src/ifIsNumericAsNumber'
 import isDateField from '../../../src/isDateField'
 import Zuletzt from '../../shared/Zuletzt'
 import storeContext from '../../../storeContext'
+import updateField from '../../../src/updateField'
 
 const Container = styled.div``
 const StyledForm = styled(Form)`
@@ -47,7 +48,6 @@ const Bereich = () => {
     filterBereich,
     existsFilter,
     setFilter,
-    updateField,
     setDirty,
   } = store
 
@@ -96,6 +96,7 @@ const Bereich = () => {
           value: newValue,
           id: bereich.id,
           setErrors,
+          store,
         })
         if (field === 'mutationFrist' && newValue && !bereich.mutationNoetig) {
           // set mutationNoetig to true of not yet so
@@ -105,6 +106,7 @@ const Bereich = () => {
             field: 'mutationNoetig',
             value: 1,
             id: bereich.id,
+            store,
           })
         }
         if (field === 'name') {
@@ -116,16 +118,7 @@ const Bereich = () => {
         }
       }
     },
-    [
-      bereichId,
-      bereich,
-      filterBereich,
-      listRef,
-      setFilter,
-      showFilter,
-      store.bereicheFilteredSortedByHandelsbedarf,
-      updateField,
-    ],
+    [bereich, showFilter, bereichId, setFilter, filterBereich, store, listRef],
   )
 
   // filter out options with empty values - makes no sense and errors
@@ -133,7 +126,7 @@ const Bereich = () => {
     () =>
       sortBy(personen, ['name', 'vorname'])
         .filter((w) => !!w.name && !!w.vorname && w.deleted === 0)
-        .filter((w) => !showFilter)
+        .filter(() => !showFilter)
         .map((w) => ({
           label: `${w.name} ${w.vorname}`,
           value: w.id,

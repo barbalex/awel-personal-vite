@@ -12,6 +12,7 @@ import SharedCheckbox from '../shared/Checkbox_01'
 import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber'
 import tables from '../../src/tables'
 import storeContext from '../../storeContext'
+import updateField from '../../src/updateField'
 
 const Container = styled.div``
 const StyledForm = styled(Form)`
@@ -22,7 +23,7 @@ const Data = ({ listRef }) => {
   const { tableId, tableName } = useParams()
 
   const store = useContext(storeContext)
-  const { showDeleted, updateField, setDirty } = store
+  const { showDeleted, setDirty } = store
 
   const dat = tableId ? store[tableName].find((p) => p.id === +tableId) : []
 
@@ -47,6 +48,7 @@ const Data = ({ listRef }) => {
         value: newValue,
         id: dat.id,
         setErrors,
+        store,
       })
       if (field === 'value') {
         let data = store[tableName].slice().filter((p) => {
@@ -58,7 +60,7 @@ const Data = ({ listRef }) => {
         listRef.current.scrollToItem(index)
       }
     },
-    [updateField, tableName, dat.id, store, listRef, showDeleted],
+    [tableName, dat.id, store, listRef, showDeleted],
   )
 
   if (!tableId) return null

@@ -24,6 +24,7 @@ import Textarea from '../shared/Textarea'
 import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber'
 import isDateField from '../../src/isDateField'
 import storeContext from '../../storeContext'
+import updateField from '../../src/updateField'
 
 const Container = styled.div`
   hyphens: auto;
@@ -120,7 +121,6 @@ const PersonMutation = () => {
     filterPerson,
     existsFilter,
     setFilter,
-    updateField,
     settings,
     setSettingsKey,
   } = store
@@ -218,6 +218,7 @@ const PersonMutation = () => {
           id: personId,
           personId,
           setErrors,
+          store,
         })
         if (field === 'amt') {
           if (person.abteilung) {
@@ -230,6 +231,7 @@ const PersonMutation = () => {
               id: personId,
               personId,
               setErrors,
+              store,
             })
           }
           if (person.sektion) {
@@ -242,6 +244,7 @@ const PersonMutation = () => {
               id: personId,
               personId,
               setErrors,
+              store,
             })
           }
         }
@@ -255,11 +258,12 @@ const PersonMutation = () => {
             id: personId,
             personId,
             setErrors,
+            store,
           })
         }
       }
     },
-    [person, showFilter, personId, setFilter, filterPerson, updateField],
+    [person, showFilter, personId, setFilter, filterPerson, store],
   )
 
   // filter out options with empty values - makes no sense and errors

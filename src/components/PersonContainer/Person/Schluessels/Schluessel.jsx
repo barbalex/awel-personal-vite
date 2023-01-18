@@ -12,6 +12,7 @@ import Textarea from '../../../shared/Textarea'
 import storeContext from '../../../../storeContext'
 import Select from '../Select'
 import deleteSchluessel from '../../../../src/deleteSchluessel'
+import updateField from '../../../../src/updateField'
 
 const Row = styled.div`
   grid-column: 1;
@@ -63,7 +64,6 @@ const SchluesselComponent = ({ id }) => {
     setFilter,
     schluesselTypWerte,
     schluesselAnlageWerte,
-    updateField,
   } = store
   let schluessel
   if (showFilter) {
@@ -110,17 +110,11 @@ const SchluesselComponent = ({ id }) => {
           id: schluessel?.id,
           setErrors,
           personId: +personId,
+          store,
         })
       }
     },
-    [
-      showFilter,
-      setFilter,
-      filterSchluessel,
-      updateField,
-      schluessel?.id,
-      personId,
-    ],
+    [showFilter, setFilter, filterSchluessel, schluessel?.id, personId, store],
   )
   const onChangeSelectSchluesselTyp = useCallback(
     ({ field, value }) => {
@@ -139,10 +133,11 @@ const SchluesselComponent = ({ id }) => {
           id,
           setErrors,
           personId: +personId,
+          store,
         })
       }
     },
-    [filterSchluessel, id, personId, setFilter, showFilter, updateField],
+    [filterSchluessel, id, personId, setFilter, showFilter, store],
   )
   const onChangeSelectSchluesselAnlage = useCallback(
     ({ field, value }) => {
@@ -161,10 +156,11 @@ const SchluesselComponent = ({ id }) => {
           id,
           setErrors,
           personId: +personId,
+          store,
         })
       }
     },
-    [filterSchluessel, id, personId, setFilter, showFilter, updateField],
+    [filterSchluessel, id, personId, setFilter, showFilter, store],
   )
   const onClickDelete = useCallback(
     () => deleteSchluessel({ id, personId: +personId, store }),
