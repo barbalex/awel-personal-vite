@@ -861,24 +861,11 @@ const store = () =>
         addTelefon(val) {
           self.telefones.push(val)
         },
-        deleteMobileAbo({ id, personId }) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from mobileAbos where id = ?',
-              id,
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
+        deleteMobileAbo(id) {
           self.mobileAbos.splice(
             findIndex(self.mobileAbos, (p) => p.id === id),
             1,
           )
-          // set persons letzteMutation
-          self.updatePersonsMutation(personId)
         },
         deleteTelefon({ id, personId }) {
           // write to db
