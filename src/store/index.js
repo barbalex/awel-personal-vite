@@ -554,17 +554,6 @@ const store = () =>
           abteilung.letzteMutationZeit = Date.now()
         },
         deleteAmt(id) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from aemter where id = ?',
-              id,
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
           /**
            * Do not use filter! Reason:
            * rebuilds self.aemter. Consequence:
@@ -574,7 +563,6 @@ const store = () =>
             findIndex(self.aemter, (p) => p.id === id),
             1,
           )
-          self.navigate(`/Aemter`)
         },
         deleteAbteilung(id) {
           // write to db

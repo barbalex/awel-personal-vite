@@ -8,6 +8,7 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import storeContext from '../../storeContext'
 import addAmtModule from '../../src/addAmt'
 import setAmtDeleted from '../../src/setAmtDeleted'
+import deleteAmtModule from '../../src/deleteAmt'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -56,7 +57,7 @@ const Amt = () => {
       // amt.deleted is already = 1
       // prepare true deletion
       setDeletionCallback(() => {
-        store.deleteAmt(+amtId)
+        deleteAmtModule({ id: +amtId, store })
         setDeletionMessage(null)
         setDeletionTitle(null)
       })
