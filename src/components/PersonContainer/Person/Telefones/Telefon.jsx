@@ -11,6 +11,7 @@ import Textarea from '../../../shared/Textarea'
 import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber'
 import InputWithoutLabel from '../../../shared/InputWithoutLabel'
 import storeContext from '../../../../storeContext'
+import deleteTelefon from '../../../../src/deleteTelefon'
 
 const Row = styled.div`
   display: grid;
@@ -63,7 +64,6 @@ const Telefon = ({ id }) => {
     filterTelefon,
     updateField,
     setFilter,
-    deleteTelefon,
   } = store
   let telefon
   if (showFilter) {
@@ -129,8 +129,8 @@ const Telefon = ({ id }) => {
     [filterTelefon, id, personId, setFilter, showFilter, updateField],
   )
   const onClickDelete = useCallback(
-    () => deleteTelefon({ id, personId: +personId }),
-    [deleteTelefon, id, personId],
+    () => deleteTelefon({ id, personId: +personId, store }),
+    [id, personId, store],
   )
 
   return (

@@ -867,24 +867,11 @@ const store = () =>
             1,
           )
         },
-        deleteTelefon({ id, personId }) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from telefones where id = ?',
-              id,
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
+        deleteTelefon(id) {
           self.telefones.splice(
             findIndex(self.telefones, (p) => p.id === id),
             1,
           )
-          // set persons letzteMutation
-          self.updatePersonsMutation(personId)
         },
         addFunktion({ funktion, personId }) {
           // 1. create new funktion in db, returning id
