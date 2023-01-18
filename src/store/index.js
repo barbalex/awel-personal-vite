@@ -593,22 +593,10 @@ const store = () =>
           )
         },
         setSektionDeleted(id) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              `update sektionen set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              { id, user: self.username, time: Date.now() },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
           const sektion = self.sektionen.find((p) => p.id === id)
           sektion.deleted = 1
           sektion.letzteMutationUser = self.username
           sektion.letzteMutationZeit = Date.now()
-          if (!self.showDeleted) self.navigate(`/Sektionen`)
         },
         deleteSektion(id) {
           // write to db
