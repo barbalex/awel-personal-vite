@@ -548,22 +548,10 @@ const store = () =>
           amt.letzteMutationZeit = Date.now()
         },
         setAbteilungDeleted(id) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              `update abteilungen set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              { id, user: self.username, time: Date.now() },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
           const abteilung = self.abteilungen.find((p) => p.id === id)
           abteilung.deleted = 1
           abteilung.letzteMutationUser = self.username
           abteilung.letzteMutationZeit = Date.now()
-          if (!self.showDeleted) self.navigate(`/Abteilungen`)
         },
         deleteAmt(id) {
           // write to db

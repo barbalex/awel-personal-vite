@@ -7,6 +7,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 
 import storeContext from '../../storeContext'
 import addAbteilungModule from '../../src/addAbteilung'
+import setAbteilungDeleted from '../../src/setAbteilungDeleted'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -45,7 +46,10 @@ const Abteilung = () => {
     },
     [navigate],
   )
-  const addAbteilung = useCallback(() => addAbteilungModule({store,navigate}),[navigate, store])
+  const addAbteilung = useCallback(
+    () => addAbteilungModule({ store, navigate }),
+    [navigate, store],
+  )
   const deleteAbteilung = useCallback(() => {
     const activeAbteilung = abteilungen.find((p) => p.id === +abteilungId)
     if (activeAbteilung.deleted === 1) {
@@ -69,7 +73,7 @@ const Abteilung = () => {
       // do not true delete yet
       // only set abteilung.deleted = 1
       setDeletionCallback(() => {
-        store.setAbteilungDeleted(+abteilungId)
+        setAbteilungDeleted({ abteilungId: +abteilungId, store })
         setDeletionMessage(null)
         setDeletionTitle(null)
       })

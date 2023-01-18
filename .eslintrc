@@ -17,7 +17,8 @@
     "react-hooks/exhaustive-deps": "warn",
     "no-unused-vars": 1,
     "no-empty": ["error", { "allowEmptyCatch": true }],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "require-await": 1
   },
   "env": {
     "browser": true,
