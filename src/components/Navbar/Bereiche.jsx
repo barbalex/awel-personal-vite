@@ -8,6 +8,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import storeContext from '../../storeContext'
 import addBereichModule from '../../src/addBereich'
 import setBereichDeleted from '../../src/setBereichDeleted'
+import deleteBereichModule from '../../src/deleteBereich'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -56,7 +57,7 @@ const Bereich = () => {
       // bereich.deleted is already = 1
       // prepare true deletion
       setDeletionCallback(() => {
-        store.deleteBereich(+bereichId)
+        deleteBereichModule({ id: +bereichId, store })
         setDeletionMessage(null)
         setDeletionTitle(null)
       })

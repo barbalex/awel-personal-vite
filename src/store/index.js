@@ -582,17 +582,6 @@ const store = () =>
           bereich.letzteMutationZeit = Date.now()
         },
         deleteBereich(id) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from bereiche where id = ?',
-              id,
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
           /**
            * Do not use filter! Reason:
            * rebuilds self.bereiche. Consequence:
@@ -602,7 +591,6 @@ const store = () =>
             findIndex(self.bereiche, (p) => p.id === id),
             1,
           )
-          self.navigate(`/Bereiche`)
         },
         setSektionDeleted(id) {
           // write to db
