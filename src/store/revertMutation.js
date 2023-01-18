@@ -1,10 +1,9 @@
 import keys from 'lodash/keys'
 import lValues from 'lodash/values'
-import findIndex from 'lodash/findIndex'
 
 import ifIsNumericAsNumber from '../src/ifIsNumericAsNumber'
 
-const revertMutation = ({ self, mutationId }) => {
+const revertMutation = async ({ self, mutationId }) => {
   const { mutations } = self
   const mutation = mutations.find((m) => m.id === mutationId)
   if (!mutation) {
@@ -45,16 +44,15 @@ const revertMutation = ({ self, mutationId }) => {
       // 2. remove dataset
       // write to db
       try {
-        window.electronAPI.edit(`delete from ${tableName} where id = ${rowId}`)
+        await window.electronAPI.edit(
+          `delete from ${tableName} where id = ${rowId}`,
+        )
       } catch (error) {
         self.addError(error)
         return console.log(error)
       }
       // write to store
-      self[tableName].splice(
-        findIndex(self[tableName], (p) => p.id === rowId),
-        1,
-      )
+      self.removeFromTable({ table: tableName, id: rowId })
       break
     }
     case 'remove': {
@@ -79,14 +77,13 @@ const revertMutation = ({ self, mutationId }) => {
         .map(() => '?')
         .join()})`
       try {
-        // TODO: does this work?
-        window.electronAPI.edit(sql)
+        await window.electronAPI.edit(sql)
       } catch (error) {
         self.addError(error)
         return console.log(error)
       }
       // write to store
-      self[tableName].push(previousObject)
+      self.addToTable({ table: tableName, value: previousObject })
       break
     }
     default:
