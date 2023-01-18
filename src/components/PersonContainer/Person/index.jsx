@@ -31,6 +31,7 @@ import Zuletzt from '../../shared/Zuletzt'
 import storeContext from '../../../storeContext'
 import PersonImage from './PersonImage'
 import addFunktion from '../../../src/addFunktion'
+import deleteFunktionModule from '../../../src/deleteFunktion'
 
 const Container = styled.div`
   hyphens: auto;
@@ -432,7 +433,7 @@ const Person = ({ listRef }) => {
           value: { ...filterFunktion, ...{ funktion: null } },
         })
       } else {
-        store.deleteFunktion({ funktion, personId })
+        deleteFunktionModule({ funktion, personId, store })
       }
     },
     [filterFunktion, personId, setFilter, showFilter, store],
