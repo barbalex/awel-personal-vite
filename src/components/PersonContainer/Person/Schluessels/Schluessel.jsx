@@ -75,7 +75,7 @@ const SchluesselComponent = ({ id }) => {
   const [errors, setErrors] = useState({})
   useEffect(() => {
     setErrors({})
-  }, [schluessel.id])
+  }, [schluessel?.id])
 
   const schluesselTypOptions = sortBy(schluesselTypWerte, ['sort', 'value'])
     .filter((w) => !!w.value)
@@ -107,7 +107,7 @@ const SchluesselComponent = ({ id }) => {
           parentModel: 'schluessel',
           field,
           value: newValue,
-          id: schluessel.id,
+          id: schluessel?.id,
           setErrors,
           personId: +personId,
         })
@@ -118,7 +118,7 @@ const SchluesselComponent = ({ id }) => {
       setFilter,
       filterSchluessel,
       updateField,
-      schluessel.id,
+      schluessel?.id,
       personId,
     ],
   )
@@ -170,6 +170,8 @@ const SchluesselComponent = ({ id }) => {
     () => deleteSchluessel({ id, personId: +personId }),
     [deleteSchluessel, id, personId],
   )
+
+  if (!schluessel) return null
 
   return (
     <Row key={`${id}`} nosymbol={showFilter}>

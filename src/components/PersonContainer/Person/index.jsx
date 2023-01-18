@@ -1092,7 +1092,9 @@ const Person = ({ listRef }) => {
                 error={errors.bemerkungen}
               />
               {!showFilter && <Links row={false} />}
-              <Schluessels row={false} />
+              <Schluessels
+                row={false}
+              />
               <MobileAbos row={false} />
             </AreaVerzeichnis>
             {!showFilter && (

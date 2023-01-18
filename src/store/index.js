@@ -846,30 +846,8 @@ const store = () =>
           // set persons letzteMutation
           self.updatePersonsMutation(personId)
         },
-        addSchluessel(personId) {
-          // 1. create new link in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              'insert into schluessel (idPerson, letzteMutationUser, letzteMutationZeit) values (@idPerson,@letzteMutationUser,@letzteMutationZeit)',
-              {
-                idPerson: personId,
-                letzteMutationUser: self.username,
-                letzteMutationZeit: Date.now(),
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.schluessel.push({
-            id: info.lastInsertRowid,
-            idPerson: personId,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          self.updatePersonsMutation(personId)
+        addSchluessel(val) {
+          self.schluessel.push(val)
         },
         deleteSchluessel({ id, personId }) {
           // write to db

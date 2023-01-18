@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom'
 
 import Schluessel from './Schluessel'
 import storeContext from '../../../../storeContext'
+import addSchluessel from '../../../../src/addSchluessel'
 
 const Container = styled.div``
 const StyledButton = styled(Button)`
@@ -55,13 +56,7 @@ const SchluesselsComponent = ({ row = true }) => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const {
-    showFilter,
-    filterSchluessel,
-    addSchluessel,
-    settings,
-    setSettingsKey,
-  } = store
+  const { showFilter, filterSchluessel, settings, setSettingsKey } = store
   const uploader = useRef(null)
 
   let schluessels
@@ -89,16 +84,17 @@ const SchluesselsComponent = ({ row = true }) => {
     },
     [setSettingsKey],
   )
-  const onClickForm = useCallback(() => {
+  const onClickForm = useCallback(async () => {
     let success = false
     if (settings.schluesselFormPath) {
       // TODO: test
-      success = window.electronAPI.openUrl(settings.schluesselFormPath)
+      success = await window.electronAPI.openUrl(settings.schluesselFormPath)
       if (!success) console.log('File could not be opened')
       return
     }
     console.log('no schluesselFormPath to open')
   }, [settings.schluesselFormPath])
+
   const Content = () => (
     <Container name="schluessel">
       {schluessels.length > 0 && (
@@ -119,7 +115,7 @@ const SchluesselsComponent = ({ row = true }) => {
       {mayAddNew && (
         <StyledButton
           title="neuer Schlüssel"
-          onClick={() => addSchluessel(+personId)}
+          onClick={() => addSchluessel({ personId: +personId, store })}
           outline
         >
           <PlusIcon id={`plusIconSchluessel${personId}`} />
