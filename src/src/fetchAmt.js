@@ -1,9 +1,9 @@
 const fetchAmt = async ({ store, id }) => {
   const { addError, setWatchMutations, setAmt } = store
 
-  let amt = []
+  let result = []
   try {
-    amt = await window.electronAPI.queryWithParam(
+    result = await window.electronAPI.queryWithParam(
       'SELECT * from aemter where id = ?',
       id,
     )
@@ -11,8 +11,11 @@ const fetchAmt = async ({ store, id }) => {
     addError(error)
   }
 
+  const amt = result?.[0]
+  if (!amt) return
+
   setWatchMutations(false)
-  setAmt(amt[0])
+  setAmt(amt)
   setWatchMutations(true)
 }
 

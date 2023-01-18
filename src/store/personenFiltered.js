@@ -227,19 +227,6 @@ const personenFiltered = ({ self }) => {
     }
   })
 
-  let personenIdsFulltextFiltered = []
-  if (self.filterFulltext) {
-    try {
-      const result = window.electronAPI.query(
-        `SELECT id from personenFts where data like '%${self.filterFulltext}%'`,
-      )
-      personenIdsFulltextFiltered = result.map((p) => p.id)
-    } catch (error) {
-      self.addError(error)
-      return []
-    }
-  }
-
   personen = personen
     .filter((p) => {
       if (!self.showDeleted) return p.deleted === 0
@@ -274,9 +261,9 @@ const personenFiltered = ({ self }) => {
       return anwesenheitstage.filter((s) => s.idPerson === p.id).length > 0
     })
     .filter((p) => {
-      const { filterFulltext } = self
-      if (!filterFulltext) return true
-      return personenIdsFulltextFiltered.includes(p.id)
+      const { filterFulltextIds } = self
+      if (!filterFulltextIds.length) return true
+      return filterFulltextIds.includes(p.id)
     })
   return personen
 }

@@ -1,9 +1,9 @@
 const fetchBereich = async ({ store, id }) => {
   const { addError, setWatchMutations, setBereich } = store
 
-  let bereich = []
+  let result = []
   try {
-    bereich = await window.electronAPI.queryWithParam(
+    result = await window.electronAPI.queryWithParam(
       'SELECT * from bereiche where id = ?',
       id,
     )
@@ -11,8 +11,11 @@ const fetchBereich = async ({ store, id }) => {
     addError(error)
   }
 
+  const bereich = result?.[0]
+  if (!bereich) return
+
   setWatchMutations(false)
-  setBereich(bereich[0])
+  setBereich(bereich)
   setWatchMutations(true)
 }
 

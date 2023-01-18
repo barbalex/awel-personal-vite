@@ -11,7 +11,7 @@ const fetchPerson = async ({ store, id }) => {
     addError(error)
   }
 
-  const person = result[0]
+  const person = result?.[0]
   if (!person) return
 
   setWatchMutations(false)

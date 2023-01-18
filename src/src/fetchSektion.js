@@ -1,9 +1,9 @@
 const fetchSektion = async ({ store, id }) => {
   const { addError, setWatchMutations, setSektion } = store
 
-  let sektion = []
+  let result = []
   try {
-    sektion = await window.electronAPI.queryWithParam(
+    result = await window.electronAPI.queryWithParam(
       'SELECT * from sektionen where id = ?',
       id,
     )
@@ -11,8 +11,11 @@ const fetchSektion = async ({ store, id }) => {
     addError(error)
   }
 
+  const sektion = result?.[0]
+  if (!sektion) return
+
   setWatchMutations(false)
-  setSektion(sektion[0])
+  setSektion(sektion)
   setWatchMutations(true)
 }
 

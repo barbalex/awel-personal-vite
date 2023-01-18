@@ -123,6 +123,7 @@ const store = () =>
       filterFulltext: types.maybe(
         types.union(types.string, types.integer, types.null),
       ),
+      filterFulltextIds: types.optional(types.array(types.integer), []),
       personPages: types.optional(PersonPages, {
         pages: [],
         activePageIndex: 0,
@@ -291,13 +292,19 @@ const store = () =>
         },
         setFilter({ model, value }) {
           self[model] = value
-          if (self.filterFulltext) self.filterFulltext = null
+          if (self.filterFulltext) {
+            self.filterFulltext = null
+            this.setFilterFulltextIds([])
+          }
         },
         setFilterFulltext(value) {
           self.filterFulltext = value
           // remove other filters
           if (value && self.existsFilter) self.emptyFilterButFulltext()
           if (self.showFilter) self.showFilter = false
+        },
+        setFilterFulltextIds(ids) {
+          self.filterFulltextIds = ids
         },
         emptyFilter() {
           self.filterPerson = {}
@@ -320,6 +327,7 @@ const store = () =>
           self.filterFunktion = {}
           self.filterKaderFunktion = {}
           self.filterFulltext = null
+          self.filterFulltextIds = []
         },
         emptyFilterButFulltext() {
           self.filterPerson = {}
@@ -344,7 +352,10 @@ const store = () =>
         },
         setShowFilter(value) {
           self.showFilter = value
-          if (value && self.filterFulltext) self.filterFulltext = null
+          if (value && self.filterFulltext) {
+            self.filterFulltext = null
+            self.filterFulltextIds = []
+          }
         },
         setUsername(name) {
           self.username = name
@@ -480,6 +491,9 @@ const store = () =>
         revertMutation(mutationId) {
           revertMutation({ self, mutationId })
         },
+        addToTable({ table, value }) {
+          self[table].push(value)
+        },
         addPerson(val) {
           self.personen.push(val)
         },
@@ -498,19 +512,7 @@ const store = () =>
         setRevertingMutationId(val) {
           self.revertingMutationId = val
         },
-        deletePerson(id) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from personen where id = ?',
-              id,
-            )
-          } catch (error) {
-            self.addError(error)
-            // roll back update
-            return console.log(error)
-          }
-          // write to store
+        removePerson(id) {
           /**
            * Do not use filter! Reason:
            * rebuilds self.personen. Consequence:
@@ -520,7 +522,23 @@ const store = () =>
             findIndex(self.personen, (p) => p.id === id),
             1,
           )
-          self.navigate(`/Personen`)
+        },
+        removeWert({ table, id }) {
+          /**
+           * Do not use filter! Reason:
+           * rebuilds self.personen. Consequence:
+           * all other personen are re-added and listet as mutations of op 'add'
+           */
+          store[table].splice(
+            findIndex(store[table], (p) => p.id === id),
+            1,
+          )
+        },
+        removeFromTable({ table, id }) {
+          self[table].splice(
+            findIndex(self[table], (p) => p.id === id),
+            1,
+          )
         },
         setAmtDeleted(id) {
           // write to db

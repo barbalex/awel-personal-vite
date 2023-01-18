@@ -66,6 +66,7 @@ const Filter = () => {
     showFilter,
     setShowFilter,
     filterFulltext,
+    filterFulltextIds,
     setFilterFulltext,
     setFilter,
     setShowMutationNoetig,
@@ -76,6 +77,8 @@ const Filter = () => {
     setFilterPersonAktivJetztMitTel,
     setFilterPersonAktivJetztMitMobiltel,
     setFilterPersonAktivJetztMitKurzzeichen,
+    addError,
+    setFilterFulltextIds,
   } = store
 
   const [filterDropdownIsOpen, setFilterDropdownIsOpen] = useState(false)
@@ -84,16 +87,38 @@ const Filter = () => {
     () => setShowFilter(!showFilter),
     [setShowFilter, showFilter],
   )
+
   const onChangeFilterFulltext = useCallback(
-    (e) => {
+    async (e) => {
       // TODO: test
       setFilterFulltext(e.target.value)
+      let result
+      try {
+        result = await window.electronAPI.query(
+          `SELECT id from personenFts where data like '%${e.target.value}%'`,
+        )
+      } catch (error) {
+        addError(error)
+        return []
+      }
+      const ids = result.map((p) => p.id)
+      setFilterFulltextIds(ids)
       const activeNodeArray = pathname.split('/').filter((e) => e)
-      if (e.target.value && !filterFulltext && activeNodeArray.length === 2) {
+      if (
+        e.target.value &&
+        !filterFulltextIds.length &&
+        activeNodeArray.length === 2
+      ) {
         Navigate(`/${activeNodeArray[0]}`)
       }
     },
-    [filterFulltext, pathname, setFilterFulltext],
+    [
+      addError,
+      filterFulltextIds,
+      pathname,
+      setFilterFulltext,
+      setFilterFulltextIds,
+    ],
   )
   const onBlurFilterFulltext = useCallback(
     (e) => {
@@ -122,6 +147,7 @@ const Filter = () => {
   )
   const onEmptyFilterFulltext = useCallback(() => {
     setFilterFulltext(null)
+    setFilterFulltextIds([])
     if (
       [
         'personFunktionen',
@@ -135,6 +161,7 @@ const Filter = () => {
       personPages.initiate()
     }
   }, [report, personPages, setFilterFulltext])
+
   const toggleFilterDropdown = useCallback(
     (e) => {
       setFilterDropdownIsOpen(!filterDropdownIsOpen)
@@ -183,7 +210,7 @@ const Filter = () => {
             onBlur={onBlurFilterFulltext}
             value={filterFulltext || ''}
             onKeyPress={onKeyPressFilterFulltext}
-            existsfilter={filterFulltext ? 'true' : 'false'}
+            existsfilter={filterFulltextIds.length ? 'true' : 'false'}
           />
           <InputGroupAddon addonType="append">
             {filterFulltext && (
