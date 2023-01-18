@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 
 import Telefon from './Telefon'
 import storeContext from '../../../../storeContext'
+import addTelefon from '../../../../src/addTelefon'
 
 const Container = styled.div``
 const StyledButton = styled(Button)`
@@ -44,7 +45,7 @@ const TelefonesComponent = ({ row = true }) => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const { showFilter, filterTelefon, addTelefon } = store
+  const { showFilter, filterTelefon } = store
   let telefones
   if (showFilter) {
     telefones = [filterTelefon]
@@ -71,7 +72,7 @@ const TelefonesComponent = ({ row = true }) => {
       {mayAddNew && (
         <StyledButton
           title="neues Telefon"
-          onClick={() => addTelefon(+personId)}
+          onClick={() => addTelefon({ personId: +personId, store })}
           outline
         >
           <PlusIcon id={`plusIconTelefon${personId}`} />
