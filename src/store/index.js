@@ -599,17 +599,6 @@ const store = () =>
           sektion.letzteMutationZeit = Date.now()
         },
         deleteSektion(id) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from sektionen where id = ?',
-              id,
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
           /**
            * Do not use filter! Reason:
            * rebuilds self.sektionen. Consequence:
@@ -619,7 +608,6 @@ const store = () =>
             findIndex(self.sektionen, (p) => p.id === id),
             1,
           )
-          self.navigate(`/Sektionen`)
         },
         addEtikett({ etikett, personId }) {
           // 1. create new etikett in db, returning id
