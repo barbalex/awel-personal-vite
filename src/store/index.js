@@ -50,7 +50,7 @@ import bereicheFilteredSortedByHandelsbedarf from './bereicheFilteredSortedByHan
 import sektionenFiltered from './sektionenFiltered'
 import sektionenFilteredSortedByHandelsbedarf from './sektionenFilteredSortedByHandelsbedarf'
 import revertMutation from './revertMutation'
-import updatePersonsMutation from './updatePersonsMutation'
+import updatePersonsMutation from '../src/updatePersonsMutation'
 
 const store = () =>
   types

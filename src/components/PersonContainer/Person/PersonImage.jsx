@@ -7,7 +7,7 @@ import { UncontrolledTooltip } from 'reactstrap'
 import { useParams } from 'react-router-dom'
 
 import storeContext from '../../../storeContext'
-import updateField from '../../../utils/updateField'
+import updateField from '../../../src/updateField'
 
 const Container = styled.div`
   grid-area: areaLinks;
