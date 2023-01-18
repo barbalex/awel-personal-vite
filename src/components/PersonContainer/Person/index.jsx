@@ -33,6 +33,7 @@ import PersonImage from './PersonImage'
 import addFunktion from '../../../src/addFunktion'
 import deleteFunktionModule from '../../../src/deleteFunktion'
 import addKaderFunktionModule from '../../../src/addKaderFunktion'
+import deleteKaderFunktionModule from '../../../src/deleteKaderFunktion'
 
 const Container = styled.div`
   hyphens: auto;
@@ -476,7 +477,7 @@ const Person = ({ listRef }) => {
           value: { ...filterKaderFunktion, ...{ funktion: null } },
         })
       } else {
-        store.deleteKaderFunktion({ funktion, personId })
+        deleteKaderFunktionModule({ funktion, personId, store })
       }
     },
     [filterKaderFunktion, personId, setFilter, showFilter, store],

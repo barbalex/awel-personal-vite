@@ -889,17 +889,6 @@ const store = () =>
           self.kaderFunktionen.push(val)
         },
         deleteKaderFunktion({ funktion, personId }) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from kaderFunktionen where idPerson = @idPerson and funktion = @funktion',
-              { idPerson: personId, funktion },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
           self.kaderFunktionen.splice(
             findIndex(
               self.kaderFunktionen,
@@ -907,7 +896,6 @@ const store = () =>
             ),
             1,
           )
-          self.updatePersonsMutation(personId)
         },
         updateField({
           table,
