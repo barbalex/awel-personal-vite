@@ -855,30 +855,8 @@ const store = () =>
             1,
           )
         },
-        addMobileAbo(personId) {
-          // 1. create new link in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              'insert into mobileAbos (idPerson,letzteMutationUser, letzteMutationZeit) values (@idPerson,@letzteMutationUser,@letzteMutationZeit)',
-              {
-                idPerson: personId,
-                letzteMutationUser: self.username,
-                letzteMutationZeit: Date.now(),
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.mobileAbos.push({
-            id: info.lastInsertRowid,
-            idPerson: personId,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          self.updatePersonsMutation(personId)
+        addMobileAbo(val) {
+          self.mobileAbos.push(val)
         },
         addTelefon(personId) {
           // 1. create new link in db, returning id

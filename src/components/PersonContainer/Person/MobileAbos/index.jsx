@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 
 import MobileAbo from './MobileAbo'
 import storeContext from '../../../../storeContext'
+import addMobileAbo from '../../../../src/addMobileAbo'
 
 const Container = styled.div`
   border: none;
@@ -46,7 +47,7 @@ const MobileAbosComponent = ({ row = true }) => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const { showFilter, filterMobileAbo, addMobileAbo } = store
+  const { showFilter, filterMobileAbo } = store
   let mobileAbos
   if (showFilter) {
     mobileAbos = [filterMobileAbo]
@@ -77,7 +78,7 @@ const MobileAbosComponent = ({ row = true }) => {
       {mayAddNew && (
         <StyledButton
           title="neues mobile Abo"
-          onClick={() => addMobileAbo(+personId)}
+          onClick={() => addMobileAbo({ personId: +personId, store })}
           outline
         >
           <PlusIcon id={`plusIconMobileAbo${personId}`} />
