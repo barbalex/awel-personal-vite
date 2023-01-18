@@ -849,24 +849,11 @@ const store = () =>
         addSchluessel(val) {
           self.schluessel.push(val)
         },
-        deleteSchluessel({ id, personId }) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from schluessel where id = ?',
-              id,
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
+        deleteSchluessel(id) {
           self.schluessel.splice(
             findIndex(self.schluessel, (p) => p.id === id),
             1,
           )
-          // set persons letzteMutation
-          self.updatePersonsMutation(personId)
         },
         addMobileAbo(personId) {
           // 1. create new link in db, returning id

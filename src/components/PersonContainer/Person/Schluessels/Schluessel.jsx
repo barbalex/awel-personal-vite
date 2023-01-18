@@ -11,6 +11,7 @@ import InputWithoutLabel from '../../../shared/InputWithoutLabel'
 import Textarea from '../../../shared/Textarea'
 import storeContext from '../../../../storeContext'
 import Select from '../Select'
+import deleteSchluessel from '../../../../src/deleteSchluessel'
 
 const Row = styled.div`
   grid-column: 1;
@@ -60,7 +61,6 @@ const SchluesselComponent = ({ id }) => {
     showFilter,
     filterSchluessel,
     setFilter,
-    deleteSchluessel,
     schluesselTypWerte,
     schluesselAnlageWerte,
     updateField,
@@ -167,8 +167,8 @@ const SchluesselComponent = ({ id }) => {
     [filterSchluessel, id, personId, setFilter, showFilter, updateField],
   )
   const onClickDelete = useCallback(
-    () => deleteSchluessel({ id, personId: +personId }),
-    [deleteSchluessel, id, personId],
+    () => deleteSchluessel({ id, personId: +personId, store }),
+    [id, personId, store],
   )
 
   if (!schluessel) return null
