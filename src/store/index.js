@@ -576,22 +576,10 @@ const store = () =>
           )
         },
         setBereichDeleted(id) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              `update bereiche set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              { id, user: self.username, time: Date.now() },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
           const bereich = self.bereiche.find((p) => p.id === id)
           bereich.deleted = 1
           bereich.letzteMutationUser = self.username
           bereich.letzteMutationZeit = Date.now()
-          if (!self.showDeleted) self.navigate(`/Bereiche`)
         },
         deleteBereich(id) {
           // write to db
