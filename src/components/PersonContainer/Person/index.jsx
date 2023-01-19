@@ -35,6 +35,7 @@ import deleteFunktionModule from '../../../src/deleteFunktion'
 import addKaderFunktionModule from '../../../src/addKaderFunktion'
 import deleteKaderFunktionModule from '../../../src/deleteKaderFunktion'
 import updateField from '../../../src/updateField'
+import addEtikettModule from '../../../src/addEtikett'
 
 const Container = styled.div`
   hyphens: auto;
@@ -334,7 +335,7 @@ const Person = ({ listRef }) => {
           value: { ...filterEtikett, ...{ etikett } },
         })
       } else {
-        store.addEtikett({ etikett, personId })
+        addEtikettModule({ etikett, personId, store })
       }
     },
     [showFilter, setFilter, filterEtikett, store, personId],

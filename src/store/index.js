@@ -609,32 +609,8 @@ const store = () =>
             1,
           )
         },
-        addEtikett({ etikett, personId }) {
-          // 1. create new etikett in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              'insert into etiketten (idPerson, etikett, letzteMutationUser, letzteMutationZeit) values (@idPerson, @etikett, @letzteMutationUser, @letzteMutationZeit)',
-              {
-                idPerson: personId,
-                etikett,
-                letzteMutationUser: self.username,
-                letzteMutationZeit: Date.now(),
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.etiketten.push({
-            id: info.lastInsertRowid,
-            etikett,
-            idPerson: personId,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          updatePersonsMutation({ personId, store: self })
+        addEtikett(val) {
+          self.etiketten.push(val)
         },
         deleteEtikett({ etikett, personId }) {
           // write to db
