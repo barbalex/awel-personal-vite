@@ -18,7 +18,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
-    "preinstall": "npm install better-sqlite3 --no-save --build-from-source --runtime=electron --target=22.0.2 --dist-url=https://electronjs.org/headers --force",
+    "preinstall": "cross-env-shell npm install better-sqlite3 --no-save --build-from-source --sqlite3=\"$INIT_CWD/sqlite-amalgamation\" --runtime=electron --target=22.0.2 --dist-url=https://electronjs.org/headers --force",
     "preview": "vite preview",
     "e2e": "npx playwright test"
   },
@@ -36,6 +36,7 @@
     "bootstrap": "4.6.2",
     "classnames": "2.3.2",
     "copy-webpack-plugin": "11.0.0",
+    "cross-env": "7.0.3",
     "css-loader": "6.7.3",
     "date-fns": "2.29.3",
     "electron": "22.0.2",
