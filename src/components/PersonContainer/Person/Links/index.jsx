@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 
 import storeContext from '../../../../storeContext'
 import Link from './Link'
+import addLink from '../../../../src/addLink'
 
 const Container = styled.div`
   grid-area: areaLinks;
@@ -43,15 +44,15 @@ const LinksComponent = ({ row = true }) => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const { links, addLink } = store
+  const { links } = store
   const myLinks = links.filter((l) => l.idPerson === +personId)
 
   const onDrop = useCallback(
     (files) => {
       console.log('files:', files)
-      addLink({ url: files[0].path, personId: +personId })
+      addLink({ url: files[0].path, personId: +personId, store })
     },
-    [addLink, personId],
+    [personId, store],
   )
 
   // Need useFsAccessApi false when using react-dropzone v12 in electron

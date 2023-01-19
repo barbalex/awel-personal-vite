@@ -633,32 +633,8 @@ const store = () =>
             1,
           )
         },
-        addLink({ url, personId }) {
-          // 1. create new link in db, returning id
-          let info
-          try {
-            window.electronAPI.editWithParam(
-              'insert into links (idPerson, url, letzteMutationUser, letzteMutationZeit) values (@idPerson, @url, @letzteMutationUser, @letzteMutationZeit)',
-              {
-                idPerson: personId,
-                url,
-                letzteMutationUser: self.username,
-                letzteMutationZeit: Date.now(),
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.links.push({
-            id: info.lastInsertRowid,
-            url,
-            idPerson: personId,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          updatePersonsMutation({ personId, store: self })
+        addLink(val) {
+          self.links.push(val)
         },
         deleteLink({ id, personId }) {
           // write to db
