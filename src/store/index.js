@@ -621,32 +621,8 @@ const store = () =>
             1,
           )
         },
-        addAnwesenheitstag({ tag, personId }) {
-          // 1. create new anwesenheitstag in db, returning id
-          let info
-          try {
-            info = window.electronAPI.editWithParam(
-              'insert into anwesenheitstage (idPerson, tag, letzteMutationUser, letzteMutationZeit) values (@idPerson, @tag, @letzteMutationUser, @letzteMutationZeit)',
-              {
-                idPerson: personId,
-                tag,
-                letzteMutationUser: self.username,
-                letzteMutationZeit: Date.now(),
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // 2. add to store
-          self.anwesenheitstage.push({
-            id: info.lastInsertRowid,
-            tag,
-            idPerson: personId,
-            letzteMutationUser: self.username,
-            letzteMutationZeit: Date.now(),
-          })
-          updatePersonsMutation({ personId, store: self })
+        addAnwesenheitstag(val) {
+          self.anwesenheitstage.push(val)
         },
         deleteAnwesenheitstag({ tag, personId }) {
           // write to db
