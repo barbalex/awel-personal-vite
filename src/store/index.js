@@ -625,17 +625,6 @@ const store = () =>
           self.anwesenheitstage.push(val)
         },
         deleteAnwesenheitstag({ tag, personId }) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from anwesenheitstage where idPerson = @idPerson and tag = @tag',
-              { idPerson: personId, tag },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
           self.anwesenheitstage.splice(
             findIndex(
               self.anwesenheitstage,
@@ -643,7 +632,6 @@ const store = () =>
             ),
             1,
           )
-          updatePersonsMutation({ personId, store: self })
         },
         addLink({ url, personId }) {
           // 1. create new link in db, returning id

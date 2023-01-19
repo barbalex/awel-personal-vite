@@ -38,6 +38,7 @@ import updateField from '../../../src/updateField'
 import addEtikettModule from '../../../src/addEtikett'
 import deleteEtikettModule from '../../../src/deleteEtikett'
 import addAnwesenheitstagModule from '../../../src/addAnwesenheitstag'
+import deleteAnwesenheitstagModule from '../../../src/deleteAnwesenheitstag'
 
 const Container = styled.div`
   hyphens: auto;
@@ -392,7 +393,7 @@ const Person = ({ listRef }) => {
           value: { ...filterAnwesenheitstage, ...{ tag: null } },
         })
       } else {
-        store.deleteAnwesenheitstag({ tag, personId })
+        deleteAnwesenheitstagModule({ tag, personId, store })
       }
     },
     [filterAnwesenheitstage, personId, setFilter, showFilter, store],
