@@ -6,6 +6,7 @@ import { FaTimes } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
 import storeContext from '../../../../storeContext'
+import deleteLink from '../../../../src/deleteLink'
 
 const Field = styled.div`
   grid-column: 1;
@@ -41,13 +42,11 @@ const StyledA = styled.a`
 
 const LinkComponent = ({ link }) => {
   const { personId = 0 } = useParams()
-
   const store = useContext(storeContext)
-  const { deleteLink } = store
 
   const onClickRemove = useCallback(
-    () => deleteLink({ id: link.id, personId: +personId }),
-    [deleteLink, link.id, personId],
+    () => deleteLink({ id: link.id, personId: +personId, store }),
+    [link.id, personId, store],
   )
 
   return (

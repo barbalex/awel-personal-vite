@@ -636,24 +636,11 @@ const store = () =>
         addLink(val) {
           self.links.push(val)
         },
-        deleteLink({ id, personId }) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from links where id = ?',
-              id,
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
+        deleteLink(id) {
           self.links.splice(
             findIndex(self.links, (p) => p.id === id),
             1,
           )
-          // set persons letzteMutation
-          updatePersonsMutation({ personId, store: self })
         },
         addSchluessel(val) {
           self.schluessel.push(val)
