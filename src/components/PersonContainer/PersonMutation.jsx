@@ -25,6 +25,7 @@ import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber'
 import isDateField from '../../src/isDateField'
 import storeContext from '../../storeContext'
 import updateField from '../../src/updateField'
+import setSettingsKey from '../../src/setSettingsKey'
 
 const Container = styled.div`
   hyphens: auto;
@@ -122,7 +123,6 @@ const PersonMutation = () => {
     existsFilter,
     setFilter,
     settings,
-    setSettingsKey,
   } = store
 
   let person
@@ -146,17 +146,17 @@ const PersonMutation = () => {
   )
   const onSaveWeiterleiten = useCallback(
     ({ value }) => {
-      setSettingsKey({ key: 'personMutationWeiterleiten', value })
+      setSettingsKey({ key: 'personMutationWeiterleiten', value, store })
       setEditWeiterleiten(false)
     },
-    [setSettingsKey],
+    [store],
   )
   const onSavePdfPath = useCallback(
     ({ value }) => {
-      setSettingsKey({ key: 'mutationFormPath', value })
+      setSettingsKey({ key: 'mutationFormPath', value, store })
       setEditPdfPath(false)
     },
-    [setSettingsKey],
+    [store],
   )
 
   const [errors, setErrors] = useState({})

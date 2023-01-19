@@ -715,99 +715,10 @@ const store = () =>
           person.letzteMutationUser = self.username
           person.letzteMutationZeit = Date.now()
         },
-        updateAmtMutation(idAmt) {
-          // in db
-          try {
-            window.electronAPI.editWithParam(
-              `update aemter set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              {
-                user: self.username,
-                time: Date.now(),
-                id: idAmt,
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // in store
-          const amt = self.aemter.find((p) => p.id === idAmt)
-          amt.letzteMutationUser = self.username
-          amt.letzteMutationZeit = Date.now()
-        },
-        updateAbteilungsMutation(idAbteilung) {
-          // in db
-          try {
-            window.electronAPI.editWithParam(
-              `update abteilungen set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              {
-                user: self.username,
-                time: Date.now(),
-                id: idAbteilung,
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // in store
-          const abteilung = self.abteilungen.find((p) => p.id === idAbteilung)
-          abteilung.letzteMutationUser = self.username
-          abteilung.letzteMutationZeit = Date.now()
-        },
-        updateBereichsMutation(idBereich) {
-          // in db
-          try {
-            window.electronAPI.editWithParam(
-              `update bereiche set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              {
-                user: self.username,
-                time: Date.now(),
-                id: idBereich,
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // in store
-          const person = self.bereiche.find((p) => p.id === idBereich)
-          person.letzteMutationUser = self.username
-          person.letzteMutationZeit = Date.now()
-        },
-        updateSektionsMutation(idSektion) {
-          // in db
-          try {
-            window.electronAPI.editWithParam(
-              `update sektionen set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-              {
-                user: self.username,
-                time: Date.now(),
-                id: idSektion,
-              },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // in store
-          const person = self.sektionen.find((p) => p.id === idSektion)
-          person.letzteMutationUser = self.username
-          person.letzteMutationZeit = Date.now()
-        },
         setSettings(value) {
           self.settings = value
         },
         setSettingsKey({ key, value }) {
-          try {
-            window.electronAPI.editWithParam(
-              `update settings set ${key} = ? where id = 1`,
-              value,
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
           self.settings = {
             ...self.settings,
             [key]: value,

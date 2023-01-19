@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 import Schluessel from './Schluessel'
 import storeContext from '../../../../storeContext'
 import addSchluessel from '../../../../src/addSchluessel'
+import setSettingsKey from '../../../../src/setSettingsKey'
 
 const Container = styled.div``
 const StyledButton = styled(Button)`
@@ -56,7 +57,7 @@ const SchluesselsComponent = ({ row = true }) => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const { showFilter, filterSchluessel, settings, setSettingsKey } = store
+  const { showFilter, filterSchluessel, settings } = store
   const uploader = useRef(null)
 
   let schluessels
@@ -77,12 +78,12 @@ const SchluesselsComponent = ({ row = true }) => {
       event.preventDefault()
       const file = event.target.files[0]
       if (file && file.path) {
-        setSettingsKey({ key: 'schluesselFormPath', value: file.path })
+        setSettingsKey({ key: 'schluesselFormPath', value: file.path, store })
       } else {
         console.log('Path not set')
       }
     },
-    [setSettingsKey],
+    [store],
   )
   const onClickForm = useCallback(async () => {
     let success = false
