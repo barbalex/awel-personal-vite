@@ -9,6 +9,7 @@ import { FaUndo } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import storeContext from '../../storeContext'
+import revertMutation from '../../src/revertMutation'
 
 moment.locale('de')
 
@@ -64,14 +65,13 @@ const MutationsRow = ({ style, listIndex, mutations }) => {
   const { mutationId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const { revertMutation } = store
   const row = mutations[listIndex]
   const { id, time, user, tableName, rowId, field, op, value, previousValue } =
     row
 
   const revert = useCallback(
-    () => revertMutation(row.id),
-    [revertMutation, row.id],
+    () => revertMutation({ mutationId: row.id, store }),
+    [row.id, store],
   )
   const onClickRow = useCallback(() => {
     navigate(`/mutations/${row.id}`)

@@ -49,8 +49,6 @@ import bereicheFiltered from './bereicheFiltered'
 import bereicheFilteredSortedByHandelsbedarf from './bereicheFilteredSortedByHandelsbedarf'
 import sektionenFiltered from './sektionenFiltered'
 import sektionenFilteredSortedByHandelsbedarf from './sektionenFilteredSortedByHandelsbedarf'
-import revertMutation from './revertMutation'
-import updatePersonsMutation from '../src/updatePersonsMutation'
 
 const store = () =>
   types
@@ -488,9 +486,6 @@ const store = () =>
         },
         setShowMutationNoetig(show) {
           self.showMutationNoetig = show
-        },
-        revertMutation(mutationId) {
-          revertMutation({ self, mutationId })
         },
         addToTable({ table, value }) {
           self[table].push(value)

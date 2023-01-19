@@ -4,18 +4,18 @@ import lValues from 'lodash/values'
 import ifIsNumericAsNumber from '../src/ifIsNumericAsNumber'
 import updateField from '../src/updateField'
 
-const revertMutation = async ({ self, mutationId }) => {
-  const { mutations } = self
+const revertMutation = async ({ store, mutationId }) => {
+  const { mutations } = store
   const mutation = mutations.find((m) => m.id === mutationId)
   if (!mutation) {
     throw new Error(`Keine Mutation mit id ${mutationId} gefunden`)
   }
-  self.revertingMutationId = mutationId
+  store.revertingMutationId = mutationId
   const { op, tableName, rowId, field, previousValue } = mutation
   switch (op) {
     case 'replace': {
       // 1. check if dataset still exists, warn and exit if not
-      const dataset = self[tableName].find((d) => d.id === rowId)
+      const dataset = store[tableName].find((d) => d.id === rowId)
       if (!dataset) {
         throw new Error(
           `Der Datensatz aus Tabelle ${tableName} mit id ${rowId} existiert nicht mehr. Daher wird er nicht aktualisiert`,
@@ -30,14 +30,14 @@ const revertMutation = async ({ self, mutationId }) => {
         // need to convert to number or it will fail
         value: ifIsNumericAsNumber(previousValue),
         id: rowId,
-        store: self,
+        store: store,
       })
       break
     }
     case 'add': {
       // not in use
       // 1. check if dataset still exists, warn and exit if not
-      const dataset = self[tableName].find((d) => d.id === rowId)
+      const dataset = store[tableName].find((d) => d.id === rowId)
       if (!dataset) {
         throw new Error(
           `Der Datensatz aus Tabelle ${tableName} mit id ${rowId} existiert nicht mehr. Daher wird er nicht gelöscht`,
@@ -50,17 +50,17 @@ const revertMutation = async ({ self, mutationId }) => {
           `delete from ${tableName} where id = ${rowId}`,
         )
       } catch (error) {
-        self.addError(error)
+        store.addError(error)
         return console.log(error)
       }
       // write to store
-      self.removeFromTable({ table: tableName, id: rowId })
+      store.removeFromTable({ table: tableName, id: rowId })
       break
     }
     case 'remove': {
       // not in use
       // 1. check if dataset exists, warn and exit if does
-      const dataset = self[tableName].find((d) => d.id === rowId)
+      const dataset = store[tableName].find((d) => d.id === rowId)
       if (dataset) {
         throw new Error(
           `Der Datensatz aus Tabelle ${tableName} mit id ${rowId} existiert. Daher wird er nicht wiederhergestellt`,
@@ -81,11 +81,11 @@ const revertMutation = async ({ self, mutationId }) => {
       try {
         await window.electronAPI.edit(sql)
       } catch (error) {
-        self.addError(error)
+        store.addError(error)
         return console.log(error)
       }
       // write to store
-      self.addToTable({ table: tableName, value: previousObject })
+      store.addToTable({ table: tableName, value: previousObject })
       break
     }
     default:

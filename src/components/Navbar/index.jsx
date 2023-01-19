@@ -17,6 +17,7 @@ import Export from './Export'
 import Berichte from './Berichte'
 import More from './More'
 import storeContext from '../../storeContext'
+import revertMutation from '../../src/revertMutation'
 
 const StyledNavbar = styled(Navbar)`
   @media print {
@@ -45,7 +46,7 @@ const MyNavbar = () => {
   const { pathname } = useLocation()
 
   const store = useContext(storeContext)
-  const { lastUserMutation, revertMutation, addError, dirty } = store
+  const { lastUserMutation, addError, dirty } = store
 
   const [open, setOpen] = useState(false)
   const toggleNavbar = useCallback(() => {
@@ -58,8 +59,8 @@ const MyNavbar = () => {
         'Es gibt keine Aktion, die rückgängig gemacht werden könnte',
       )
     }
-    revertMutation(lastUserMutation.id)
-  }, [addError, lastUserMutation, revertMutation])
+    revertMutation({ mutationId: lastUserMutation.id, store })
+  }, [addError, lastUserMutation, store])
 
   const showFilter =
     pathname.startsWith('/Personen') ||
