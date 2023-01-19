@@ -613,17 +613,6 @@ const store = () =>
           self.etiketten.push(val)
         },
         deleteEtikett({ etikett, personId }) {
-          // write to db
-          try {
-            window.electronAPI.editWithParam(
-              'delete from etiketten where idPerson = @idPerson and etikett = @etikett',
-              { idPerson: personId, etikett },
-            )
-          } catch (error) {
-            self.addError(error)
-            return console.log(error)
-          }
-          // write to store
           self.etiketten.splice(
             findIndex(
               self.etiketten,
@@ -631,7 +620,6 @@ const store = () =>
             ),
             1,
           )
-          updatePersonsMutation({ personId, store: self })
         },
         addAnwesenheitstag({ tag, personId }) {
           // 1. create new anwesenheitstag in db, returning id
