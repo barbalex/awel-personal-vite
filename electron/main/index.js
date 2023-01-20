@@ -147,13 +147,12 @@ try {
     openDialogGetPath(undefined, chooseDbOptions).then((result) => {
       dbPath = result.filePaths[0]
       db = new Database(dbPath, { fileMustExist: true })
-      config.dbPath = dbPath
-      saveConfig(undefined, config)
+      saveConfig(undefined, { dbPath })
     })
   } else {
     // TODO: how to surface this error?
     // store.addError(error)
-    // return console.log('index.js, Error opening db file:', error)
+    return console.log('index.js, Error opening db file:', error)
   }
 }
 
@@ -254,9 +253,8 @@ ipcMain.handle('open-dialog-get-path', openDialogGetPath)
 ipcMain.handle('get-username', async () => {
   let user
   try {
-    const { usernameSync } = require('username')
+    const { usernameSync } = await import('username')
     user = usernameSync()
-    console.log('user', user)
   } catch (error) {
     return null
   }
