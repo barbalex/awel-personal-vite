@@ -6,14 +6,14 @@ import findIndex from 'lodash/findIndex'
 import moment from 'moment'
 import { useParams, useOutletContext } from 'react-router-dom'
 
-import ErrorBoundary from '../../shared/ErrorBoundary'
-import Input from '../../shared/Input'
-import SharedCheckbox from '../../shared/Checkbox_01'
-import ifIsNumericAsNumber from '../../../src/ifIsNumericAsNumber'
-import Zuletzt from '../../shared/Zuletzt'
-import storeContext from '../../../storeContext'
-import isDateField from '../../../src/isDateField'
-import updateField from '../../../src/updateField'
+import ErrorBoundary from '../shared/ErrorBoundary'
+import Input from '../shared/Input'
+import SharedCheckbox from '../shared/Checkbox_01'
+import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber'
+import Zuletzt from '../shared/Zuletzt'
+import storeContext from '../../storeContext'
+import isDateField from '../../src/isDateField'
+import updateField from '../../src/updateField'
 
 const Container = styled.div``
 const StyledForm = styled(Form)`
