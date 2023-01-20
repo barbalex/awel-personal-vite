@@ -58,8 +58,8 @@ const Login = () => {
   useEffect(() => {
     if (!user?.pwd) return
 
-    window.electronAPI.decryptString(user.pwd).then((decrypted) => {
-      setPwd(decrypted)
+    window.electronAPI.decryptString(user.pwd).then((decryptedPwd) => {
+      setPwd(decryptedPwd)
       setTimeout(() => {
         console.log('effect, inputRef.current', inputRef.current)
         inputRef.current.focus()
@@ -69,7 +69,6 @@ const Login = () => {
 
   console.log('Login', {
     pwd,
-    user,
     userIsLoggedIn,
     inputRef: inputRef.current,
   })
@@ -86,6 +85,7 @@ const Login = () => {
     navigate('/Personen')
   }, [navigate, pwd, setUserIsLoggedIn, value])
 
+  // enable using enter key to submit
   useEffect(() => {
     const keyDownHandler = (event) => {
       if (event.key === 'Enter') {
