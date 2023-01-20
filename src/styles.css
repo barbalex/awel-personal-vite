@@ -57,6 +57,11 @@ body {
   }
 }
 
+/* bootstrap does not use pointers on nav links! */
+.nav-link {
+  cursor: pointer;
+}
+
 @media print {
   /*
    * hide everything BUT what shall be printed
