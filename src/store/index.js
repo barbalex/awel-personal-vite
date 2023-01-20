@@ -297,7 +297,9 @@ const store = () =>
       setUndoManager(self)
 
       return {
-        setUserPwd(val) {self.userPwd = val},
+        setUserPwd(val) {
+          self.userPwd = val
+        },
         setUserIsLoggedIn(val) {
           self.userIsLoggedIn = val
         },
