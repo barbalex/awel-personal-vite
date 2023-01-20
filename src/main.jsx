@@ -33,12 +33,14 @@ const root = createRoot(container)
 
 const run = async () => {
   const store = createStore().create()
-  const { setUsername, setUserIsAdmin } = store
+  const { setUsername, setUserIsAdmin, setUserPwd } = store
   watchMutations({ store })
 
-  const { userName, isAdmin } = await window.electronAPI.getUsername()
+  const { userName, isAdmin, pwd } = await window.electronAPI.getUser()
   setUsername(userName ?? '(Benutzer nicht erkannt)')
   setUserIsAdmin(isAdmin)
+  setUserPwd(pwd)
+
 
   window.store = store
 

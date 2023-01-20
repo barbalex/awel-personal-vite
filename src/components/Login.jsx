@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
 
 import storeContext from '../storeContext'
-import fetchUser from '../src/fetchUserByName'
 
 const StyledFormGroup = styled(FormGroup)`
   margin-bottom: 20px !important;
@@ -41,32 +40,22 @@ const StyledButton = styled(Button)`
 
 const Login = () => {
   const store = useContext(storeContext)
-  const { userIsLoggedIn, setUserIsLoggedIn, username } = store
+  const { userIsLoggedIn, setUserIsLoggedIn, username, userPwd } = store
 
   const navigate = useNavigate()
 
-  const [user, setUser] = useState()
-  useEffect(() => {
-    fetchUser({ store }).then((user) => setUser(user))
-  }, [store])
-
   const inputRef = useRef()
 
-  const [pwd, setPwd] = useState()
+  // const [pwd, setPwd] = useState()
   useEffect(() => {
-    if (!user?.pwd) return
-
-    window.electronAPI.decryptString(user.pwd).then((decryptedPwd) => {
-      setPwd(decryptedPwd)
-      setTimeout(() => {
-        console.log('effect, will focus inputRef:', inputRef.current)
-        inputRef.current?.focus?.()
-      })
+    setTimeout(() => {
+      console.log('effect, will focus inputRef:', inputRef.current)
+      inputRef.current?.focus?.()
     })
-  }, [user?.pwd])
+  }, [])
 
   console.log('Login', {
-    pwd,
+    userPwd,
     userIsLoggedIn,
     inputRef: inputRef.current,
   })
@@ -76,14 +65,14 @@ const Login = () => {
 
   const onChange = useCallback((e) => setValue(e.target.value), [])
   const onBlur = useCallback(() => {
-    if (!value || value !== pwd) {
+    if (!value || value !== userPwd) {
       return setErrorMsg('Das Passwort ist falsch')
     }
 
     setErrorMsg(undefined)
     setUserIsLoggedIn(true)
     navigate('/Personen')
-  }, [navigate, pwd, setUserIsLoggedIn, value])
+  }, [navigate, setUserIsLoggedIn, userPwd, value])
 
   // enable using enter key to submit
   useEffect(() => {

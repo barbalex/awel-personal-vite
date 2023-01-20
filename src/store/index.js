@@ -99,6 +99,7 @@ const store = () =>
       username: types.maybe(types.string),
       userIsAdmin: types.optional(types.boolean, false),
       userIsLoggedIn: types.optional(types.boolean, false),
+      userPwd: types.maybe(types.string),
       watchMutations: types.optional(types.boolean, false),
       revertingMutationId: types.maybe(types.union(types.integer, types.null)),
       history: types.optional(UndoManager, {}),
@@ -296,6 +297,7 @@ const store = () =>
       setUndoManager(self)
 
       return {
+        setUserPwd(val) {self.userPwd = val},
         setUserIsLoggedIn(val) {
           self.userIsLoggedIn = val
         },

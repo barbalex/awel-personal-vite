@@ -1,3 +1,4 @@
+// Not used any more
 const fetchUserByName = async ({ store }) => {
   const { addError, username } = store
 
