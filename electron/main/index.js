@@ -251,7 +251,7 @@ const openDialogGetPath = async (event, dialogOptions) => {
   return filePath
 }
 ipcMain.handle('open-dialog-get-path', openDialogGetPath)
-ipcMain.handle('get-username', async () => {
+ipcMain.handle('get-user', async () => {
   let userName
   try {
     const { usernameSync } = await import('username')
@@ -259,11 +259,13 @@ ipcMain.handle('get-username', async () => {
   } catch (error) {
     return null
   }
-  const user = db
-    .prepare(`select isAdmin from users where name = ?`)
-    .get(userName)
+  const user = db.prepare(`select * from users where name = ?`).get(userName)
 
-  return { userName, isAdmin: user?.isAdmin === 1 }
+  return {
+    userName,
+    isAdmin: user?.isAdmin === 1,
+    pwd: safeStorage.decryptString(user?.pwd),
+  }
 })
 ipcMain.handle('open-url', (event, url) => {
   return shell.openPath(url)

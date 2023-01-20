@@ -12,7 +12,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   saveFile: (path, data) => ipcRenderer.invoke('save-file', path, data),
   saveDialogGetPath: (options) =>
     ipcRenderer.invoke('save-dialog-get-path', options),
-  getUsername: () => ipcRenderer.invoke('get-username'),
+  getUser: () => ipcRenderer.invoke('get-user'),
   queryWithParam: (sql, param) =>
     ipcRenderer.invoke('query-with-param', sql, param),
   query: (sql) => ipcRenderer.invoke('query', sql),
