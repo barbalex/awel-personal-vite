@@ -17,7 +17,11 @@ const Layout = () => {
   const { userIsLoggedIn } = useContext(storeContext)
 
   if (!userIsLoggedIn) {
-    return <Navigate to="/login" />
+    console.log(
+      'Layout: navigating to / because user is not logged in:',
+      userIsLoggedIn,
+    )
+    return <Navigate to="/" />
   }
 
   return (

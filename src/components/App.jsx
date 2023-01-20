@@ -45,9 +45,8 @@ const RouterComponent = () => (
   <Container>
     <HashRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route element={<Layout />}>
-          <Route path="/" element={<Navigate to="/Personen" />} />
           <Route path="/Personen/print/:report" element={<Print />} />
           <Route path="/Personen/print/:report/:personId" element={<Print />} />
           <Route path="/Personen/*" element={<PersonContainer />}>

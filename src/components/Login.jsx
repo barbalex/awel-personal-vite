@@ -50,9 +50,7 @@ const Login = () => {
     fetchUser({ store }).then((user) => setUser(user))
   }, [store])
 
-  const [errorMsg, setErrorMsg] = useState()
-
-  const inputRef = useRef(null)
+  const inputRef = useRef()
 
   const [pwd, setPwd] = useState()
   useEffect(() => {
@@ -61,8 +59,8 @@ const Login = () => {
     window.electronAPI.decryptString(user.pwd).then((decryptedPwd) => {
       setPwd(decryptedPwd)
       setTimeout(() => {
-        console.log('effect, inputRef.current', inputRef.current)
-        inputRef.current.focus()
+        console.log('effect, will focus inputRef:', inputRef.current)
+        inputRef.current?.focus?.()
       })
     })
   }, [user?.pwd])
@@ -73,7 +71,9 @@ const Login = () => {
     inputRef: inputRef.current,
   })
 
+  const [errorMsg, setErrorMsg] = useState()
   const [value, setValue] = useState('')
+
   const onChange = useCallback((e) => setValue(e.target.value), [])
   const onBlur = useCallback(() => {
     if (!value || value !== pwd) {
@@ -93,7 +93,6 @@ const Login = () => {
         onBlur()
       }
     }
-
     document.addEventListener('keydown', keyDownHandler)
 
     return () => {
@@ -103,7 +102,7 @@ const Login = () => {
 
   if (!username) {
     return (
-      <Container>{`Oh je. Ihr Benutzername konnte nicht ausgelesen werden. Daher ist die Anmeldung nicht möglich.`}</Container>
+      <Container>{`Oh je. Ihr Benutzername konnte nicht ausgelesen werden. Daher ist eine Anmeldung nicht möglich.`}</Container>
     )
   }
 
