@@ -6,6 +6,7 @@ const {
   dialog,
   shell,
   protocol,
+  safeStorage,
 } = require('electron')
 const fs = require('fs-extra')
 const path = require('path')
@@ -258,14 +259,21 @@ ipcMain.handle('get-username', async () => {
   } catch (error) {
     return null
   }
-  const { isAdmin } = db
+  const user = db
     .prepare(`select isAdmin from users where name = ?`)
     .get(userName)
+  console.log('get-username', { userName, user, isAdmin: user?.isAdmin === 1 })
 
-  return { userName, isAdmin: isAdmin === 1 }
+  return { userName, isAdmin: user?.isAdmin === 1 }
 })
 ipcMain.handle('open-url', (event, url) => {
   return shell.openPath(url)
+})
+ipcMain.handle('encrypt-string', (event, string) => {
+  return safeStorage.encryptString(string)
+})
+ipcMain.handle('decrypt-string', (event, buffer) => {
+  return safeStorage.decryptString(buffer)
 })
 ipcMain.handle('quit', () => {
   app.quit()

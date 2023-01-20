@@ -3,16 +3,13 @@ import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 import { Form } from 'reactstrap'
 import findIndex from 'lodash/findIndex'
-import moment from 'moment'
 import { useParams, useOutletContext } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary'
 import Input from '../shared/Input'
 import SharedCheckbox from '../shared/Checkbox_01'
-import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber'
 import Zuletzt from '../shared/Zuletzt'
 import storeContext from '../../storeContext'
-import isDateField from '../../src/isDateField'
 import updateField from '../../src/updateField'
 
 const Container = styled.div``
@@ -45,22 +42,27 @@ const User = () => {
     setDirty(false)
   }, [user.id, setDirty])
 
+  const [pwd, setPwd] = useState()
+  useEffect(() => {
+    if (!user.pwd) return setPwd('')
+    window.electronAPI
+      .decryptString(user.pwd)
+      .then((decrypted) => setPwd(decrypted))
+  }, [user.pwd])
+
   const saveToDb = useCallback(
-    ({ field, value }) => {
+    async ({ field, value }) => {
       if (!user && !showFilter)
         throw new Error(`User with id ${userId} not found`)
 
-      let newValue
-      if (isDateField(field)) {
-        if (value) {
-          newValue = moment(value, 'DD.MM.YYYY').format('DD.MM.YYYY')
-        }
-        if (newValue && newValue.includes('Invalid date')) {
-          newValue = newValue.replace('Invalid date', 'Format: DD.MM.YYYY')
-        }
-      } else {
-        newValue = ifIsNumericAsNumber(value)
+      let newValue = value
+      // if is password, need to encrypt
+      if (field === 'pwd' && value) {
+        console.log('User, seaveToDb', { field, value })
+        newValue = await window.electronAPI.encryptString(value)
+        console.log('saveToDb', { value, newValue })
       }
+      console.log('User, seaveToDb', { newValue })
 
       if (showFilter) {
         setFilter({
@@ -103,14 +105,16 @@ const User = () => {
             saveToDb={saveToDb}
             error={errors.name}
           />
-          <Input
-            key={`${userId}password`}
-            value={user.password}
-            field="password"
-            label="Passwort"
-            saveToDb={saveToDb}
-            error={errors.password}
-          />
+          {!showFilter && (
+            <Input
+              key={`${userId}pwd`}
+              value={pwd}
+              field="pwd"
+              label="Passwort"
+              saveToDb={saveToDb}
+              error={errors.pwd}
+            />
+          )}
           <SharedCheckbox
             key={`${userId}isAdmin`}
             value={user.isAdmin}

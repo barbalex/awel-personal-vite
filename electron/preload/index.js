@@ -19,4 +19,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   editWithParam: (sql, param) =>
     ipcRenderer.invoke('edit-with-param', sql, param),
   edit: (sql) => ipcRenderer.invoke('edit', sql),
+  decryptString: (string) => ipcRenderer.invoke('decrypt-string', string),
+  encryptString: (string) => ipcRenderer.invoke('encrypt-string', string),
 })

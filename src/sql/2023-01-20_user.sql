@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id integer PRIMARY KEY autoincrement,
   name text UNIQUE,
-  password text,
+  pwd BLOB,
   isAdmin integer DEFAULT 0,
   letzteMutationZeit text,
   letzteMutationUser text
@@ -23,8 +23,11 @@ CREATE INDEX iUserIsAdmin ON users (isAdmin);
 
 -- TODO: need oliver's windows user name
 -- https://www.sqlite.org/lang_datefunc.html
-INSERT INTO users (name, PASSWORD, isAdmin, letzteMutationZeit, letzteMutationUser)
-  VALUES ('admin', 'very-secret', 1, 1674212203000.0, 'ag');
+INSERT INTO users (name, isAdmin, letzteMutationZeit, letzteMutationUser)
+  VALUES ('admin', 1, 1674212203000.0, 'ag');
+
+INSERT INTO users (name, isAdmin, letzteMutationZeit, letzteMutationUser)
+  VALUES ('alexa', 1, 1674212203000.0, 'ag');
 
 -- TODO: in pesonen letzeMutationZeit is 02.09.2019 for original import. Need to transform to unixepoch
 UPDATE

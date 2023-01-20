@@ -19,7 +19,7 @@ export default (self) => {
     if (!filterFulltext) return true
     // now check for any value if includes
     const userValues = Object.entries(p)
-      .filter((e) => !['id', 'password'].includes(e[0]))
+      .filter((e) => !['id', 'pwd'].includes(e[0]))
       .map((e) => e[1])
     return (
       [...userValues].filter((v) => {
