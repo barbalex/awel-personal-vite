@@ -1,6 +1,4 @@
-import { types, getParent, isAlive } from 'mobx-state-tree'
-
-import ifIsNumericAsNumber from '../src/ifIsNumericAsNumber'
+import { types, getParent } from 'mobx-state-tree'
 
 export default types
   .model('Person', {
