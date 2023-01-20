@@ -262,7 +262,6 @@ ipcMain.handle('get-username', async () => {
   const user = db
     .prepare(`select isAdmin from users where name = ?`)
     .get(userName)
-  console.log('get-username', { userName, user, isAdmin: user?.isAdmin === 1 })
 
   return { userName, isAdmin: user?.isAdmin === 1 }
 })
