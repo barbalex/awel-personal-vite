@@ -10,12 +10,6 @@ import fetchUsers from '../../src/fetchUsers'
 import storeContext from '../../storeContext'
 import fetchUser from '../../src/fetchUser'
 
-// height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
-// above does not work
-// seems that navbar is not finished when AmtContainer is built
-const Container = styled.div`
-  height: calc(100vh - 56px);
-`
 // seems needed to prevent unnessecary scrollbars
 const StyledReflexElement = styled(ReflexElement)`
   background-color: ${(props) =>
@@ -45,24 +39,22 @@ const UserContainer = () => {
   const listRef = useRef(null)
 
   return (
-    <Container>
-      <ErrorBoundary>
-        <ReflexContainer orientation="vertical">
-          <ReflexElement
-            flex={0.25}
-            propagateDimensions
-            renderOnResizeRate={100}
-            renderOnResize
-          >
-            <List {...userJson} listRef={listRef} />
-          </ReflexElement>
-          <ReflexSplitter />
-          <StyledReflexElement showfilter={showFilter}>
-            {!!userId && <Outlet context={[listRef]} />}
-          </StyledReflexElement>
-        </ReflexContainer>
-      </ErrorBoundary>
-    </Container>
+    <ErrorBoundary>
+      <ReflexContainer orientation="vertical">
+        <ReflexElement
+          flex={0.25}
+          propagateDimensions
+          renderOnResizeRate={100}
+          renderOnResize
+        >
+          <List {...userJson} listRef={listRef} />
+        </ReflexElement>
+        <ReflexSplitter />
+        <StyledReflexElement showfilter={showFilter}>
+          {!!userId && <Outlet context={[listRef]} />}
+        </StyledReflexElement>
+      </ReflexContainer>
+    </ErrorBoundary>
   )
 }
 
