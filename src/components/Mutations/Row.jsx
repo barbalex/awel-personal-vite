@@ -6,7 +6,7 @@ import moment from 'moment'
 import { Button, UncontrolledTooltip } from 'reactstrap'
 import ReactJson from 'react-json-view'
 import { FaUndo } from 'react-icons/fa'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import storeContext from '../../storeContext'
 import revertMutation from '../../src/revertMutation'
@@ -61,7 +61,6 @@ const RevertButton = styled(Button)`
 `
 
 const MutationsRow = ({ style, listIndex, mutations }) => {
-  const navigate = useNavigate()
   const { mutationId = 0 } = useParams()
 
   const store = useContext(storeContext)
@@ -73,12 +72,13 @@ const MutationsRow = ({ style, listIndex, mutations }) => {
     () => revertMutation({ mutationId: row.id, store }),
     [row.id, store],
   )
-  const onClickRow = useCallback(() => {
-    navigate(`/mutations/${row.id}`)
-  }, [navigate, row.id])
 
   return (
-    <Row style={style} onClick={onClickRow} active={+mutationId === id}>
+    <Row
+      style={style}
+      // onClick={onClickRow}
+      active={+mutationId === id}
+    >
       <Time>{time}</Time>
       <User>{user}</User>
       <Op>{op}</Op>
