@@ -413,6 +413,10 @@ const store = () =>
           const ownAmt = self.aemter.find((a) => a.id === amt.id)
           Object.keys(amt).forEach((key) => (ownAmt[key] = amt[key]))
         },
+        setUser(user) {
+          const own = self.users.find((a) => a.id === user.id)
+          Object.keys(user).forEach((key) => (own[key] = user[key]))
+        },
         setAemter(aemter) {
           self.watchMutations = false
           self.aemter = aemter

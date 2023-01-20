@@ -6,11 +6,10 @@ import { Outlet, useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary'
 import List from './List'
-import fetchAemter from '../../src/fetchAemter'
-import fetchWerte from '../../src/fetchWerte'
+import fetchUsers from '../../src/fetchUsers'
 import storeContext from '../../storeContext'
 import Navbar from '../Navbar'
-import fetchAmt from '../../src/fetchAmt'
+import fetchUser from '../../src/fetchUser'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
 // above does not work
@@ -28,22 +27,21 @@ const StyledReflexElement = styled(ReflexElement)`
   }
 `
 
-const AmtContainer = () => {
-  const { amtId = 0 } = useParams()
+const UserContainer = () => {
+  const { userId = 0 } = useParams()
   const store = useContext(storeContext)
-  const { showFilter, aemter } = store
-  const amt = aemter.find((p) => p.id === +amtId)
+  const { showFilter, users } = store
+  const user = users.find((p) => p.id === +userId)
   // pass list the active amt's props to enable instant updates
-  const amtJson = amt ? amt.toJSON() : {}
+  const userJson = user ? user.toJSON() : {}
 
   useEffect(() => {
-    fetchAemter({ store })
-    fetchWerte({ store, table: 'kostenstelleWerte' })
+    fetchUsers({ store })
   }, [store])
 
   useEffect(() => {
-    fetchAmt({ store, id: amtId })
-  }, [amtId, store])
+    fetchUser({ store, id: userId })
+  }, [userId, store])
 
   const listRef = useRef(null)
 
@@ -59,11 +57,11 @@ const AmtContainer = () => {
               renderOnResizeRate={100}
               renderOnResize
             >
-              <List {...amtJson} listRef={listRef} />
+              <List {...userJson} listRef={listRef} />
             </ReflexElement>
             <ReflexSplitter />
             <StyledReflexElement showfilter={showFilter}>
-              {!!amtId && <Outlet context={[listRef]} />}
+              {!!userId && <Outlet context={[listRef]} />}
             </StyledReflexElement>
           </ReflexContainer>
         </ErrorBoundary>
@@ -72,4 +70,4 @@ const AmtContainer = () => {
   )
 }
 
-export default observer(AmtContainer)
+export default observer(UserContainer)
