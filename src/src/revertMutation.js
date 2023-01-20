@@ -5,12 +5,18 @@ import ifIsNumericAsNumber from '../src/ifIsNumericAsNumber'
 import updateField from '../src/updateField'
 
 const revertMutation = async ({ store, mutationId }) => {
-  const { mutations } = store
+  const {
+    mutations,
+    setRevertingMutationId,
+    removeFromTable,
+    addError,
+    addToTable,
+  } = store
   const mutation = mutations.find((m) => m.id === mutationId)
   if (!mutation) {
     throw new Error(`Keine Mutation mit id ${mutationId} gefunden`)
   }
-  store.revertingMutationId = mutationId
+  setRevertingMutationId(mutationId)
   const { op, tableName, rowId, field, previousValue } = mutation
   switch (op) {
     case 'replace': {
@@ -30,7 +36,7 @@ const revertMutation = async ({ store, mutationId }) => {
         // need to convert to number or it will fail
         value: ifIsNumericAsNumber(previousValue),
         id: rowId,
-        store: store,
+        store,
       })
       break
     }
@@ -50,11 +56,11 @@ const revertMutation = async ({ store, mutationId }) => {
           `delete from ${tableName} where id = ${rowId}`,
         )
       } catch (error) {
-        store.addError(error)
+        addError(error)
         return console.log(error)
       }
       // write to store
-      store.removeFromTable({ table: tableName, id: rowId })
+      removeFromTable({ table: tableName, id: rowId })
       break
     }
     case 'remove': {
@@ -81,11 +87,11 @@ const revertMutation = async ({ store, mutationId }) => {
       try {
         await window.electronAPI.edit(sql)
       } catch (error) {
-        store.addError(error)
+        addError(error)
         return console.log(error)
       }
       // write to store
-      store.addToTable({ table: tableName, value: previousObject })
+      addToTable({ table: tableName, value: previousObject })
       break
     }
     default:
