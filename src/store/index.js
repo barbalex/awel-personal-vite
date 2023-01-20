@@ -49,6 +49,7 @@ import bereicheFiltered from './bereicheFiltered'
 import bereicheFilteredSortedByHandelsbedarf from './bereicheFilteredSortedByHandelsbedarf'
 import sektionenFiltered from './sektionenFiltered'
 import sektionenFilteredSortedByHandelsbedarf from './sektionenFilteredSortedByHandelsbedarf'
+import User from './User'
 
 const store = () =>
   types
@@ -79,6 +80,7 @@ const store = () =>
       mutationArtWerte: types.array(MutationartWert),
       standortWerte: types.array(StandortWert),
       personen: types.array(Person),
+      users: types.array(User),
       aemter: types.array(Amt),
       abteilungen: types.array(Abteilung),
       settings: types.optional(Settings, {
@@ -382,6 +384,11 @@ const store = () =>
         setPersonen(personen) {
           self.watchMutations = false
           self.personen = personen
+          self.watchMutations = true
+        },
+        setUsers(users) {
+          self.watchMutations = false
+          self.users = users
           self.watchMutations = true
         },
         setAmt(amt) {
