@@ -37,7 +37,10 @@ const StyledButton = styled(Button)`
   margin-left: auto;
   margin-right: auto;
 `
-
+// TODO:
+// Should focus input field on mount
+// now renders only once
+// but neither autoFocus nor ref.focus() work
 const Login = () => {
   const store = useContext(storeContext)
   const { userIsLoggedIn, setUserIsLoggedIn, username, userPwd } = store
@@ -46,7 +49,6 @@ const Login = () => {
 
   const inputRef = useRef()
 
-  // const [pwd, setPwd] = useState()
   useEffect(() => {
     setTimeout(() => {
       console.log('effect, will focus inputRef:', inputRef.current)
