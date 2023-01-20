@@ -1,5 +1,9 @@
-import { Outlet } from 'react-router-dom'
+import { useContext } from 'react'
+import { Outlet, Navigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { observer } from 'mobx-react-lite'
+
+import storeContext from '../storeContext'
 
 const Container = styled.div`
   height: 100%;
@@ -9,11 +13,19 @@ const Container = styled.div`
 
 import Navbar from './Navbar'
 
-const Layout = () => (
-  <Container>
-    <Navbar />
-    <Outlet />
-  </Container>
-)
+const Layout = () => {
+  const { userIsLoggedIn } = useContext(storeContext)
 
-export default Layout
+  if (!userIsLoggedIn) {
+    return <Navigate to="/login" />
+  }
+
+  return (
+    <Container>
+      <Navbar />
+      <Outlet />
+    </Container>
+  )
+}
+
+export default observer(Layout)

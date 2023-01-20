@@ -98,6 +98,7 @@ const store = () =>
       tagWerte: types.array(TagWert),
       username: types.maybe(types.string),
       userIsAdmin: types.optional(types.boolean, false),
+      userIsLoggedIn: types.optional(types.boolean, false),
       watchMutations: types.optional(types.boolean, false),
       revertingMutationId: types.maybe(types.union(types.integer, types.null)),
       history: types.optional(UndoManager, {}),
@@ -295,6 +296,9 @@ const store = () =>
       setUndoManager(self)
 
       return {
+        setUserIsLoggedIn(val) {
+          self.userIsLoggedIn = val
+        },
         setNavigate(val) {
           self.navigate = val
         },

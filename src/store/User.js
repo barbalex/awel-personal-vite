@@ -14,3 +14,8 @@ export default types
   .volatile(() => ({
     pwd: null,
   }))
+  .actions((self) => ({
+    setPwd(pwd) {
+      self.pwd = pwd
+    },
+  }))

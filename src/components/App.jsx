@@ -26,6 +26,7 @@ import Errors from './Errors'
 import NavigateSetter from './NavigateSetter'
 import Print from './Print'
 import Layout from './Layout'
+import Login from './Login'
 
 registerLocale('de', de)
 setDefaultLocale('de')
@@ -44,6 +45,7 @@ const RouterComponent = () => (
   <Container>
     <HashRouter>
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route element={<Layout />}>
           <Route path="/" element={<Navigate to="/Personen" />} />
           <Route path="/Personen/print/:report" element={<Print />} />
