@@ -58,11 +58,8 @@ const User = () => {
       let newValue = value
       // if is password, need to encrypt
       if (field === 'pwd' && value) {
-        console.log('User, seaveToDb', { field, value })
         newValue = await window.electronAPI.encryptString(value)
-        console.log('saveToDb', { value, newValue })
       }
-      console.log('User, seaveToDb', { newValue })
 
       if (showFilter) {
         setFilter({
