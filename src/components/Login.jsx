@@ -56,46 +56,50 @@ const Login = () => {
 
   const [pwd, setPwd] = useState()
   useEffect(() => {
-    if (!user?.pwd) {
-      console.log('effect, no pwd')
-      return /*setPwd('')*/
-    }
+    if (!user?.pwd) return
+
     window.electronAPI.decryptString(user.pwd).then((decrypted) => {
       setPwd(decrypted)
-      console.log('effect, inputRef.current', inputRef.current)
-      setTimeout(() => inputRef.current.focus())
+      setTimeout(() => {
+        console.log('effect, inputRef.current', inputRef.current)
+        inputRef.current.focus()
+      })
     })
   }, [user?.pwd])
 
   console.log('Login', {
     pwd,
     user,
-    errorMsg,
-    errorMsgExists: !!errorMsg,
     userIsLoggedIn,
     inputRef: inputRef.current,
   })
 
-  // const callbackRef = useCallback((inputElement) => {
-  //   if (inputElement) {
-  //     inputElement.focus()
-  //   }
-  // }, [])
+  const [value, setValue] = useState('')
+  const onChange = useCallback((e) => setValue(e.target.value), [])
+  const onBlur = useCallback(() => {
+    if (!value || value !== pwd) {
+      return setErrorMsg('Das Passwort ist falsch')
+    }
 
-  const onBlur = useCallback(
-    (e) => {
-      console.log('value:', { value: e.target.value, pwd })
-      if (!e.target.value || e.target.value !== pwd) {
-        console.log('Das Passwort ist falsch')
-        return setErrorMsg('Das Passwort ist falsch')
+    setErrorMsg(undefined)
+    setUserIsLoggedIn(true)
+    navigate('/Personen')
+  }, [navigate, pwd, setUserIsLoggedIn, value])
+
+  useEffect(() => {
+    const keyDownHandler = (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault()
+        onBlur()
       }
+    }
 
-      setErrorMsg(undefined)
-      setUserIsLoggedIn(true)
-      navigate('/Personen')
-    },
-    [navigate, pwd, setUserIsLoggedIn],
-  )
+    document.addEventListener('keydown', keyDownHandler)
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler)
+    }
+  }, [onBlur])
 
   if (!username) {
     return (
@@ -109,9 +113,10 @@ const Login = () => {
       <P>{`Bitte mit Passwort anmelden:`}</P>
       <StyledFormGroup>
         <StyledInput
-          id="thisfuckinginput"
+          value={value}
           innerRef={inputRef}
           type="password"
+          onChange={onChange}
           onBlur={onBlur}
           autoFocus
           invalid={!!errorMsg}
@@ -120,7 +125,7 @@ const Login = () => {
       </StyledFormGroup>
       <StyledButton
         color="primary"
-        onClick={() => console.log('clicked')}
+        onClick={onBlur}
         block={false}
         outline={true}
       >
