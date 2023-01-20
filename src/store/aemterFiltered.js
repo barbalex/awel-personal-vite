@@ -6,7 +6,7 @@ export default self => {
   Object.keys(filterAmt).forEach(key => {
     if (filterAmt[key] || filterAmt[key] === 0) {
       aemter = aemter.filter(p => {
-        if (!filterAmt[key]) return true
+        if (!filterAmt[key]) return true 
         if (!p[key]) return false
         return p[key]
           .toString()

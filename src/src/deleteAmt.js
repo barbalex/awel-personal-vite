@@ -14,4 +14,4 @@ const deleteAmt = async ({ id, store }) => {
   store.navigate(`/Aemter`)
 }
 
-export default deleteAmt
+export default deleteAmt 

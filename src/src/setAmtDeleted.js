@@ -13,5 +13,5 @@ const setAmtDeleted = async ({ id, store }) => {
   store.setAmtDeleted(id)
   if (!store.showDeleted) store.navigate(`/Aemter`)
 }
-
+ 
 export default setAmtDeleted

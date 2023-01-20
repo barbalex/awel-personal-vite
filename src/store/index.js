@@ -42,6 +42,7 @@ import personenFiltered from './personenFiltered'
 import personenSorted from './personenSorted'
 import personenSortedByHandlungsbedarf from './personenSortedByHandlungsbedarf'
 import aemterFiltered from './aemterFiltered'
+import usersFiltered from './usersFiltered'
 import aemterFilteredSortedByHandlungsbedarf from './aemterFilteredSortedByHandlungsbedarf'
 import abteilungenFiltered from './abteilungenFiltered'
 import abteilungenFilteredSortedByHandlungsbedarf from './abteilungenFilteredSortedByHandlungsbedarf'
@@ -96,6 +97,7 @@ const store = () =>
       statusWerte: types.array(StatusWert),
       tagWerte: types.array(TagWert),
       username: types.maybe(types.string),
+      userIsAdmin: types.optional(types.boolean, false),
       watchMutations: types.optional(types.boolean, false),
       revertingMutationId: types.maybe(types.union(types.integer, types.null)),
       history: types.optional(UndoManager, {}),
@@ -109,6 +111,7 @@ const store = () =>
         false,
       ),
       filterAmt: types.optional(Amt, {}),
+      filterUser: types.optional(User, {}),
       filterAbteilung: types.optional(Abteilung, {}),
       filterBereich: types.optional(Bereich, {}),
       filterSektion: types.optional(Sektion, {}),
@@ -155,6 +158,7 @@ const store = () =>
           filterPersonAktivJetztMitMobiltel,
           filterPersonAktivJetztMitKurzzeichen,
           filterAmt,
+          filterUser,
           filterAbteilung,
           filterBereich,
           filterSektion,
@@ -171,6 +175,7 @@ const store = () =>
           [
             ...Object.values(filterPerson),
             ...Object.values(filterAmt),
+            ...Object.values(filterUser),
             ...Object.values(filterAbteilung),
             ...Object.values(filterBereich),
             ...Object.values(filterSektion),
@@ -207,6 +212,14 @@ const store = () =>
       },
       get aemterFilteredSorted() {
         return self.aemterFiltered.sort((a, b) =>
+          (a.name || '').localeCompare(b.name || '', 'de-Ch'),
+        )
+      },
+      get usersFiltered() {
+        return usersFiltered(self)
+      },
+      get usersFilteredSorted() {
+        return self.usersFiltered.sort((a, b) =>
           (a.name || '').localeCompare(b.name || '', 'de-Ch'),
         )
       },
@@ -318,6 +331,7 @@ const store = () =>
           self.filterBereich = {}
           self.filterSektion = {}
           self.filterAmt = {}
+          self.filterUser = {}
           self.filterEtikett = {}
           self.filterAnwesenheitstage = {}
           self.filterLink = {}
@@ -341,6 +355,7 @@ const store = () =>
           self.filterBereich = {}
           self.filterSektion = {}
           self.filterAmt = {}
+          self.filterUser = {}
           self.filterEtikett = {}
           self.filterAnwesenheitstage = {}
           self.filterLink = {}
@@ -360,6 +375,9 @@ const store = () =>
         },
         setUsername(name) {
           self.username = name
+        },
+        setUserIsAdmin(val) {
+          self.userIsAdmin = val
         },
         setDeletionCallback(callback) {
           self.deletionCallback = callback
@@ -503,6 +521,9 @@ const store = () =>
         addAmt(val) {
           self.aemter.push(val)
         },
+        addUser(val) {
+          self.users.push(val)
+        },
         addAbteilung(val) {
           self.abteilungen.push(val)
         },
@@ -563,6 +584,17 @@ const store = () =>
            */
           self.aemter.splice(
             findIndex(self.aemter, (p) => p.id === id),
+            1,
+          )
+        },
+        deleteUser(id) {
+          /**
+           * Do not use filter! Reason:
+           * rebuilds self.users. Consequence:
+           * all other users are re-added and listet as mutations of op 'add'
+           */
+          self.users.splice(
+            findIndex(self.users, (p) => p.id === id),
             1,
           )
         },

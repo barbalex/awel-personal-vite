@@ -9,6 +9,7 @@ import './styles.css'
 import createStore from './store'
 import watchMutations from './src/watchMutations'
 
+import fetchUsers from './src/fetchUsers'
 import fetchPersonen from './src/fetchPersonen'
 import fetchAemter from './src/fetchAemter'
 import fetchAbteilungen from './src/fetchAbteilungen'
@@ -32,11 +33,12 @@ const root = createRoot(container)
 
 const run = async () => {
   const store = createStore().create()
-  const { setUsername } = store
+  const { setUsername, setUserIsAdmin } = store
   watchMutations({ store })
 
-  const user = await window.electronAPI.getUsername()
-  if (user) setUsername(user)
+  const { userName, isAdmin } = await window.electronAPI.getUsername()
+  setUsername(userName ?? '(Benutzer nicht erkannt)')
+  setUserIsAdmin(isAdmin)
 
   window.store = store
 
@@ -68,6 +70,7 @@ const run = async () => {
   fetchFunktionen({ store })
   fetchKaderFunktionen({ store })
   fetchSettings({ store })
+  fetchUsers({ store })
 
   root.render(
     <StoreContextProvider value={store}>

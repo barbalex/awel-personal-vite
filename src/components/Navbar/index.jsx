@@ -15,6 +15,7 @@ import Sektionen from './Sektionen'
 import Bereiche from './Bereiche'
 import Export from './Export'
 import Berichte from './Berichte'
+import User from './User'
 import More from './More'
 import storeContext from '../../storeContext'
 import revertMutation from '../../src/revertMutation'
@@ -46,7 +47,7 @@ const MyNavbar = () => {
   const { pathname } = useLocation()
 
   const store = useContext(storeContext)
-  const { lastUserMutation, addError, dirty } = store
+  const { lastUserMutation, addError, dirty, userIsAdmin } = store
 
   const [open, setOpen] = useState(false)
   const toggleNavbar = useCallback(() => {
@@ -65,6 +66,7 @@ const MyNavbar = () => {
   const showFilter =
     pathname.startsWith('/Personen') ||
     pathname.startsWith('/Aemter') ||
+    pathname.startsWith('/Users') ||
     pathname.startsWith('/Abteilungen') ||
     pathname.startsWith('/Sektionen') ||
     pathname.startsWith('/Bereiche')
@@ -83,6 +85,7 @@ const MyNavbar = () => {
             <Export />
             <Berichte />
             <Stammdaten />
+            {userIsAdmin && <User />}
           </Nav>
           <Nav className="ml-auto" navbar>
             <SaveButton

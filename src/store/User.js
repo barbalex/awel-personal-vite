@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree'
 
 export default types.model('User', {
+  id: types.maybe(types.integer),
   name: types.maybe(types.union(types.string, types.integer, types.null)),
   password: types.maybe(types.union(types.string, types.integer, types.null)),
   letzteMutationZeit: types.maybe(

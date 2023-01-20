@@ -251,14 +251,18 @@ const openDialogGetPath = async (event, dialogOptions) => {
 }
 ipcMain.handle('open-dialog-get-path', openDialogGetPath)
 ipcMain.handle('get-username', async () => {
-  let user
+  let userName
   try {
     const { usernameSync } = await import('username')
-    user = usernameSync()
+    userName = usernameSync()
   } catch (error) {
     return null
   }
-  return user
+  const { isAdmin } = db
+    .prepare(`select isAdmin from users where name = ?`)
+    .get(userName)
+
+  return { userName, isAdmin: isAdmin === 1 }
 })
 ipcMain.handle('open-url', (event, url) => {
   return shell.openPath(url)

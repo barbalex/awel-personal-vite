@@ -11,6 +11,8 @@ import PersonTab from './PersonContainer/PersonTab'
 import PrintPreview from './PersonContainer/PrintPreview'
 import AmtContainer from './AmtContainer'
 import Amt from './AmtContainer/Amt'
+import UserContainer from './UserContainer'
+import User from './UserContainer/User'
 import AbteilungContainer from './AbteilungContainer'
 import Abteilung from './AbteilungContainer/Abteilung'
 import SektionContainer from './SektionContainer'
@@ -55,6 +57,9 @@ const RouterComponent = () => (
         </Route>
         <Route path="/Aemter/*" element={<AmtContainer />}>
           <Route path=":amtId" element={<Amt />} />
+        </Route>
+        <Route path="/Users/*" element={<UserContainer />}>
+          <Route path=":userId" element={<User />} />
         </Route>
         <Route path="/Sektionen/*" element={<SektionContainer />}>
           <Route path=":sektionId" element={<Sektion />} />
