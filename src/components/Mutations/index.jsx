@@ -11,7 +11,6 @@ import fetchMutations from '../../src/fetchMutations'
 import Filter from './Filter'
 import storeContext from '../../storeContext'
 import Row from './Row'
-import Navbar from '../Navbar'
 
 moment.locale('de')
 
@@ -227,91 +226,88 @@ const Mutations = () => {
   })
 
   return (
-    <>
-      <Navbar />
-      <ErrorBoundary>
-        <Container>
-          <TitleRow>
-            <Time>
-              <div>Zeit</div>
-              <Filter
-                value={zeitFilter}
-                onChange={onChangeZeitFilter}
-                empty={emptyZeitFilter}
-              />
-            </Time>
-            <User>
-              <div>Benutzer</div>
-              <Filter
-                value={userFilter}
-                onChange={onChangeUserFilter}
-                empty={emptyUserFilter}
-              />
-            </User>
-            <Op>
-              <div>Operation</div>
-              <Filter
-                value={opFilter}
-                onChange={onChangeOpFilter}
-                empty={emptyOpFilter}
-              />
-            </Op>
-            <Model>
-              <div>Tabelle</div>
-              <Filter
-                value={tableFilter}
-                onChange={onChangeTableFilter}
-                empty={emptyTableFilter}
-              />
-            </Model>
-            <Id>
-              <div>ID</div>
-              <Filter
-                value={idFilter}
-                onChange={onChangeIdFilter}
-                empty={emptyIdFilter}
-              />
-            </Id>
-            <FieldName>
-              <div>Feldname</div>
-              <Filter
-                value={fieldFilter}
-                onChange={onChangeFieldFilter}
-                empty={emptyFieldFilter}
-              />
-            </FieldName>
-            <PreviousValue>
-              <div>Alter Wert</div>
-              <Filter
-                value={previousValueFilter}
-                onChange={onChangePreviousValueFilter}
-                empty={emptyPreviousValueFilter}
-              />
-            </PreviousValue>
-            <Value>
-              <div>Neuer Wert</div>
-              <Filter
-                value={valueFilter}
-                onChange={onChangeValueFilter}
-                empty={emptyValueFilter}
-              />
-            </Value>
-          </TitleRow>
-          <ListDiv>
-            <List
-              height={window.innerHeight - 56 - 65}
-              itemCount={mutations.length}
-              itemSize={(index) => rowHeights[index] || 50}
-              width={window.innerWidth}
-            >
-              {({ index, style }) => (
-                <Row style={style} listIndex={index} mutations={mutations} />
-              )}
-            </List>
-          </ListDiv>
-        </Container>
-      </ErrorBoundary>
-    </>
+    <ErrorBoundary>
+      <Container>
+        <TitleRow>
+          <Time>
+            <div>Zeit</div>
+            <Filter
+              value={zeitFilter}
+              onChange={onChangeZeitFilter}
+              empty={emptyZeitFilter}
+            />
+          </Time>
+          <User>
+            <div>Benutzer</div>
+            <Filter
+              value={userFilter}
+              onChange={onChangeUserFilter}
+              empty={emptyUserFilter}
+            />
+          </User>
+          <Op>
+            <div>Operation</div>
+            <Filter
+              value={opFilter}
+              onChange={onChangeOpFilter}
+              empty={emptyOpFilter}
+            />
+          </Op>
+          <Model>
+            <div>Tabelle</div>
+            <Filter
+              value={tableFilter}
+              onChange={onChangeTableFilter}
+              empty={emptyTableFilter}
+            />
+          </Model>
+          <Id>
+            <div>ID</div>
+            <Filter
+              value={idFilter}
+              onChange={onChangeIdFilter}
+              empty={emptyIdFilter}
+            />
+          </Id>
+          <FieldName>
+            <div>Feldname</div>
+            <Filter
+              value={fieldFilter}
+              onChange={onChangeFieldFilter}
+              empty={emptyFieldFilter}
+            />
+          </FieldName>
+          <PreviousValue>
+            <div>Alter Wert</div>
+            <Filter
+              value={previousValueFilter}
+              onChange={onChangePreviousValueFilter}
+              empty={emptyPreviousValueFilter}
+            />
+          </PreviousValue>
+          <Value>
+            <div>Neuer Wert</div>
+            <Filter
+              value={valueFilter}
+              onChange={onChangeValueFilter}
+              empty={emptyValueFilter}
+            />
+          </Value>
+        </TitleRow>
+        <ListDiv>
+          <List
+            height={window.innerHeight - 56 - 65}
+            itemCount={mutations.length}
+            itemSize={(index) => rowHeights[index] || 50}
+            width={window.innerWidth}
+          >
+            {({ index, style }) => (
+              <Row style={style} listIndex={index} mutations={mutations} />
+            )}
+          </List>
+        </ListDiv>
+      </Container>
+    </ErrorBoundary>
   )
 }
 

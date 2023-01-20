@@ -8,7 +8,6 @@ import ErrorBoundary from '../shared/ErrorBoundary'
 import List from './List'
 import fetchUsers from '../../src/fetchUsers'
 import storeContext from '../../storeContext'
-import Navbar from '../Navbar'
 import fetchUser from '../../src/fetchUser'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
@@ -46,27 +45,24 @@ const UserContainer = () => {
   const listRef = useRef(null)
 
   return (
-    <>
-      <Navbar />
-      <Container>
-        <ErrorBoundary>
-          <ReflexContainer orientation="vertical">
-            <ReflexElement
-              flex={0.25}
-              propagateDimensions
-              renderOnResizeRate={100}
-              renderOnResize
-            >
-              <List {...userJson} listRef={listRef} />
-            </ReflexElement>
-            <ReflexSplitter />
-            <StyledReflexElement showfilter={showFilter}>
-              {!!userId && <Outlet context={[listRef]} />}
-            </StyledReflexElement>
-          </ReflexContainer>
-        </ErrorBoundary>
-      </Container>
-    </>
+    <Container>
+      <ErrorBoundary>
+        <ReflexContainer orientation="vertical">
+          <ReflexElement
+            flex={0.25}
+            propagateDimensions
+            renderOnResizeRate={100}
+            renderOnResize
+          >
+            <List {...userJson} listRef={listRef} />
+          </ReflexElement>
+          <ReflexSplitter />
+          <StyledReflexElement showfilter={showFilter}>
+            {!!userId && <Outlet context={[listRef]} />}
+          </StyledReflexElement>
+        </ReflexContainer>
+      </ErrorBoundary>
+    </Container>
   )
 }
 

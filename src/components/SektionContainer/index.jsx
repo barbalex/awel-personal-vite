@@ -11,7 +11,6 @@ import fetchSektionen from '../../src/fetchSektionen'
 import fetchAbteilungen from '../../src/fetchAbteilungen'
 import fetchWerte from '../../src/fetchWerte'
 import storeContext from '../../storeContext'
-import Navbar from '../Navbar'
 import fetchSektion from '../../src/fetchSektion'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
@@ -53,27 +52,24 @@ const SektionContainer = () => {
   const listRef = useRef(null)
 
   return (
-    <>
-      <Navbar />
-      <Container>
-        <ErrorBoundary>
-          <ReflexContainer orientation="vertical">
-            <ReflexElement
-              flex={0.25}
-              propagateDimensions
-              renderOnResizeRate={100}
-              renderOnResize
-            >
-              <List {...sektionJson} listRef={listRef} />
-            </ReflexElement>
-            <ReflexSplitter />
-            <StyledReflexElement showfilter={showFilter}>
-              {sektionId && <Outlet context={[listRef]} />}
-            </StyledReflexElement>
-          </ReflexContainer>
-        </ErrorBoundary>
-      </Container>
-    </>
+    <Container>
+      <ErrorBoundary>
+        <ReflexContainer orientation="vertical">
+          <ReflexElement
+            flex={0.25}
+            propagateDimensions
+            renderOnResizeRate={100}
+            renderOnResize
+          >
+            <List {...sektionJson} listRef={listRef} />
+          </ReflexElement>
+          <ReflexSplitter />
+          <StyledReflexElement showfilter={showFilter}>
+            {sektionId && <Outlet context={[listRef]} />}
+          </StyledReflexElement>
+        </ReflexContainer>
+      </ErrorBoundary>
+    </Container>
   )
 }
 

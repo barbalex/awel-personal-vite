@@ -9,7 +9,6 @@ import Data from './Data'
 import List from './List'
 import fetchWerte from '../../src/fetchWerte'
 import storeContext from '../../storeContext'
-import Navbar from '../Navbar'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
 // above does not work
@@ -56,27 +55,24 @@ const StammdatenContainer = () => {
   const listRef = useRef(null)
 
   return (
-    <>
-      <Navbar />
-      <Container>
-        <ErrorBoundary>
-          <ReflexContainer orientation="vertical">
-            <ReflexElement
-              flex={0.33}
-              propagateDimensions
-              renderOnResizeRate={100}
-              renderOnResize
-            >
-              <List {...datJson} listRef={listRef} />
-            </ReflexElement>
-            <ReflexSplitter />
-            <StyledReflexElement>
-              {!!tableId && <Data listRef={listRef} />}
-            </StyledReflexElement>
-          </ReflexContainer>
-        </ErrorBoundary>
-      </Container>
-    </>
+    <Container>
+      <ErrorBoundary>
+        <ReflexContainer orientation="vertical">
+          <ReflexElement
+            flex={0.33}
+            propagateDimensions
+            renderOnResizeRate={100}
+            renderOnResize
+          >
+            <List {...datJson} listRef={listRef} />
+          </ReflexElement>
+          <ReflexSplitter />
+          <StyledReflexElement>
+            {!!tableId && <Data listRef={listRef} />}
+          </StyledReflexElement>
+        </ReflexContainer>
+      </ErrorBoundary>
+    </Container>
   )
 }
 
