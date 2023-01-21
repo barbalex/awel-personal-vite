@@ -70,23 +70,22 @@ const Abteilung = () => {
         `${name} war schon gelöscht. Wenn Sie ${namer1} nochmals löschen, wird ${namer2} endgültig und unwiederbringlich gelöscht. Möchten Sie das?`,
       )
       setDeletionTitle('Abteilung unwiederbringlich löschen')
-    } else {
-      // do not true delete yet
-      // only set abteilung.deleted = 1
-      setDeletionCallback(() => {
-        setAbteilungDeleted({ abteilungId: +abteilungId, store })
-        setDeletionMessage(null)
-        setDeletionTitle(null)
-      })
-      setDeletionMessage(
-        `${
-          activeAbteilung.name
-            ? `"${activeAbteilung.name}"`
-            : 'Diesen Datensatz'
-        } wirklich löschen?`,
-      )
-      setDeletionTitle('Abteilung löschen')
+
+      return
     }
+    // do not true delete yet
+    // only set abteilung.deleted = 1
+    setDeletionCallback(() => {
+      setAbteilungDeleted({ id: +abteilungId, store })
+      setDeletionMessage(null)
+      setDeletionTitle(null)
+    })
+    setDeletionMessage(
+      `${
+        activeAbteilung.name ? `"${activeAbteilung.name}"` : 'Diesen Datensatz'
+      } wirklich löschen?`,
+    )
+    setDeletionTitle('Abteilung löschen')
   }, [
     abteilungen,
     abteilungId,
