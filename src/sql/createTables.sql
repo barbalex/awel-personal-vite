@@ -15,6 +15,8 @@ create table kostenstelleWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iKostenstelleWerteId;
+create index iKostenstelleWerteId on kostenstelleWerte (id);
 drop index if exists iKostenstelleWerteKostenstelle;
 create index iKostenstelleWerteKostenstelle on kostenstelleWerte (value);
 drop index if exists iKostenstelleWerteHistorisch;
@@ -35,6 +37,8 @@ create table standortWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iStandortWerteId;
+create index iStandortWerteId on standortWerte (id);
 drop index if exists iStandortWerteStandort;
 create index iStandortWerteStandort on standortWerte (value);
 drop index if exists iStandortWerteHistorisch;
@@ -58,6 +62,8 @@ create table statusWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iStatusWerteId;
+create index iStatusWerteId on statusWerte (id);
 drop index if exists iStatusWerteStatus;
 create index iStatusWerteStatus on statusWerte (value);
 drop index if exists iStatusWerteHistorisch;
@@ -124,6 +130,8 @@ create table personen (
   letzteMutationUser TEXT
 );
 
+drop index if exists iPersonId;
+create index iPersonId on personen (id);
 drop index if exists iPersonDeleted;
 create index iPersonDeleted on personen (deleted);
 drop index if exists iPersonName;
@@ -154,6 +162,8 @@ create table aemter (
   letzteMutationUser TEXT
 );
 
+drop index if exists iAmtId;
+create index iAmtId on aemter (id);
 drop index if exists iAmtDeleted;
 create index iAmtDeleted on aemter (deleted);
 drop index if exists iAmtName;
@@ -180,6 +190,8 @@ create table abteilungen (
   unique(amt, name)
 );
 
+drop index if exists iAbteilungId;
+create index iAbteilungId on abteilungen (id);
 drop index if exists iAbteilungDeleted;
 create index iAbteilungDeleted on abteilungen (deleted);
 drop index if exists iAbteilungName;
@@ -206,6 +218,8 @@ create table sektionen (
   unique(abteilung, name)
 );
 
+drop index if exists iSektionId;
+create index iSektionId on sektionen (id);
 drop index if exists iSektionDeleted;
 create index iSektionDeleted on sektionen (deleted);
 drop index if exists iSektionName;
@@ -233,6 +247,8 @@ create table bereiche (
   letzteMutationUser TEXT
 );
 
+drop index if exists iBereichId;
+create index iBereichId on bereiche (id);
 drop index if exists iBereichDeleted;
 create index iBereichDeleted on bereiche (deleted);
 drop index if exists iBereichName;
@@ -265,6 +281,8 @@ create table links (
   unique(idPerson, url)
 );
 
+drop index if exists iLinkId;
+create index iLinkId on links (id);
 drop index if exists iLinkDeleted;
 create index iLinkDeleted on links (deleted);
 drop index if exists iLinkIdPerson;
@@ -288,6 +306,8 @@ create table schluessel (
   letzteMutationUser TEXT
 );
 
+drop index if exists iSchluesselId;
+create index iSchluesselId on schluessel (id);
 drop index if exists iSchluesselDeleted;
 create index iSchluesselDeleted on schluessel (deleted);
 drop index if exists iSchluesselIdPerson;
@@ -307,6 +327,8 @@ create table mobileAbos (
   letzteMutationUser TEXT
 );
 
+drop index if exists iMobileAboId;
+create index iMobileAboId on mobileAbos (id);
 drop index if exists iMobileAboDeleted;
 create index iMobileAboDeleted on mobileAbos (deleted);
 drop index if exists iMobileAboIdPerson;
@@ -329,6 +351,8 @@ create table telefones (
   unique(idPerson, nr)
 );
 
+drop index if exists iTelefonId;
+create index iTelefonId on telefones (id);
 drop index if exists iTelefonDeleted;
 create index iTelefonDeleted on telefones (deleted);
 drop index if exists iTelefonIdPerson;
@@ -349,6 +373,8 @@ create table funktionen (
   unique(idPerson, funktion)
 );
 
+drop index if exists iFunktionId;
+create index iFunktionId on funktionen (id);
 drop index if exists iFunktionDeleted;
 create index iFunktionDeleted on funktionen (deleted);
 drop index if exists iFunktionIdPerson;
@@ -369,6 +395,8 @@ create table kaderFunktionen (
   unique(idPerson, funktion)
 );
 
+drop index if exists iKaderFunktionId;
+create index iKaderFunktionId on kaderFunktionen (id);
 drop index if exists iKaderFunktionDeleted;
 create index iKaderFunktionDeleted on kaderFunktionen (deleted);
 drop index if exists iKaderFunktionIdPerson;
@@ -389,6 +417,8 @@ create table etiketten (
   unique(idPerson, etikett)
 );
 
+drop index if exists iEtikettId;
+create index iEtikettId on etiketten (id);
 drop index if exists iEtikettDeleted;
 create index iEtikettDeleted on etiketten (deleted);
 drop index if exists iEtikettIdPerson;
@@ -409,6 +439,8 @@ create table anwesenheitstage (
   unique(idPerson, tag)
 );
 
+drop index if exists iAnwesenheitstagId;
+create index iAnwesenheitstagId on anwesenheitstage (id);
 drop index if exists iAnwesenheitstagDeleted;
 create index iAnwesenheitstagDeleted on anwesenheitstage (deleted);
 drop index if exists iAnwesenheitstagIdPerson;
@@ -434,6 +466,8 @@ create table mutations (
   reverts integer
 );
 
+drop index if exists iMutationsId;
+create index iMutationsId on mutations (id);
 drop index if exists iMutationsTime;
 create index iMutationsTime on mutations (time);
 drop index if exists iMutationsUser;
@@ -468,12 +502,17 @@ create table anredeWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iAnredeWerteId;
+create index iAnredeWerteId on anredeWerte (id);
 drop index if exists iGeschlechtWerteGeschlecht;
-create index iGeschlechtWerteGeschlecht on anredeWerte (value);
+drop index if exists iAnredeWerteValue;
+create index iAnredeWerteValue on anredeWerte (value);
 drop index if exists iGeschlechtWerteHistorisch;
-create index iGeschlechtWerteHistorisch on anredeWerte (historic);
+drop index if exists iAnredeWerteHistorisch;
+create index iAnredeWerteHistorisch on anredeWerte (historic);
 drop index if exists iGeschlechtWerteSort;
-create index iGeschlechtWerteSort on anredeWerte (sort);
+drop index if exists iAnredeWerteSort;
+create index iAnredeWerteSort on anredeWerte (sort);
 
 -------------------------------------------
 
@@ -488,6 +527,8 @@ create table mobileAboTypWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iMobileAboTypWerteId;
+create index iMobileAboTypWerteId on mobileAboTypWerte (id);
 drop index if exists iMobileAboTypWerteMobileAboTyp;
 create index iMobileAboTypWerteMobileAboTyp on mobileAboTypWerte (value);
 drop index if exists iMobileAboTypWerteHistorisch;
@@ -508,6 +549,8 @@ create table telefonTypWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iTelefonTypWerteId;
+create index iTelefonTypWerteId on telefonTypWerte (id);
 drop index if exists iTelefonTypWerteTelefonTyp;
 create index iTelefonTypWerteTelefonTyp on telefonTypWerte (value);
 drop index if exists iTelefonTypWerteHistorisch;
@@ -528,6 +571,8 @@ create table schluesselTypWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iSchluesselTypWerteId;
+create index iSchluesselTypWerteId on schluesselTypWerte (id);
 drop index if exists iSchluesselTypWerteSchluesselTyp;
 create index iSchluesselTypWerteSchluesselTyp on schluesselTypWerte (value);
 drop index if exists iSchluesselTypWerteHistorisch;
@@ -548,6 +593,8 @@ create table schluesselAnlageWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iSchluesselAnlageWerteId;
+create index iSchluesselAnlageWerteId on schluesselAnlageWerte (id);
 drop index if exists iSchluesselAnlageWerteSchluesselAnlage;
 create index iSchluesselAnlageWerteSchluesselAnlage on schluesselAnlageWerte (value);
 drop index if exists iSchluesselAnlageWerteHistorisch;
@@ -568,6 +615,8 @@ create table funktionWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iFunktionWerteId;
+create index iFunktionWerteId on funktionWerte (id);
 drop index if exists iFunktionWerteFunktion;
 create index iFunktionWerteFunktion on funktionWerte (value);
 drop index if exists iFunktionWerteHistorisch;
@@ -588,11 +637,16 @@ create table kaderFunktionWerte (
   letzteMutationUser TEXT
 );
 
-drop index if exists iFunktionWerteFunktion;
+drop index if exists iKaderFunktionWerteId;
+create index iFunktionWerteId on kaderFunktionWerte (id);
+drop index if exists iFunktionWerteFunktion; -- remove later, 2023.01.21
+drop index if exists iKaderFunktionWerteFunktion;
 create index iFunktionWerteFunktion on kaderFunktionWerte (value);
-drop index if exists iFunktionWerteHistorisch;
+drop index if exists iFunktionWerteHistorisch; -- remove later, 2023.01.21
+drop index if exists iKaderFunktionWerteHistorisch;
 create index iFunktionWerteHistorisch on kaderFunktionWerte (historic);
-drop index if exists iFunktionWerteSort;
+drop index if exists iFunktionWerteSort; -- remove later, 2023.01.21
+drop index if exists iKaderFunktionWerteSort;
 create index iFunktionWerteSort on kaderFunktionWerte (sort);
 
 -------------------------------------------
@@ -608,6 +662,8 @@ create table mobileAboKostenstelleWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iMobileAboKostenstelleWerteId;
+create index iMobileAboKostenstelleWerteId on mobileAboKostenstelleWerte (id);
 drop index if exists iMobileAboKostenstelleWerteMobileAboKostenstelle;
 create index iMobileAboKostenstelleWerteMobileAboKostenstelle on mobileAboKostenstelleWerte (value);
 drop index if exists iMobileAboKostenstelleWerteHistorisch;
@@ -628,6 +684,8 @@ create table etikettWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iEtikettWerteId;
+create index iEtikettWerteId on etikettWerte (id);
 drop index if exists iEtikettWerteEtikett;
 create index iEtikettWerteEtikett on etikettWerte (value);
 drop index if exists iEtikettWerteHistorisch;
@@ -648,6 +706,8 @@ create table anwesenheitstagWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iAnwesenheitstagWerteId;
+create index iAnwesenheitstagWerteId on anwesenheitstagWerte (id);
 drop index if exists iAnwesenheitstagWerteAnwesenheitstag;
 create index iAnwesenheitstagWerteAnwesenheitstag on anwesenheitstagWerte (value);
 drop index if exists iAnwesenheitstagWerteHistorisch;
@@ -668,6 +728,8 @@ create table landWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iLandWerteId;
+create index iLandWerteId on landWerte (id);
 drop index if exists iLandWerteLand;
 create index iLandWerteLand on landWerte (value);
 drop index if exists iLandWerteHistorisch;
@@ -688,6 +750,8 @@ create table mutationArtWerte (
   letzteMutationUser TEXT
 );
 
+drop index if exists iMutationartWerteId;
+create index iMutationartWerteId on mutationArtWerte (id);
 drop index if exists iMutationartWerteMutationart;
 create index iMutationartWerteMutationart on mutationArtWerte (value);
 drop index if exists iMutationartWerteHistorisch;
