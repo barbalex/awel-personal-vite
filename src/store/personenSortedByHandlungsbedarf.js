@@ -1,7 +1,7 @@
 /**
  * This is filter used after starting the application
  */
-export default self =>
+export default (self) =>
   self.personenFiltered.sort((a, b) => {
     if (self.showMutationNoetig) {
       if (a.mutationFrist && b.mutationFrist) {
@@ -20,5 +20,6 @@ export default self =>
     }
     const nameCompared = (a.name || '').localeCompare(b.name || '', 'de-Ch')
     if (nameCompared !== 0) return nameCompared
+
     return (a.vorname || '').localeCompare(b.vorname || '', 'de-Ch')
   })
