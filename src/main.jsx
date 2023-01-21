@@ -41,7 +41,6 @@ const run = async () => {
   setUserIsAdmin(isAdmin)
   setUserPwd(pwd)
 
-
   window.store = store
 
   fetchPersonen({ store })

@@ -37,13 +37,13 @@ const StyledButton = styled(Button)`
   margin-left: auto;
   margin-right: auto;
 `
-// TODO:
 // Should focus input field on mount
 // now renders only once
 // but neither autoFocus nor ref.focus() work
+// SOLVED. Reason was electron opening dev tools
 const Login = () => {
   const store = useContext(storeContext)
-  const { userIsLoggedIn, setUserIsLoggedIn, username, userPwd } = store
+  const { setUserIsLoggedIn, username, userPwd } = store
 
   const navigate = useNavigate()
 
@@ -55,12 +55,6 @@ const Login = () => {
       inputRef.current?.focus?.()
     })
   }, [])
-
-  console.log('Login', {
-    userPwd,
-    userIsLoggedIn,
-    inputRef: inputRef.current,
-  })
 
   const [errorMsg, setErrorMsg] = useState()
   const [value, setValue] = useState('')

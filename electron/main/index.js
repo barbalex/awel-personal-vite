@@ -77,9 +77,13 @@ const createWindow = () => {
     // electron-vite-vue#298
     win.loadURL(url)
     // Open devTool if the app is not packaged
-    win.webContents.openDevTools()
+    // WARNING: this will disable focusing the login input
+    // win.webContents.openDevTools()
   } else {
     win.loadFile(indexHtml)
+    // only remove application menu in production
+    // because need it to open devTools in development
+    Menu.setApplicationMenu(null)
   }
 
   // Make all links open with the browser, not with the application
@@ -89,7 +93,7 @@ const createWindow = () => {
   })
 
   win.maximize()
-  Menu.setApplicationMenu(null)
+  // Menu.setApplicationMenu(null)
 
   // Emitted when the window is closed.
   win.on('closed', () => {
