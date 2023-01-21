@@ -468,6 +468,9 @@ const store = () =>
         setMutations(mutations) {
           self.mutations = mutations
         },
+        addMutation(mutation) {
+          self.mutations.push(mutation)
+        },
         setEtiketten(etiketten) {
           self.watchMutations = false
           self.etiketten = etiketten
@@ -781,7 +784,7 @@ const store = () =>
           }, 1000 * 10)
         },
         popError() {
-          // eslint-disable-next-line no-unused-vars
+          // eslint-disable-next-line
           const [first, ...last] = self.errors
           self.errors = [...last]
         },

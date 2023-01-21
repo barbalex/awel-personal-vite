@@ -1,6 +1,6 @@
 import updatePersonsMutation from './updatePersonsMutation'
 
-const updateField = async ({
+const updateField = async ({ 
   table,
   parentModel,
   field,

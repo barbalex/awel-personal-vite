@@ -7,11 +7,12 @@ import { undoManager } from '../store'
 const addMutation = ({ tableName, patch, inversePatch, store }) => {
   // watchMutations is false while data is loaded from server
   // as these additions should not be added to mutations
-  if (!self.watchMutations) return
+  if (!store?.watchMutations) return
+
   // need to wait for undoManager to list deletion
   setTimeout(async () => {
     let info
-    const { username } = self
+    const { username } = store
     const time = Date.now()
     const { op, path, value: valueIn } = patch
     const [index, field] = splitJsonPath(path)
@@ -32,7 +33,7 @@ const addMutation = ({ tableName, patch, inversePatch, store }) => {
          * Problem:
          * - inversePatch is undefined
          * - patch has no value
-         * - self[tableName][index] was already removed
+         * - store[tableName][index] was already removed
          * so how get id or better value of removed dataset?
          * Solution: get this from undoManager's history
          * But: need to setTimeout to let undoManager catch up
@@ -51,7 +52,7 @@ const addMutation = ({ tableName, patch, inversePatch, store }) => {
         break
       }
       case 'replace': {
-        const storeObject = self[tableName][index]
+        const storeObject = store[tableName][index]
         rowId = storeObject.id
         previousValue = inversePatch.value
         break
@@ -75,12 +76,12 @@ const addMutation = ({ tableName, patch, inversePatch, store }) => {
         },
       )
     } catch (error) {
-      self.addError(error)
+      store.addError(error)
       return console.log(error)
     }
     // 2. add to store
     // need to call other action as this happens inside timeout
-    self.mutations.push({
+    store.addMutation({
       id: info.lastInsertRowid,
       time,
       user: username,
