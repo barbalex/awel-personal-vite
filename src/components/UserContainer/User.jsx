@@ -1,7 +1,7 @@
 import React, { useContext, useCallback, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
-import { Form, Col, FormGroup, Label } from 'reactstrap'
+import { Form } from 'reactstrap'
 import findIndex from 'lodash/findIndex'
 import { useParams, useOutletContext } from 'react-router-dom'
 import isAlphanumeric from 'validator/es/lib/isAlphanumeric'
@@ -103,6 +103,7 @@ const User = () => {
     },
     [user, showFilter, userId, setFilter, filterUser, store, listRef],
   )
+  const onChange = useCallback((val) => setPwd(val), [])
 
   if (!showFilter && !userId) return null
 
@@ -133,12 +134,14 @@ const User = () => {
                 value={pwd}
                 field="pwd"
                 label="Passwort"
+                onChange={onChange}
                 saveToDb={saveToDb}
                 error={errors.pwd}
                 spellCheck="false"
                 component={
                   (pwd ?? '').length && (
                     <Checks>
+                      <div>Anforderungen:</div>
                       <div>{`${
                         hasLetter() ? '✅' : '⛔️'
                       } Enthält Buchstaben`}</div>
