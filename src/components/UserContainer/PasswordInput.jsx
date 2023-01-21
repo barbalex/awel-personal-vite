@@ -33,7 +33,6 @@ const SharedInput = ({
         // encrypt password
         newValue = await window.electronAPI.encryptString(newValue)
       }
-      console.log('Input, onBlur', { newValue, value: event.target.value })
       saveToDb({ value: newValue, field: 'pwd' })
       setDirty(false)
     },
