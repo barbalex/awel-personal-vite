@@ -8,6 +8,7 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import storeContext from '../../storeContext'
 import addPerson from '../../src/addPerson'
 import setPersonDeleted from '../../src/setPersonDeleted'
+import fetchPersonen from '../../src/fetchPersonen'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -48,6 +49,7 @@ const Person = () => {
   )
   const deletePerson = useCallback(() => {
     const activePerson = personen.find((p) => p.id === +personId)
+    console.log('Person, activePerson:', activePerson)
     if (activePerson.deleted === 1) {
       // person.deleted is already = 1
       // prepare true deletion
@@ -55,6 +57,7 @@ const Person = () => {
         store.deletePerson(+personId)
         setDeletionMessage(null)
         setDeletionTitle(null)
+        fetchPersonen({ store })
       })
       const name = activePerson.name
         ? `"${activePerson.name} ${activePerson.vorname}"`
@@ -65,29 +68,31 @@ const Person = () => {
         `${name} war schon gelöscht. Wenn Sie ${namer1} nochmals löschen, wird ${namer2} endgültig und unwiederbringlich gelöscht. Möchten Sie das?`,
       )
       setDeletionTitle('Person unwiederbringlich löschen')
-    } else {
-      // do not true delete yet
-      // only set person.deleted = 1
-      setDeletionCallback(() => {
-        setPersonDeleted({ id: +personId, store })
-        setDeletionMessage(null)
-        setDeletionTitle(null)
-      })
-      setDeletionMessage(
-        `${
-          activePerson.name
-            ? `"${activePerson.name} ${activePerson.vorname}"`
-            : 'Diesen Datensatz'
-        } wirklich löschen?`,
-      )
-      setDeletionTitle('Person löschen')
+
+      return
     }
+    // soft delete
+    // only set person.deleted = 1
+    setDeletionCallback(() => {
+      setPersonDeleted({ id: +personId, store })
+      setDeletionMessage(null)
+      setDeletionTitle(null)
+      fetchPersonen({ store })
+    })
+    setDeletionMessage(
+      `${
+        activePerson.name
+          ? `"${activePerson.name} ${activePerson.vorname}"`
+          : 'Diesen Datensatz'
+      } wirklich löschen?`,
+    )
+    setDeletionTitle('Person löschen')
   }, [
     personen,
-    personId,
     setDeletionCallback,
     setDeletionMessage,
     setDeletionTitle,
+    personId,
     store,
   ])
 
