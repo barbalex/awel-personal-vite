@@ -49,6 +49,8 @@ const Login = () => {
 
   const inputRef = useRef()
 
+  console.log('Login, userPwd:', userPwd)
+
   useEffect(() => {
     setTimeout(() => {
       console.log('effect, will focus inputRef:', inputRef.current)
@@ -61,8 +63,11 @@ const Login = () => {
 
   const onChange = useCallback((e) => setValue(e.target.value), [])
   const onBlur = useCallback(() => {
-    if (!value || value !== userPwd) {
+    if (!!value && value !== userPwd) {
       return setErrorMsg('Das Passwort ist falsch')
+    }
+    if (!value) {
+      return setErrorMsg('Bitte Passwort eingeben')
     }
 
     setErrorMsg(undefined)
