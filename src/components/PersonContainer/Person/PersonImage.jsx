@@ -72,7 +72,7 @@ const PersonImage = () => {
   const { showFilter, personen } = store
   const person = personen.find((p) => p.id === +personId) || {}
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line
   const [errors, setErrors] = useState({})
   useEffect(() => {
     setErrors({})
