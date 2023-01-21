@@ -9,7 +9,7 @@ const NonRowLabel = styled(Label)`
   margin-bottom: 3px;
 `
 const StyledFormGroup = styled(FormGroup)`
-  margin-bottom: ${props => (props.row ? '16px' : '8px !important')};
+  margin-bottom: ${(props) => (props.row ? '16px' : '8px !important')};
 `
 
 const SharedInput = ({
@@ -23,6 +23,8 @@ const SharedInput = ({
   saveToDb,
   error,
   row = true,
+  component,
+  spellCheck = true,
 }) => {
   const store = useContext(storeContext)
   const { showFilter, setDirty } = store
@@ -31,12 +33,12 @@ const SharedInput = ({
   )
 
   const onBlur = useCallback(
-    event => {
+    (event) => {
       let newValue = event.target.value
       // save nulls if empty
       if (newValue === '') newValue = null
       // only save if value has changed
-      if (!showFilter && (!newValue && !value && value !== 0 && newValue !== 0))
+      if (!showFilter && !newValue && !value && value !== 0 && newValue !== 0)
         return
       if (!showFilter && newValue === value) return
       saveToDb({ value: newValue, field })
@@ -45,7 +47,7 @@ const SharedInput = ({
     [field, saveToDb, setDirty, showFilter, value],
   )
   const onChange = useCallback(
-    event => {
+    (event) => {
       setStateValue(event.target.value)
       if (event.target.value !== value) setDirty(true)
       if (showFilter) {
@@ -81,8 +83,10 @@ const SharedInput = ({
               onBlur={onBlur}
               rows={rows}
               invalid={!!error}
+              spellCheck={spellCheck}
             />
             <FormFeedback>{error}</FormFeedback>
+            {component && component}
           </Col>
         </>
       ) : (

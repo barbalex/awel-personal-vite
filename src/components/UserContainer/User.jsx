@@ -1,9 +1,10 @@
 import React, { useContext, useCallback, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
-import { Form } from 'reactstrap'
+import { Form, Col, FormGroup, Label } from 'reactstrap'
 import findIndex from 'lodash/findIndex'
 import { useParams, useOutletContext } from 'react-router-dom'
+import isAlphanumeric from 'validator/es/lib/isAlphanumeric'
 
 import ErrorBoundary from '../shared/ErrorBoundary'
 import Input from '../shared/Input'
@@ -15,6 +16,9 @@ import updateField from '../../src/updateField'
 const Container = styled.div``
 const StyledForm = styled(Form)`
   margin: 20px;
+`
+const Checks = styled.div`
+  padding: 5px 5px 5px 0;
 `
 
 const User = () => {
@@ -49,6 +53,18 @@ const User = () => {
       .decryptString(user.pwd)
       .then((decrypted) => setPwd(decrypted))
   }, [user.pwd])
+
+  const hasLetter = useCallback(() => /[a-zA-Z]/g.test(pwd), [pwd])
+  const hasUppercase = useCallback(() => pwd.toLowerCase() !== pwd, [pwd])
+  const hasLowercase = useCallback(() => pwd.toUpperCase() !== pwd, [pwd])
+  // https://stackoverflow.com/a/28813213/712005
+  const hasNumber = useCallback(() => /\d/.test(pwd), [pwd])
+  const hasSpecial = useCallback(() => !isAlphanumeric(pwd, 'de-DE'), [pwd])
+  const minLength = user?.isAdmin ? 12 : 8
+  const hasMinLength = useCallback(
+    () => pwd?.length >= minLength,
+    [minLength, pwd?.length],
+  )
 
   const saveToDb = useCallback(
     async ({ field, value }) => {
@@ -102,16 +118,6 @@ const User = () => {
             saveToDb={saveToDb}
             error={errors.name}
           />
-          {!showFilter && (
-            <Input
-              key={`${userId}pwd`}
-              value={pwd}
-              field="pwd"
-              label="Passwort"
-              saveToDb={saveToDb}
-              error={errors.pwd}
-            />
-          )}
           <SharedCheckbox
             key={`${userId}isAdmin`}
             value={user.isAdmin}
@@ -120,6 +126,43 @@ const User = () => {
             saveToDb={saveToDb}
             error={errors.isAdmin}
           />
+          {!showFilter && (
+            <>
+              <Input
+                key={`${userId}pwd`}
+                value={pwd}
+                field="pwd"
+                label="Passwort"
+                saveToDb={saveToDb}
+                error={errors.pwd}
+                spellCheck="false"
+                component={
+                  (pwd ?? '').length && (
+                    <Checks>
+                      <div>{`${
+                        hasLetter() ? '✅' : '⛔️'
+                      } Enthält Buchstaben`}</div>
+                      <div>{`${
+                        hasUppercase() ? '✅' : '⛔️'
+                      } Enthält Gross-Buchstaben`}</div>
+                      <div>{`${
+                        hasLowercase() ? '✅' : '⛔️'
+                      } Enthält Klein-Buchstaben`}</div>
+                      <div>{`${
+                        hasNumber() ? '✅' : '⛔️'
+                      } Enthält Nummern`}</div>
+                      <div>{`${
+                        hasSpecial() ? '✅' : '⛔️'
+                      } Enthält Sonderzeichen`}</div>
+                      <div>{`${
+                        hasMinLength() ? '✅' : '⛔️'
+                      } Enthält mindestens ${minLength} Zeichen`}</div>
+                    </Checks>
+                  )
+                }
+              />
+            </>
+          )}
           {!showFilter && <Zuletzt row={user} />}
         </StyledForm>
       </Container>
