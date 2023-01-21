@@ -1,4 +1,4 @@
-import { useContext, useCallback, useState, useEffect, useRef } from 'react'
+import { useContext, useCallback, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { FormGroup, Input, FormFeedback, Button } from 'reactstrap'
 import { observer } from 'mobx-react-lite'
@@ -47,16 +47,7 @@ const Login = () => {
 
   const navigate = useNavigate()
 
-  const inputRef = useRef()
-
   console.log('Login, userPwd:', userPwd)
-
-  useEffect(() => {
-    setTimeout(() => {
-      console.log('effect, will focus inputRef:', inputRef.current)
-      inputRef.current?.focus?.()
-    })
-  }, [])
 
   const [errorMsg, setErrorMsg] = useState()
   const [value, setValue] = useState('')
@@ -103,7 +94,6 @@ const Login = () => {
       <StyledFormGroup>
         <StyledInput
           value={value}
-          innerRef={inputRef}
           type="password"
           onChange={onChange}
           onBlur={onBlur}

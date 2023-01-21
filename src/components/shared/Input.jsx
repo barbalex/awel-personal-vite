@@ -21,11 +21,8 @@ const SharedInput = ({
   placeholder = '',
   disabled = false,
   saveToDb,
-  onChange: onChangePassed,
   error,
   row = true,
-  // good to pass validation checks, e.g. for password
-  component,
   spellCheck = true,
 }) => {
   const store = useContext(storeContext)
@@ -50,7 +47,6 @@ const SharedInput = ({
   )
   const onChange = useCallback(
     (event) => {
-      if (onChangePassed) onChangePassed(event.target.value)
       setStateValue(event.target.value)
       if (event.target.value !== value) setDirty(true)
       if (showFilter) {
@@ -58,7 +54,7 @@ const SharedInput = ({
         onBlur(event)
       }
     },
-    [onBlur, onChangePassed, setDirty, showFilter, value],
+    [onBlur, setDirty, showFilter, value],
   )
 
   // need this check because of filtering:
@@ -89,7 +85,6 @@ const SharedInput = ({
               spellCheck={spellCheck}
             />
             <FormFeedback>{error}</FormFeedback>
-            {!!component && component}
           </Col>
         </>
       ) : (
