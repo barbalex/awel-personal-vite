@@ -3,7 +3,7 @@ const addAbteilung = async ({ store, navigate }) => {
   let info
   try {
     info = await window.electronAPI.editWithParam(
-      `insert into abteilungen (letzteMutationUser, letzteMutationZeit, amt) values (@user, @zeit, @amt)', 1)`,
+      `insert into abteilungen (letzteMutationUser, letzteMutationZeit, amt) values (@user, @zeit, @amt)`,
       { user: store.username, zeit: Date.now(), amt: 1 },
     )
   } catch (error) {
