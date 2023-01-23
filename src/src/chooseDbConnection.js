@@ -1,10 +1,8 @@
-import chooseDb from './chooseDb'
-
 const chooseDbConnection = async () => {
   const config = await window.electronAPI.getConfig()
   let dbPath
   try {
-    dbPath = await chooseDb()
+    dbPath = await window.electronAPI.openDialogGetPath()
   } catch (chooseError) {
     return console.log('Error after choosing db:', chooseError)
   }
