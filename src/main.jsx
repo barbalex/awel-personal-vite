@@ -34,7 +34,6 @@ const root = createRoot(container)
 const run = async () => {
   const store = createStore().create()
   const { setUsername, setUserIsAdmin, setUserPwd } = store
-  watchMutations({ store })
 
   const { userName, isAdmin, pwd } = await window.electronAPI.getUser()
   setUsername(userName ?? '(Benutzer nicht erkannt)')
@@ -72,6 +71,8 @@ const run = async () => {
   fetchKaderFunktionen({ store })
   fetchSettings({ store })
   fetchUsers({ store })
+
+  watchMutations({ store })
 
   root.render(
     <StoreContextProvider value={store}>
