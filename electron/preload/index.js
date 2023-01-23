@@ -6,8 +6,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getConfig: () => ipcRenderer.invoke('get-config'),
   saveConfig: (config) => ipcRenderer.invoke('save-config', config),
   reloadMainWindow: () => ipcRenderer.invoke('reload-main-window'),
-  openDialogGetPath: (options) =>
-    ipcRenderer.invoke('open-dialog-get-path', options),
+  openDialogGetPath: () => ipcRenderer.invoke('open-dialog-get-path'),
   openUrl: (path) => ipcRenderer.invoke('open-url', path),
   saveFile: (path, data) => ipcRenderer.invoke('save-file', path, data),
   saveDialogGetPath: (options) =>
