@@ -20,8 +20,7 @@
     "build": "tsc && vite build && electron-builder",
     "preinstall": "cross-env-shell npm install better-sqlite3 --no-save --build-from-source --sqlite3=\"$INIT_CWD/sqlite-amalgamation\" --runtime=electron --target=22.0.3 --dist-url=https://electronjs.org/headers --force",
     "preview": "vite preview",
-    "e2e": "npx playwright test",
-    "createEncryptedDb": "node createEncryptedDb.js"
+    "e2e": "npx playwright test"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.19.1",
