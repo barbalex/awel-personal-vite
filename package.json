@@ -52,7 +52,6 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "exceljs": "4.3.0",
     "file-loader": "6.2.0",
-    "javascript-obfuscator": "4.0.0",
     "jquery": "3.6.3",
     "mobx": "6.7.0",
     "mobx-react-lite": "3.4.0",

@@ -11,7 +11,7 @@ const {
 const fs = require('fs-extra')
 const path = require('path')
 const Database = require('better-sqlite3')
-// const JavaScriptObfuscator = require('javascript-obfuscator')
+const dbKey = require('../../db_key')
 
 // The built directory structure
 //
@@ -174,17 +174,12 @@ try {
   }
 }
 
-const key = 'secret'
-db.pragma(`key='${key}'`)
-// console.log('index.js', {
-//   key,
-//   dbPath,
-//   keyRes,
-// })
-// const obfuscatedResult = JavaScriptObfuscator.obfuscate(`()=> '${key}'`)
-// console.log('index.js, obfuscatedKey:', obfuscatedResult.toString())
-
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  // safeStorage cannot be used before app is ready
+  const key = safeStorage.decryptString(Buffer.from(dbKey))
+  db.pragma(`key='${key}'`)
+  createWindow()
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
