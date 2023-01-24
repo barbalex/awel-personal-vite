@@ -17,22 +17,30 @@
 ** by "src/shell.c.in", then rerun the tool/mkshellc.tcl script.
 */
 /*
-** 2001 September 15
+** Copyright (c) 2004-2008 Hipp, Wyrick & Company, Inc.
+** 6200 Maple Cove Lane, Charlotte, NC 28269 USA
+** +1.704.948.4565
 **
-** The author disclaims copyright to this source code.  In place of
-** a legal notice, here is a blessing:
+** All rights reserved.
 **
-**    May you do good and not evil.
-**    May you find forgiveness for yourself and forgive others.
-**    May you share freely, never taking more than you give.
+** This file implements a proprietary version of SQLite that support
+** reading and writing encrypted database files.  The core SQLite is
+** public domain software.  However, this file contains proprietary
+** extensions.
 **
-*************************************************************************
-** This file contains code to implement the "sqlite" command line
-** utility for accessing SQLite databases.
+** If you are reading this file, you should have a license.  If you do
+** not have a license for the SQLite Encryption Extension, please contact
+** the copyright holder above.
 */
 #if (defined(_WIN32) || defined(WIN32)) && !defined(_CRT_SECURE_NO_WARNINGS)
 /* This needs to come before any includes for MSVC compiler */
 #define _CRT_SECURE_NO_WARNINGS
+#endif
+#if !defined(SQLITE_OMIT_CODEC) && !defined(SQLITE_ENABLE_CEROD)
+#define SQLITE_HAS_CODEC 1
+#endif
+#ifdef SQLITE_HAS_CODEC
+extern const char *sqlite3_see_style(void);
 #endif
 typedef unsigned int u32;
 typedef unsigned short int u16;
@@ -725,6 +733,37 @@ static char *local_getline(char *zLine, FILE *in){
 #endif /* defined(_WIN32) || defined(WIN32) */
   return zLine;
 }
+
+#ifdef SQLITE_HAS_CODEC
+/*
+** Translate a single byte of Hex into an integer.
+*/
+static int shellHexToInt(int h){
+  if( h>='0' && h<='9' ){
+    return h - '0';
+  }else if( h>='a' && h<='f' ){
+    return h - 'a' + 10;
+  }else{
+    assert( h>='A' && h<='F' );
+    return h - 'A' + 10;
+  }
+}
+
+/*
+** Try to translate the string in the buffer from hex into binary.
+** Return the number of bytes of binary.  Return -1 if the input
+** string is not pure hex.
+*/
+static int shellHexToBin(char *z){
+  int i = 0, j = 0;
+ 
+  while( isxdigit(z[i]) && isxdigit(z[i+1]) ){
+    z[j++] = (shellHexToInt(z[i])<<4) | shellHexToInt(z[i+1]);
+    i += 2;
+  }
+  return z[i]!=0 ? -1 : j;
+}
+#endif /* SQLITE_HAS_CODEC */
 
 /*
 ** Retrieve a single line of input text.
@@ -3930,7 +3969,7 @@ static unsigned re_next_char(ReInput *p){
       c = (c&0x0f)<<12 | ((p->z[p->i]&0x3f)<<6) | (p->z[p->i+1]&0x3f);
       p->i += 2;
       if( c<=0x7ff || (c>=0xd800 && c<=0xdfff) ) c = 0xfffd;
-    }else if( (c&0xf8)==0xf0 && p->i+2<p->mx && (p->z[p->i]&0xc0)==0x80
+    }else if( (c&0xf8)==0xf0 && p->i+3<p->mx && (p->z[p->i]&0xc0)==0x80
            && (p->z[p->i+1]&0xc0)==0x80 && (p->z[p->i+2]&0xc0)==0x80 ){
       c = (c&0x07)<<18 | ((p->z[p->i]&0x3f)<<12) | ((p->z[p->i+1]&0x3f)<<6)
                        | (p->z[p->i+2]&0x3f);
@@ -4457,15 +4496,15 @@ static const char *re_compile(ReCompiled **ppRe, const char *zIn, int noCase){
   ** one or more matching characters, enter those matching characters into
   ** zInit[].  The re_match() routine can then search ahead in the input 
   ** string looking for the initial match without having to run the whole
-  ** regex engine over the string.  Do not worry about trying to match
+  ** regex engine over the string.  Do not worry able trying to match
   ** unicode characters beyond plane 0 - those are very rare and this is
   ** just an optimization. */
   if( pRe->aOp[0]==RE_OP_ANYSTAR && !noCase ){
     for(j=0, i=1; j<(int)sizeof(pRe->zInit)-2 && pRe->aOp[i]==RE_OP_MATCH; i++){
       unsigned x = pRe->aArg[i];
-      if( x<=0x7f ){
+      if( x<=127 ){
         pRe->zInit[j++] = (unsigned char)x;
-      }else if( x<=0x7ff ){
+      }else if( x<=0xfff ){
         pRe->zInit[j++] = (unsigned char)(0xc0 | (x>>6));
         pRe->zInit[j++] = 0x80 | (x&0x3f);
       }else if( x<=0xffff ){
@@ -14629,7 +14668,6 @@ static void recoverFinalCleanup(sqlite3_recover *p){
   p->pTblList = 0;
   sqlite3_finalize(p->pGetPage);
   p->pGetPage = 0;
-  sqlite3_file_control(p->dbIn, p->zDb, SQLITE_FCNTL_RESET_CACHE, 0);
 
   {
 #ifndef NDEBUG
@@ -14928,7 +14966,6 @@ static int recoverVfsRead(sqlite3_file *pFd, void *aBuf, int nByte, i64 iOff){
       **
       **   + first freelist page (32-bits at offset 32)
       **   + size of freelist (32-bits at offset 36)
-      **   + the wal-mode flags (16-bits at offset 18)
       **
       ** We also try to preserve the auto-vacuum, incr-value, user-version
       ** and application-id fields - all 32 bit quantities at offsets 
@@ -14992,8 +15029,7 @@ static int recoverVfsRead(sqlite3_file *pFd, void *aBuf, int nByte, i64 iOff){
       if( p->pPage1Cache ){
         p->pPage1Disk = &p->pPage1Cache[nByte];
         memcpy(p->pPage1Disk, aBuf, nByte);
-        aHdr[18] = a[18];
-        aHdr[19] = a[19];
+
         recoverPutU32(&aHdr[28], dbsz);
         recoverPutU32(&aHdr[56], enc);
         recoverPutU16(&aHdr[105], pgsz-nReserve);
@@ -15189,7 +15225,6 @@ static void recoverStep(sqlite3_recover *p){
       recoverOpenOutput(p);
 
       /* Open transactions on both the input and output databases. */
-      sqlite3_file_control(p->dbIn, p->zDb, SQLITE_FCNTL_RESET_CACHE, 0);
       recoverExec(p, p->dbIn, "PRAGMA writable_schema = on");
       recoverExec(p, p->dbIn, "BEGIN");
       if( p->errCode==SQLITE_OK ) p->bCloseTransaction = 1;
@@ -15582,6 +15617,8 @@ struct ShellState {
     sqlite3 *db;               /* Connection pointer */
     const char *zDbFilename;   /* Filename used to open the connection */
     char *zFreeOnClose;        /* Free this memory allocation on close */
+    char *zKey;                /* Encryption key */
+    int nKey;                  /* Size of the key */
 #if defined(SQLITE_ENABLE_SESSION)
     int nSession;              /* Number of active sessions */
     OpenSession aSession[4];   /* Array of sessions.  [0] is in focus. */
@@ -16279,7 +16316,7 @@ static int safeModeAuth(
     "zipfile",
     "zipfile_cds",
   };
-  UNUSED_PARAMETER(zA1);
+  UNUSED_PARAMETER(zA2);
   UNUSED_PARAMETER(zA3);
   UNUSED_PARAMETER(zA4);
   switch( op ){
@@ -16294,7 +16331,7 @@ static int safeModeAuth(
     case SQLITE_FUNCTION: {
       int i;
       for(i=0; i<ArraySize(azProhibitedFunctions); i++){
-        if( sqlite3_stricmp(zA2, azProhibitedFunctions[i])==0 ){
+        if( sqlite3_stricmp(zA1, azProhibitedFunctions[i])==0 ){
           failIfSafeMode(p, "cannot use the %s() function in safe mode",
                          azProhibitedFunctions[i]);
         }
@@ -18804,6 +18841,10 @@ static const char *(azHelp[]) = {
   ".fullschema ?--indent?   Show schema and the content of sqlite_stat tables",
   ".headers on|off          Turn display of headers on or off",
   ".help ?-all? ?PATTERN?   Show help text for PATTERN",
+#ifdef SQLITE_HAS_CODEC
+  ".hex-rekey OLD NEW NEW   Change the encryption key using hexadecimal",
+#endif
+  ".import FILE TABLE       Import data from FILE into TABLE",
 #ifndef SQLITE_SHELL_FIDDLE
   ".import FILE TABLE       Import data from FILE into TABLE",
   "   Options:",
@@ -18885,9 +18926,16 @@ static const char *(azHelp[]) = {
   "        --hexdb         Load the output of \"dbtotxt\" as an in-memory db",
   "        --maxsize N     Maximum size for --hexdb or --deserialized database",
 #endif
+#ifdef SQLITE_HAS_CODEC
+  "        --hexkey HEX    Encryption key as hexadecimal",
+  "        --key KEY       Encryption key as text",
+#endif
   "        --new           Initialize FILE to an empty database",
   "        --nofollow      Do not follow symbolic links",
   "        --readonly      Open FILE readonly",
+#ifdef SQLITE_HAS_CODEC
+  "        --textkey KEY   Use a hash of KEY as the encryption key",
+#endif
   "        --zip           FILE is a ZIP archive",
 #ifndef SQLITE_SHELL_FIDDLE
   ".output ?FILE?           Send output to FILE or stdout if FILE is omitted",
@@ -18924,6 +18972,9 @@ static const char *(azHelp[]) = {
   "   --lost-and-found TABLE   Alternative name for the lost-and-found table",
   "   --no-rowids              Do not attempt to recover rowid values",
   "                            that are not also INTEGER PRIMARY KEYs",
+#endif
+#ifdef SQLITE_HAS_CODEC
+  ".rekey OLD NEW NEW     Change the encryption key",
 #endif
 #ifndef SQLITE_SHELL_FIDDLE
   ".restore ?DB? FILE       Restore content of DB (default \"main\") from FILE",
@@ -18980,6 +19031,9 @@ static const char *(azHelp[]) = {
 #endif
   ".testctrl CMD ...        Run various sqlite3_test_control() operations",
   "                           Run \".testctrl\" with no arguments for details",
+#ifdef SQLITE_HAS_CODEC
+  ".text-rekey OLD NEW NEW  Change the encryption key using hexadecimal",
+#endif
   ".timeout MS              Try opening locked tables for MS milliseconds",
   ".timer on|off            Turn SQL timer on or off",
 #ifndef SQLITE_OMIT_TRACE
@@ -19510,6 +19564,14 @@ static void open_db(ShellState *p, int openFlags){
       }
     }
     globalDb = p->db;
+#ifdef SQLITE_HAS_CODEC
+    if( p->pAuxDb->zDbFilename
+     && p->pAuxDb->zDbFilename[0] 
+     && 0!=sqlite3_strglob("file:*[?]*key=*", p->pAuxDb->zDbFilename)
+    ){
+      sqlite3_key(p->db, p->pAuxDb->zKey, p->pAuxDb->nKey);
+    }
+#endif
     if( p->db==0 || SQLITE_OK!=sqlite3_errcode(p->db) ){
       utf8_printf(stderr,"Error: unable to open database \"%s\": %s\n",
           zDbFilename, sqlite3_errmsg(p->db));
@@ -19868,7 +19930,6 @@ static void test_breakpoint(void){
   static int nCall = 0;
   nCall++;
 }
-
 /*
 ** An object used to read a CSV and other files for import.
 */
@@ -21767,6 +21828,30 @@ static int recoverDatabaseCmd(ShellState *pState, int nArg, char **azArg){
 }
 #endif /* SQLITE_SHELL_HAVE_RECOVER */
 
+#ifdef SQLITE_HAS_CODEC
+/*
+** Compare the string in zKey against the current encryption key stored
+** in p.  Return 1 if they match.  Return 0 if they differ.
+*/
+static int shellKeyMatch(ShellState *p, char *zKey){
+  int n;
+  struct AuxDb *pAuxDb = p->pAuxDb;
+  if( zKey[0]==0 ){
+    if( pAuxDb->nKey ) return 0;
+    return 1;
+  }
+  if( pAuxDb->nKey==0 ) return 0;
+  if( pAuxDb->nKey<0 ){
+    return cli_strcmp(pAuxDb->zKey, zKey)==0;
+  }
+  n = strlen30(zKey);
+  if( pAuxDb->nKey==n && memcmp(pAuxDb->zKey,zKey,n)==0 ) return 1;
+  if( pAuxDb->nKey==n/2
+   && pAuxDb->nKey==shellHexToBin(zKey)
+   && memcmp(pAuxDb->zKey,zKey,pAuxDb->nKey)==0 ) return 1;
+  return 0;
+}
+#endif /* SQLITE_HAS_CODEC */
 
 /*
  * zAutoColumn(zCol, &db, ?) => Maybe init db, add column zCol to it.
@@ -22069,6 +22154,10 @@ static int do_meta_command(char *zLine, ShellState *p){
   ){
     const char *zDestFile = 0;
     const char *zDb = 0;
+#ifdef SQLITE_HAS_CODEC
+    char *zKey = 0;   /* Encryption key */
+    int nKey = 0;     /* Size of the encryption key */
+#endif
     sqlite3 *pDest;
     sqlite3_backup *pBackup;
     int j;
@@ -22085,6 +22174,25 @@ static int do_meta_command(char *zLine, ShellState *p){
         if( cli_strcmp(z, "-async")==0 ){
           bAsync = 1;
         }else
+#ifdef SQLITE_HAS_CODEC
+        if( j<nArg-1
+         && (cli_strcmp(z,"key")==0 || cli_strcmp(z,"hexkey")==0
+              || cli_strcmp(z,"textkey")==0)
+        ){
+          zKey = azArg[++j];
+          if( z[0]=='k' ){
+            nKey = strlen30(zKey);
+          }else if( z[0]=='t' ){
+            nKey = -1;
+          }else{
+            nKey = shellHexToBin(zKey);
+            if( nKey<=0 ){
+              utf8_printf(stderr, "invalid hexkey\n");
+              return 1;
+            }
+          }
+        }else
+#endif
         {
           utf8_printf(stderr, "unknown option: %s\n", azArg[j]);
           return 1;
@@ -22111,6 +22219,9 @@ static int do_meta_command(char *zLine, ShellState *p){
       close_db(pDest);
       return 1;
     }
+#ifdef SQLITE_HAS_CODEC
+    if( nKey!=0 ) sqlite3_key(pDest, zKey, nKey);
+#endif
     if( bAsync ){
       sqlite3_exec(pDest, "PRAGMA synchronous=OFF; PRAGMA journal_mode=OFF;",
                    0, 0, 0);
@@ -22239,6 +22350,7 @@ static int do_meta_command(char *zLine, ShellState *p){
       int i;
       for(i=0; i<ArraySize(p->aAuxDb); i++){
         const char *zFile = p->aAuxDb[i].zDbFilename;
+        char *zArg;
         if( p->aAuxDb[i].db==0 && p->pAuxDb!=&p->aAuxDb[i] ){
           zFile = "(not open)";
         }else if( zFile==0 ){
@@ -22246,11 +22358,20 @@ static int do_meta_command(char *zLine, ShellState *p){
         }else if( zFile[0]==0 ){
           zFile = "(temporary-file)";
         }
-        if( p->pAuxDb == &p->aAuxDb[i] ){
-          utf8_printf(stdout, "ACTIVE %d: %s\n", i, zFile);
-        }else if( p->aAuxDb[i].db!=0 ){
-          utf8_printf(stdout, "       %d: %s\n", i, zFile);
+        if( p->aAuxDb[i].nKey>0 ){
+          zArg = sqlite3_mprintf("%s --key %.*c", zFile, p->pAuxDb[i].nKey, '*');
+        }else if( p->aAuxDb[i].nKey<0 && p->aAuxDb[i].zKey ){
+          zArg = sqlite3_mprintf("%s --key %.*c", zFile,
+                       (int)strlen(p->pAuxDb[i].zKey), '*');
+        }else{
+          zArg = sqlite3_mprintf("%s", zFile);
         }
+        if( p->pAuxDb == &p->aAuxDb[i] ){
+          utf8_printf(stdout, "ACTIVE %d: %s\n", i, zArg);
+        }else if( p->aAuxDb[i].db!=0 ){
+          utf8_printf(stdout, "       %d: %s\n", i, zArg);
+        }
+        sqlite3_free(zArg);
       }
     }else if( nArg==2 && IsDigit(azArg[1][0]) && azArg[1][1]==0 ){
       int i = azArg[1][0] - '0';
@@ -22780,6 +22901,31 @@ static int do_meta_command(char *zLine, ShellState *p){
     }
   }else
 
+#ifdef SQLITE_HAS_CODEC
+  if( c=='h' && strncmp(azArg[0],"hex-rekey", n)==0 && nArg==4 ){
+    int m1, m2;
+
+    open_db(p, 0);
+    if( !!shellKeyMatch(p, azArg[1]) ){
+      utf8_printf(stderr, "old key is incorrect\n");
+    }else if( (m1 = shellHexToBin(azArg[2]))<0 ){
+      utf8_printf(stderr, "second parameter is not a hexadecimal key\n");
+    }else if( (m2 = shellHexToBin(azArg[3]))<0 ){
+      utf8_printf(stderr, "third parameter is not a hexadecimal key\n");
+    }else if( m1!=m2 || memcmp(azArg[2], azArg[3], m1)!=0 ){
+      utf8_printf(stderr, "copies of the new key do not match\n");
+    }else{
+      struct AuxDb *pAuxDb = p->pAuxDb;
+      free(pAuxDb->zKey);
+      pAuxDb->zKey = malloc( m1 );
+      if( pAuxDb->zKey==0 ) shell_out_of_memory();
+      memcpy(pAuxDb->zKey, azArg[2], m1);
+      pAuxDb->nKey = m1;
+      sqlite3_rekey(p->db, pAuxDb->zKey, pAuxDb->nKey);
+    }
+  }else
+#endif
+
 #ifndef SQLITE_SHELL_FIDDLE
   if( c=='i' && cli_strncmp(azArg[0], "import", n)==0 ){
     char *zTable = 0;           /* Insert data into this table */
@@ -23176,6 +23322,7 @@ static int do_meta_command(char *zLine, ShellState *p){
   }else
 #endif /* !defined(SQLITE_OMIT_TEST_CONTROL) */
 
+
 #ifdef SQLITE_ENABLE_IOTRACE
   if( c=='i' && cli_strncmp(azArg[0], "iotrace", n)==0 ){
     SQLITE_API extern void (SQLITE_CDECL *sqlite3IoTrace)(const char*, ...);
@@ -23462,6 +23609,27 @@ static int do_meta_command(char *zLine, ShellState *p){
 #ifndef SQLITE_SHELL_FIDDLE
       if( optionMatch(z,"new") ){
         newFlag = 1;
+#ifdef SQLITE_HAS_CODEC
+      }else if( optionMatch(z,"key") ){
+        struct AuxDb *pAuxDb = p->pAuxDb;
+        free(pAuxDb->zKey);
+        pAuxDb->zKey = strdup(azArg[++iName]);
+        pAuxDb->nKey = strlen30(pAuxDb->zKey);
+      }else if( optionMatch(z,"hexkey") ){
+        struct AuxDb *pAuxDb = p->pAuxDb;
+        free(pAuxDb->zKey);
+        pAuxDb->zKey = strdup(azArg[++iName]);
+        pAuxDb->nKey = shellHexToBin(pAuxDb->zKey);
+        if( pAuxDb->nKey<=0 ){
+          utf8_printf(stderr, "invalid hexkey\n");
+          pAuxDb->nKey = 0;
+        }
+      }else if( optionMatch(z, "textkey") ){
+        struct AuxDb *pAuxDb = p->pAuxDb;
+        free(pAuxDb->zKey);
+        pAuxDb->zKey = strdup(azArg[++iName]);
+        pAuxDb->nKey = -1;
+#endif
 #ifdef SQLITE_HAVE_ZLIB
       }else if( optionMatch(z, "zip") ){
         openMode = SHELL_OPEN_ZIPFILE;
@@ -23871,6 +24039,28 @@ static int do_meta_command(char *zLine, ShellState *p){
     p->lineno = savedLineno;
   }else
 #endif /* !defined(SQLITE_SHELL_FIDDLE) */
+
+#ifdef SQLITE_HAS_CODEC
+  if( (c=='r' && n>=3 && strncmp(azArg[0],"rekey", n)==0 && nArg==4)
+   || (c=='t' && n>=7 && strncmp(azArg[0],"text-rekey", n)==0 && nArg==4)
+  ){
+    open_db(p, 0);
+    if( !shellKeyMatch(p, azArg[1]) ){
+      utf8_printf(stderr,"old key is incorrect\n");
+    }else if( cli_strcmp(azArg[2], azArg[3]) ){
+      utf8_printf(stderr,"2nd copy of new key does not match the 1st\n");
+    }else{
+      struct AuxDb *pAuxDb;
+      open_db(p, 0);
+      pAuxDb = p->pAuxDb;
+      free(pAuxDb->zKey);
+      pAuxDb->zKey = strdup(azArg[2]);
+      pAuxDb->nKey = strlen30(pAuxDb->zKey);
+      if( c=='t' && pAuxDb->nKey>0 ) pAuxDb->nKey = -1;
+      sqlite3_rekey(p->db, pAuxDb->zKey, pAuxDb->nKey);
+    }
+  }else
+#endif
 
 #ifndef SQLITE_SHELL_FIDDLE
   if( c=='r' && n>=3 && cli_strncmp(azArg[0], "restore", n)==0 ){
@@ -25725,8 +25915,14 @@ static const char zOptions[] =
   "   -heap SIZE           Size of heap for memsys3 or memsys5\n"
 #endif
   "   -help                show this message\n"
+#ifdef SQLITE_HAS_CODEC
+  "   -hexkey KEY          hexadecimal encryption key\n"
+#endif
   "   -html                set output mode to HTML\n"
   "   -interactive         force interactive I/O\n"
+#ifdef SQLITE_HAS_CODEC
+  "   -key KEY             raw encryption key\n"
+#endif
   "   -json                set output mode to 'json'\n"
   "   -line                set output mode to 'line'\n"
   "   -list                set output mode to 'list'\n"
@@ -25753,6 +25949,9 @@ static const char zOptions[] =
   "   -sorterref SIZE      sorter references threshold size\n"
 #endif
   "   -stats               print memory stats before each finalize\n"
+#ifdef SQLITE_HAS_CODEC
+  "   -textkey PASSPHRASE  text to be hashed into the encryption key\n"
+#endif
   "   -table               set output mode to 'table'\n"
   "   -tabs                set output mode to 'tabs'\n"
   "   -version             show SQLite version\n"
@@ -25925,6 +26124,7 @@ int SQLITE_CDECL wmain(int argc, wchar_t **wargv){
     exit(1);
   }
 #endif
+
   main_init(&data);
 
   /* On Windows, we must translate command-line arguments into UTF-8.
@@ -25976,6 +26176,14 @@ int SQLITE_CDECL wmain(int argc, wchar_t **wargv){
     warnInmemoryDb = 0;
   }
 #endif
+#if defined(SQLITE_HAS_CODEC) && defined(SQLITE_SHELL_DBKEY_PROC)
+  {
+    /* If the SQLITE_SHELL_DBKEY_PROC macro is defined, then it is the name
+    ** of a C-function that will provide the key for the database file. */
+    extern void SQLITE_SHELL_DBKEY_PROC(char**, int*);
+    SQLITE_SHELL_DBKEY_PROC(&data.aAuxDb[0].zKey, &data.aAuxDb[0].nKey);
+  }
+#endif
 
   /* Do an initial pass through the command-line argument to locate
   ** the name of the database file, the name of the initialization file,
@@ -26008,6 +26216,21 @@ int SQLITE_CDECL wmain(int argc, wchar_t **wargv){
       (void)cmdline_option_value(argc, argv, ++i);
     }else if( cli_strcmp(z,"-init")==0 ){
       zInitFile = cmdline_option_value(argc, argv, ++i);
+#ifdef SQLITE_HAS_CODEC
+    }else if( cli_strcmp(z,"-key")==0 ){
+      data.aAuxDb[0].zKey = strdup(cmdline_option_value(argc,argv,++i));
+      data.aAuxDb[0].nKey = strlen(data.aAuxDb[0].zKey);
+    }else if( cli_strcmp(z,"-hexkey")==0 ){
+      data.aAuxDb[0].zKey = strdup(cmdline_option_value(argc,argv,++i));
+      data.aAuxDb[0].nKey = shellHexToBin(data.aAuxDb[0].zKey);
+      if( data.aAuxDb[0].nKey<0 ){
+        fprintf(stderr, "%s: invalid key string\n", argv[0]);
+        exit(1);
+      }
+    }else if( cli_strcmp(z,"-textkey")==0 ){
+      data.aAuxDb[0].zKey = strdup(cmdline_option_value(argc,argv,++i));
+      data.aAuxDb[0].nKey = -1;
+#endif
     }else if( cli_strcmp(z,"-batch")==0 ){
       /* Need to check for batch mode here to so we can avoid printing
       ** informational messages (like from process_sqliterc) before
@@ -26116,6 +26339,26 @@ int SQLITE_CDECL wmain(int argc, wchar_t **wargv){
   verify_uninitialized();
 
 
+  /* Initialize the CEROD extension if it is present.  If an
+  ** activation passphrase is required, supply it.
+  */
+#ifdef SQLITE_ENABLE_CEROD
+  {
+    extern void sqlite3_activate_cerod(const char*);
+    sqlite3_activate_cerod("7bb07b8d471d642e");
+  }
+#endif
+
+  /* If an activation phrase is required to enable the encryption
+  ** extension, then supply it.
+  */
+#if defined(SQLITE_DLL) && defined(SQLITE_HAS_CODEC)
+  {
+    extern void sqlite3_activate_see(const char*);
+    sqlite3_activate_see("7bb07b8d471d642e");
+  }
+#endif
+
 #ifdef SQLITE_SHELL_INIT_PROC
   {
     /* If the SQLITE_SHELL_INIT_PROC macro is defined, then it is the name
@@ -26136,7 +26379,7 @@ int SQLITE_CDECL wmain(int argc, wchar_t **wargv){
     if( pVfs ){
       sqlite3_vfs_register(pVfs, 1);
     }else{
-      utf8_printf(stderr, "no such VFS: \"%s\"\n", zVfs);
+      utf8_printf(stderr, "no such VFS: \"%s\"\n", argv[i]);
       exit(1);
     }
   }
@@ -26181,6 +26424,12 @@ int SQLITE_CDECL wmain(int argc, wchar_t **wargv){
     if( z[1]=='-' ){ z++; }
     if( cli_strcmp(z,"-init")==0 ){
       i++;
+#ifdef SQLITE_HAS_CODEC
+    }else if( cli_strcmp(z,"-key")==0
+           || cli_strcmp(z,"-hexkey")==0
+           || cli_strcmp(z,"-textkey")==0 ){
+      i++;
+#endif
     }else if( cli_strcmp(z,"-html")==0 ){
       data.mode = MODE_Html;
     }else if( cli_strcmp(z,"-list")==0 ){
@@ -26382,9 +26631,26 @@ int SQLITE_CDECL wmain(int argc, wchar_t **wargv){
       char *zHistory;
       int nHistory;
       printf(
-        "SQLite version %s %.19s\n" /*extra-version-info*/
+#if defined(SQLITE_HAS_CODEC) || defined(SQLITE_ENABLE_CEROD)
+#if !defined(SQLITE_ENABLE_CEROD)
+        "SQLite version %s %.19s with the Encryption (%s)\n"
+#elif !defined(SQLITE_HAS_CODEC)
+        "SQLite version %s %.19s with the CEROD\n"
+#else
+        "SQLite version %s %.19s with the Encryption (%s) and CEROD\n"
+#endif
+        "Copyright 2016 Hipp, Wyrick & Company, Inc.\n"
+#ifdef DEMO_ONLY
+        "*** Demonstration And Evaluation Use Only ***\n"
+#endif
+#else
+        "SQLite version %s %.19s\n"
+#endif
         "Enter \".help\" for usage hints.\n",
         sqlite3_libversion(), sqlite3_sourceid()
+#if defined(SQLITE_HAS_CODEC)
+        ,sqlite3_see_style()
+#endif
       );
       if( warnInmemoryDb ){
         printf("Connected to a ");
@@ -26434,6 +26700,9 @@ int SQLITE_CDECL wmain(int argc, wchar_t **wargv){
       session_close_all(&data, i);
       close_db(data.aAuxDb[i].db);
     }
+#ifdef SQLITE_HAS_CODEC
+    free(data.aAuxDb[i].zKey);
+#endif
   }
   find_home_dir(1);
   output_reset(&data);

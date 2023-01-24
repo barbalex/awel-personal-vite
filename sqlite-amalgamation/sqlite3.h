@@ -146,9 +146,9 @@ extern "C" {
 ** [sqlite3_libversion_number()], [sqlite3_sourceid()],
 ** [sqlite_version()] and [sqlite_source_id()].
 */
-#define SQLITE_VERSION        "3.40.1"
-#define SQLITE_VERSION_NUMBER 3040001
-#define SQLITE_SOURCE_ID      "2022-12-28 14:03:47 df5c253c0b3dd24916e4ec7cf77d3db5294cc9fd45ae7b9c5e82ad8197f38a24"
+#define SQLITE_VERSION        "3.40.0"
+#define SQLITE_VERSION_NUMBER 3040000
+#define SQLITE_SOURCE_ID      "2022-11-16 15:41:05 fcb4fd26a8c624f2e433ba6a6b153343225cc9d85dd297502ca5c696b603431f"
 
 /*
 ** CAPI3REF: Run-Time Library Version Numbers
@@ -1192,12 +1192,6 @@ struct sqlite3_io_methods {
 **
 ** <li>[[SQLITE_FCNTL_CKSM_FILE]]
 ** Used by the cksmvfs VFS module only.
-**
-** <li>[[SQLITE_FCNTL_RESET_CACHE]]
-** If there is currently no transaction open on the database, and the
-** database is not a temp db, then this file-control purges the contents
-** of the in-memory page cache. If there is an open transaction, or if
-** the db is a temp-db, it is a no-op, not an error.
 ** </ul>
 */
 #define SQLITE_FCNTL_LOCKSTATE               1
@@ -1240,7 +1234,6 @@ struct sqlite3_io_methods {
 #define SQLITE_FCNTL_CKPT_START             39
 #define SQLITE_FCNTL_EXTERNAL_READER        40
 #define SQLITE_FCNTL_CKSM_FILE              41
-#define SQLITE_FCNTL_RESET_CACHE            42
 
 /* deprecated names */
 #define SQLITE_GET_LOCKPROXYFILE      SQLITE_FCNTL_GET_LOCKPROXYFILE
@@ -6132,6 +6125,51 @@ SQLITE_API int sqlite3_collation_needed16(
   void*,
   void(*)(void*,sqlite3*,int eTextRep,const void*)
 );
+
+#ifdef SQLITE_HAS_CODEC
+/*
+** Specify the key for an encrypted database.  This routine should be
+** called right after sqlite3_open().
+**
+** The code to implement this API is not available in the public release
+** of SQLite.
+*/
+SQLITE_API int sqlite3_key(
+  sqlite3 *db,                   /* Database to be rekeyed */
+  const void *pKey, int nKey     /* The key */
+);
+SQLITE_API int sqlite3_key_v2(
+  sqlite3 *db,                   /* Database to be rekeyed */
+  const char *zDbName,           /* Name of the database */
+  const void *pKey, int nKey     /* The key */
+);
+
+/*
+** Change the key on an open database.  If the current database is not
+** encrypted, this routine will encrypt it.  If pNew==0 or nNew==0, the
+** database is decrypted.
+**
+** The code to implement this API is not available in the public release
+** of SQLite.
+*/
+SQLITE_API int sqlite3_rekey(
+  sqlite3 *db,                   /* Database to be rekeyed */
+  const void *pKey, int nKey     /* The new key */
+);
+SQLITE_API int sqlite3_rekey_v2(
+  sqlite3 *db,                   /* Database to be rekeyed */
+  const char *zDbName,           /* Name of the database */
+  const void *pKey, int nKey     /* The new key */
+);
+
+/*
+** Specify the activation key for a SEE database.  Unless
+** activated, none of the SEE routines will work.
+*/
+SQLITE_API void sqlite3_activate_see(
+  const char *zPassPhrase        /* Activation phrase */
+);
+#endif
 
 #ifdef SQLITE_ENABLE_CEROD
 /*

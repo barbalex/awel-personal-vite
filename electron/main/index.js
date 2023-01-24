@@ -11,7 +11,7 @@ const {
 const fs = require('fs-extra')
 const path = require('path')
 const Database = require('better-sqlite3')
-// const { username } = require('username')
+// const JavaScriptObfuscator = require('javascript-obfuscator')
 
 // The built directory structure
 //
@@ -32,10 +32,12 @@ process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL
 // Set application name for Windows 10+ notifications
 if (process.platform === 'win32') app.setAppUserModelId(app.getName())
 
-if (!app.requestSingleInstanceLock()) {
-  app.quit()
-  process.exit(0)
-}
+// TODO: this happens. Why?
+// if (!app.requestSingleInstanceLock()) {
+//   console.log('5')
+//   app.quit()
+//   process.exit(0)
+// }
 
 // Remove electron security warnings
 // This warning only shows in development mode
@@ -131,19 +133,30 @@ const getUserPath = () => {
   if (!fs.existsSync(dataFilePath)) return {}
   const configFile = fs.readFileSync(dataFilePath, 'utf-8') || {}
   if (!configFile) return {}
+  // console.log('getUserPath, configFile:', configFile)
   return JSON.parse(configFile)
 }
 
-let db
-let dbPath = getUserPath().dbPath || 'C:/Users/alexa/personal.db'
 const chooseDbOptions = {
   title: 'Datenbank für AWEL-Personal wählen',
   properties: ['openFile'],
   filters: [{ name: 'sqlite-Datenbanken', extensions: ['db'] }],
 }
+const openDialogGetPath = async (event, chooseDbOptions) => {
+  const { filePaths } = await dialog.showOpenDialog(chooseDbOptions)
+  const filePath = filePaths?.[0]
+  // console.log('openDialogGetPath, filePath:', filePath)
+  return filePath
+}
+
+let db
+let dbPath = getUserPath().dbPath || 'C:/Users/alexa/personal.db'
 try {
-  db = new Database(dbPath, { fileMustExist: true })
+  db = Database(dbPath, {
+    fileMustExist: true,
+  })
 } catch (error) {
+  console.log('index.js, Error opening db file:', error)
   if (
     (error.code && error.code === 'SQLITE_CANTOPEN') ||
     error.message.includes('directory does not exist')
@@ -161,6 +174,16 @@ try {
   }
 }
 
+const key = 'secret'
+db.pragma(`key='${key}'`)
+// console.log('index.js', {
+//   key,
+//   dbPath,
+//   keyRes,
+// })
+// const obfuscatedResult = JavaScriptObfuscator.obfuscate(`()=> '${key}'`)
+// console.log('index.js, obfuscatedKey:', obfuscatedResult.toString())
+
 app.whenReady().then(createWindow)
 
 // Quit when all windows are closed.
@@ -168,6 +191,7 @@ app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
+    db.close()
     app.quit()
   }
 })
@@ -197,7 +221,7 @@ ipcMain.handle('save-file', (event, path, data) => {
     .catch((error) => event.sender.send('ERROR', error.message))
 })
 
-ipcMain.handle('get-user-data-path', async () => {
+ipcMain.handle('get-user-data-path', () => {
   const path = app.getPath('userData')
   return path
 })
@@ -250,10 +274,6 @@ ipcMain.handle('save-dialog-get-path', async (event, dialogOptions) => {
   const { filePath } = await dialog.showSaveDialog(dialogOptions)
   return filePath
 })
-const openDialogGetPath = async (event, dialogOptions) => {
-  const { filePath } = await dialog.showOpenDialog(dialogOptions)
-  return filePath
-}
 ipcMain.handle('open-dialog-get-path', openDialogGetPath)
 ipcMain.handle('get-user', async () => {
   let userName
