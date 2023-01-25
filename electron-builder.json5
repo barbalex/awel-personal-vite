@@ -2,13 +2,8 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-  appId: 'zh.ch.awel.personal',
+  appId: 'ch.zh.awel.personal',
   asar: true,
-  asarUnpack: [
-    '**/node_modules/better-sqlite3/**/*',
-    '**/node_modules/fs-extra/**/*',
-    '**/node_modules/path/**/*',
-  ],
   npmRebuild: false,
   directories: {
     output: 'release/${version}',
