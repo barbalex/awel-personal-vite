@@ -8,7 +8,7 @@ const addMobileAbo = async ({ personId, store }) => {
       'insert into mobileAbos (idPerson,letzteMutationUser, letzteMutationZeit) values (@idPerson,@letzteMutationUser,@letzteMutationZeit)',
       {
         idPerson: personId,
-        letzteMutationUser: store.username,
+        letzteMutationUser: store.userName,
         letzteMutationZeit: Date.now(),
       },
     )
@@ -20,7 +20,7 @@ const addMobileAbo = async ({ personId, store }) => {
   store.addMobileAbo({
     id: info.lastInsertRowid,
     idPerson: personId,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   updatePersonsMutation({ personId, store })

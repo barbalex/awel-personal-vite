@@ -5,7 +5,7 @@ const addWert = async ({ table, store, navigate }) => {
     info = await window.electronAPI.editWithParam(
       `insert into ${table} (letzteMutationUser,letzteMutationZeit) values (@letzteMutationUser,@letzteMutationZeit)`,
       {
-        letzteMutationUser: store.username,
+        letzteMutationUser: store.userName,
         letzteMutationZeit: Date.now(),
       },
     )
@@ -16,7 +16,7 @@ const addWert = async ({ table, store, navigate }) => {
   // 2. add to store
   store[table].push({
     id: info.lastInsertRowid,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   navigate(`/Werte/${table}/${info.lastInsertRowid}`)

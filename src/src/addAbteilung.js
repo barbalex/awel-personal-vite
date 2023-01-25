@@ -4,7 +4,7 @@ const addAbteilung = async ({ store, navigate }) => {
   try {
     info = await window.electronAPI.editWithParam(
       `insert into abteilungen (letzteMutationUser, letzteMutationZeit, amt) values (@user, @zeit, @amt)`,
-      { user: store.username, zeit: Date.now(), amt: 1 },
+      { user: store.userName, zeit: Date.now(), amt: 1 },
     )
   } catch (error) {
     store.addError(error)
@@ -13,7 +13,7 @@ const addAbteilung = async ({ store, navigate }) => {
   // 2. add to store
   store.addAbteilung({
     id: info.lastInsertRowid,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   navigate(`/Abteilungen/${info.lastInsertRowid}`)

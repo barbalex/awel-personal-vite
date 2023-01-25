@@ -4,7 +4,7 @@ const addBereich = async ({ store, navigate }) => {
   try {
     info = await window.electronAPI.editWithParam(
       `insert into bereiche (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)`,
-      { user: store.username, zeit: Date.now() },
+      { user: store.userName, zeit: Date.now() },
     )
   } catch (error) {
     store.addError(error)
@@ -13,7 +13,7 @@ const addBereich = async ({ store, navigate }) => {
   // 2. add to store
   store.addBereich({
     id: info.lastInsertRowid,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   navigate(`/Bereiche/${info.lastInsertRowid}`)

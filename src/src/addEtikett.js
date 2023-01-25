@@ -9,7 +9,7 @@ const addEtikett = async ({ etikett, personId, store }) => {
       {
         idPerson: personId,
         etikett,
-        letzteMutationUser: store.username,
+        letzteMutationUser: store.userName,
         letzteMutationZeit: Date.now(),
       },
     )
@@ -22,7 +22,7 @@ const addEtikett = async ({ etikett, personId, store }) => {
     id: info.lastInsertRowid,
     etikett,
     idPerson: personId,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   updatePersonsMutation({ personId, store: store })

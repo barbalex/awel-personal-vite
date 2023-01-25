@@ -9,7 +9,7 @@ const addAnwesenheitstag = async ({ tag, personId, store }) => {
       {
         idPerson: personId,
         tag,
-        letzteMutationUser: store.username,
+        letzteMutationUser: store.userName,
         letzteMutationZeit: Date.now(),
       },
     )
@@ -22,7 +22,7 @@ const addAnwesenheitstag = async ({ tag, personId, store }) => {
     id: info.lastInsertRowid,
     tag,
     idPerson: personId,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   updatePersonsMutation({ personId, store: store })

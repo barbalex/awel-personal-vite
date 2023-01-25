@@ -96,7 +96,7 @@ const store = () =>
       showMutationNoetig: types.optional(types.boolean, false),
       statusWerte: types.array(StatusWert),
       tagWerte: types.array(TagWert),
-      username: types.maybe(types.string),
+      userName: types.maybe(types.string),
       userIsAdmin: types.optional(types.boolean, false),
       userIsLoggedIn: types.optional(types.boolean, false),
       userPwd: types.maybe(types.string),
@@ -267,7 +267,7 @@ const store = () =>
       get userRevertions() {
         return sortBy(
           self.mutations
-            .filter((m) => m.user === self.username)
+            .filter((m) => m.user === self.userName)
             .filter((m) => self.revertedMutationIds.includes(m.id)),
           'time',
         )
@@ -278,7 +278,7 @@ const store = () =>
         // and are themselves not revertions
         return sortBy(
           self.mutations
-            .filter((m) => m.user === self.username)
+            .filter((m) => m.user === self.userName)
             .filter((m) => !m.reverts)
             .filter((m) => !self.revertedMutationIds.includes(m.id)),
           'time',
@@ -381,8 +381,8 @@ const store = () =>
             self.filterFulltextIds = []
           }
         },
-        setUsername(name) {
-          self.username = name
+        setUserName(name) {
+          self.userName = name
         },
         setUserIsAdmin(val) {
           self.userIsAdmin = val
@@ -582,13 +582,13 @@ const store = () =>
         setAmtDeleted(id) {
           const amt = self.aemter.find((p) => p.id === id)
           amt.deleted = 1
-          amt.letzteMutationUser = self.username
+          amt.letzteMutationUser = self.userName
           amt.letzteMutationZeit = Date.now()
         },
         setAbteilungDeleted(id) {
           const abteilung = self.abteilungen.find((p) => p.id === id)
           abteilung.deleted = 1
-          abteilung.letzteMutationUser = self.username
+          abteilung.letzteMutationUser = self.userName
           abteilung.letzteMutationZeit = Date.now()
         },
         deleteAmt(id) {
@@ -627,7 +627,7 @@ const store = () =>
         setBereichDeleted(id) {
           const bereich = self.bereiche.find((p) => p.id === id)
           bereich.deleted = 1
-          bereich.letzteMutationUser = self.username
+          bereich.letzteMutationUser = self.userName
           bereich.letzteMutationZeit = Date.now()
         },
         deleteBereich(id) {
@@ -644,7 +644,7 @@ const store = () =>
         setSektionDeleted(id) {
           const sektion = self.sektionen.find((p) => p.id === id)
           sektion.deleted = 1
-          sektion.letzteMutationUser = self.username
+          sektion.letzteMutationUser = self.userName
           sektion.letzteMutationZeit = Date.now()
         },
         deleteSektion(id) {
@@ -755,13 +755,13 @@ const store = () =>
             }
           }
           storeObject[field] = value
-          storeObject.letzteMutationUser = self.username
+          storeObject.letzteMutationUser = self.userName
           storeObject.letzteMutationZeit = Date.now()
           if (setErrors) setErrors({})
         },
         updatePersonsMutation(idPerson) {
           const person = self.personen.find((p) => p.id === idPerson)
-          person.letzteMutationUser = self.username
+          person.letzteMutationUser = self.userName
           person.letzteMutationZeit = Date.now()
         },
         setSettings(value) {

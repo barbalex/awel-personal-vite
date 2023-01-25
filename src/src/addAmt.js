@@ -4,16 +4,16 @@ const addAmt = async ({ store, navigate }) => {
   try {
     info = await window.electronAPI.editWithParam(
       `insert into aemter (letzteMutationUser, letzteMutationZeit) values (@user, @zeit)`,
-      { user: store.username, zeit: Date.now() },
+      { user: store.userName, zeit: Date.now() },
     )
   } catch (error) {
     store.addError(error)
     return console.log(error)
-  } 
+  }
   // 2. add to store
   store.addAmt({
     id: info.lastInsertRowid,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   navigate(`/Aemter/${info.lastInsertRowid}`)

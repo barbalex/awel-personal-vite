@@ -33,14 +33,14 @@ const root = createRoot(container)
 
 const run = async () => {
   const store = createStore().create()
-  const { setUsername, setUserIsAdmin, setUserPwd } = store
+  const { setUserName, setUserIsAdmin, setUserPwd } = store
 
   const user = await window.electronAPI.getUser()
   const userName = user?.userName
   const isAdmin = user?.isAdmin ?? false
   const pwd = user?.pwd
 
-  setUsername(userName ?? '(Benutzer nicht erkannt)')
+  setUserName(userName ?? '(Benutzer nicht erkannt)')
   setUserIsAdmin(isAdmin)
   setUserPwd(pwd)
 
@@ -87,4 +87,5 @@ const run = async () => {
   )
 }
 
-run()
+setTimeout(run, 1000)
+// run()

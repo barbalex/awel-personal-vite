@@ -1,14 +1,14 @@
 import fetchAnwesenheitstage from './fetchAnwesenheitstage'
 
 const addPerson = async ({ store }) => {
-  const { username, addError, navigate } = store
+  const { userName, addError, navigate } = store
   // 1. create new Person in db, returning id
   let info
   try {
     info = await window.electronAPI.editWithParam(
       'insert into personen (letzteMutationUser, letzteMutationZeit, land, status) values (@user, @zeit, @land, @status)',
       {
-        user: username,
+        user: userName,
         zeit: Date.now(),
         land: 'Schweiz',
         status: 'aktiv',
@@ -21,7 +21,7 @@ const addPerson = async ({ store }) => {
   // 2. add to store
   store.addPerson({
     id: info.lastInsertRowid,
-    letzteMutationUser: username,
+    letzteMutationUser: userName,
     letzteMutationZeit: Date.now(),
     land: 'Schweiz',
     status: 'aktiv',

@@ -3,7 +3,7 @@ const setAmtDeleted = async ({ id, store }) => {
   try {
     await window.electronAPI.editWithParam(
       `update aemter set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-      { id, user: store.username, time: Date.now() },
+      { id, user: store.userName, time: Date.now() },
     )
   } catch (error) {
     store.addError(error)
@@ -13,5 +13,5 @@ const setAmtDeleted = async ({ id, store }) => {
   store.setAmtDeleted(id)
   if (!store.showDeleted) store.navigate(`/Aemter`)
 }
- 
+
 export default setAmtDeleted

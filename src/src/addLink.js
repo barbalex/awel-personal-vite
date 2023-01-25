@@ -9,7 +9,7 @@ const addLink = async ({ url, personId, store }) => {
       {
         idPerson: personId,
         url,
-        letzteMutationUser: store.username,
+        letzteMutationUser: store.userName,
         letzteMutationZeit: Date.now(),
       },
     )
@@ -22,7 +22,7 @@ const addLink = async ({ url, personId, store }) => {
     id: info.lastInsertRowid,
     url,
     idPerson: personId,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   updatePersonsMutation({ personId, store: store })

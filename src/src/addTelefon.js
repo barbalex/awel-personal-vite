@@ -8,7 +8,7 @@ const addTelefon = async ({ personId, store }) => {
       'insert into telefones (idPerson,letzteMutationUser, letzteMutationZeit) values (@idPerson,@letzteMutationUser,@letzteMutationZeit)',
       {
         idPerson: personId,
-        letzteMutationUser: store.username,
+        letzteMutationUser: store.userName,
         letzteMutationZeit: Date.now(),
       },
     )
@@ -20,7 +20,7 @@ const addTelefon = async ({ personId, store }) => {
   store.addTelefon({
     id: info.lastInsertRowid,
     idPerson: personId,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   updatePersonsMutation({ personId, store })

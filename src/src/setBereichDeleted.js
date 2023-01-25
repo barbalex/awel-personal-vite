@@ -3,7 +3,7 @@ const setBereichDeleted = async ({ id, store }) => {
   try {
     await window.electronAPI.editWithParam(
       `update bereiche set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-      { id, user: store.username, time: Date.now() },
+      { id, user: store.userName, time: Date.now() },
     )
   } catch (error) {
     store.addError(error)

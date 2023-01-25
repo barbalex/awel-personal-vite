@@ -12,7 +12,7 @@ const addMutation = ({ tableName, patch, inversePatch, store }) => {
   // need to wait for undoManager to list deletion
   setTimeout(async () => {
     let info
-    const { username } = store
+    const { userName } = store
     const time = Date.now()
     const { op, path, value: valueIn } = patch
     const [index, field] = splitJsonPath(path)
@@ -62,9 +62,9 @@ const addMutation = ({ tableName, patch, inversePatch, store }) => {
     }
     try {
       info = await window.electronAPI.editWithParam(
-        `insert into mutations (time, user, op, tableName, rowId, field, value, previousValue, reverts) values (@time, @username, @op, @tableName, @rowId, @field, @value, @previousValue, @reverts)`,
+        `insert into mutations (time, user, op, tableName, rowId, field, value, previousValue, reverts) values (@time, @userName, @op, @tableName, @rowId, @field, @value, @previousValue, @reverts)`,
         {
-          username,
+          userName,
           time,
           tableName,
           op,
@@ -84,7 +84,7 @@ const addMutation = ({ tableName, patch, inversePatch, store }) => {
     store.addMutation({
       id: info.lastInsertRowid,
       time,
-      user: username,
+      user: userName,
       op,
       tableName,
       rowId,

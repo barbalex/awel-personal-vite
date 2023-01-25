@@ -1,6 +1,6 @@
 import updatePersonsMutation from './updatePersonsMutation'
 
-const updateField = async ({ 
+const updateField = async ({
   table,
   parentModel,
   field,
@@ -17,7 +17,7 @@ const updateField = async ({
       {
         value,
         id,
-        user: store.username,
+        user: store.userName,
         time: Date.now(),
       },
     )

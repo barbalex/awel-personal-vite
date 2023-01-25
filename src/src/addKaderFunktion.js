@@ -9,7 +9,7 @@ const addKaderFunktion = async ({ funktion, personId, store }) => {
       {
         idPerson: personId,
         funktion,
-        letzteMutationUser: store.username,
+        letzteMutationUser: store.userName,
         letzteMutationZeit: Date.now(),
       },
     )
@@ -22,7 +22,7 @@ const addKaderFunktion = async ({ funktion, personId, store }) => {
     id: info.lastInsertRowid,
     funktion,
     idPerson: personId,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   updatePersonsMutation({ personId, store })

@@ -4,7 +4,7 @@ const updatePersonsMutation = async ({ idPerson, store }) => {
     await window.electronAPI.editWithParam(
       `update personen set letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
       {
-        user: store.username,
+        user: store.userName,
         time: Date.now(),
         id: idPerson,
       },

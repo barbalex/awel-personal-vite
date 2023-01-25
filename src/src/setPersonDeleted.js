@@ -3,7 +3,7 @@ const setPersonDeleted = async ({ id, store }) => {
   try {
     await window.electronAPI.editWithParam(
       `update personen set deleted = 1, letzteMutationUser = @user, letzteMutationZeit = @time where id = @id;`,
-      { id, user: store.username, time: Date.now() },
+      { id, user: store.userName, time: Date.now() },
     )
   } catch (error) {
     store.addError(error)
@@ -17,7 +17,7 @@ const setPersonDeleted = async ({ id, store }) => {
   store.setPerson({
     ...person,
     deleted: 1,
-    letzteMutationUser: store.username,
+    letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
   if (!store.showDeleted) store.navigate(`/Personen`)

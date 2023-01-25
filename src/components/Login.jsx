@@ -43,11 +43,12 @@ const StyledButton = styled(Button)`
 // SOLVED. Reason was electron opening dev tools
 const Login = () => {
   const store = useContext(storeContext)
-  const { setUserIsLoggedIn, username, userPwd } = store
+  const { setUserIsLoggedIn, userName, userPwd } = store
 
   const navigate = useNavigate()
 
-  console.log('Login, userPwd:', userPwd)
+  // TODO: if no userPwd, inform
+  console.log('Login, userPwd:', { userPwd, userName })
 
   const [errorMsg, setErrorMsg] = useState()
   const [value, setValue] = useState('')
@@ -81,7 +82,7 @@ const Login = () => {
     }
   }, [onBlur])
 
-  if (!username) {
+  if (!userName) {
     return (
       <Container>{`Oh je. Ihr Benutzername konnte nicht ausgelesen werden. Daher ist eine Anmeldung nicht möglich.`}</Container>
     )
@@ -89,7 +90,7 @@ const Login = () => {
 
   return (
     <Container>
-      <P>{`Willkommen ${username}`}</P>
+      <P>{`Willkommen ${userName}`}</P>
       <P>{`Bitte mit Passwort anmelden:`}</P>
       <StyledFormGroup>
         <StyledInput
