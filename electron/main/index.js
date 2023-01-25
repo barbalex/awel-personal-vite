@@ -11,6 +11,7 @@ const {
 const path = require('path')
 const Database = require('better-sqlite3')
 const fs = require('fs-extra')
+
 const dbKey = require('../../db_key')
 
 // The built directory structure
