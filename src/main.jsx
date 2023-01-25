@@ -87,5 +87,5 @@ const run = async () => {
   )
 }
 
-setTimeout(run, 1000)
-// run()
+// setTimeout(run, 1000)
+run()
