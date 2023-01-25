@@ -35,7 +35,11 @@ const run = async () => {
   const store = createStore().create()
   const { setUsername, setUserIsAdmin, setUserPwd } = store
 
-  const { userName, isAdmin, pwd } = await window.electronAPI.getUser()
+  const user = await window.electronAPI.getUser()
+  const userName = user?.userName
+  const isAdmin = user?.isAdmin
+  const pwd = user?.pwd
+
   setUsername(userName ?? '(Benutzer nicht erkannt)')
   setUserIsAdmin(isAdmin)
   setUserPwd(pwd)
