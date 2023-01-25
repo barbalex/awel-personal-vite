@@ -37,7 +37,7 @@ const run = async () => {
 
   const user = await window.electronAPI.getUser()
   const userName = user?.userName
-  const isAdmin = user?.isAdmin
+  const isAdmin = user?.isAdmin ?? false
   const pwd = user?.pwd
 
   setUsername(userName ?? '(Benutzer nicht erkannt)')
