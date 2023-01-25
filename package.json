@@ -31,6 +31,7 @@
     "@typescript-eslint/parser": "5.49.0",
     "@vitejs/plugin-react": "3.0.1",
     "babel-loader": "9.1.2",
+    "better-sqlite3": "file:./node_modules/better-sqlite3",
     "bootstrap": "4.6.2",
     "classnames": "2.3.2",
     "copy-webpack-plugin": "11.0.0",
@@ -90,7 +91,8 @@
     "depsVsDevDeps": "only placing sqlite in deps makes webpack bundle the right deps while ommitting sqlite, see: https://github.com/electron-userland/electron-forge/issues/1451#issuecomment-606039498",
     "popper.js": "is peer, probably required by reactstrap",
     "react-dropzone": "do not upgrade from 12.1.0 to 14.1.0, due to accept filter not working (in electron?)",
-    "versions": "need the preinstall script. See: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/compilation.md#custom-configuration and https://github.com/WiseLibs/better-sqlite3/issues/126#issuecomment-1379445811"
+    "versions": "need the preinstall script. See: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/compilation.md#custom-configuration and https://github.com/WiseLibs/better-sqlite3/issues/126#issuecomment-1379445811",
+    "better-sqlite3": "file:./node_modules/better-sqlite3"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"

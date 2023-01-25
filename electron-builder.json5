@@ -9,6 +9,7 @@
     '**/node_modules/fs-extra/**/*',
     '**/node_modules/path/**/*',
   ],
+  npmRebuild: false,
   directories: {
     output: 'release/${version}',
   },
