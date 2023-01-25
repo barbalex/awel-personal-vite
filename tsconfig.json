@@ -17,7 +17,7 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     // Typescript kills the build because of the imports in electron/main/index.js
-    "checkJs": false,
+    // "checkJs": false,
     "paths": {
       "@/*": ["src/*"]
     }
