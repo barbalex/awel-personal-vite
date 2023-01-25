@@ -270,11 +270,14 @@ ipcMain.handle('save-dialog-get-path', async (event, dialogOptions) => {
   return filePath
 })
 ipcMain.handle('open-dialog-get-path', openDialogGetPath)
+
 ipcMain.handle('get-user', async () => {
   let userName
   try {
-    const { usernameSync } = await import('username')
-    userName = usernameSync()
+    const { username } = await import('username')
+    // TODO: this does not work on installed version
+    userName = await username()
+    console.log('index, get-user:', { userName, username })
   } catch (error) {
     return null
   }
