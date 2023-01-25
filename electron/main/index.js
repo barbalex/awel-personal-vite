@@ -12,7 +12,8 @@ const path = require('path')
 const Database = require('better-sqlite3')
 const fs = require('fs-extra')
 
-const dbKey = require('../../db_key')
+const dbkeyPath = path.join(__dirname, './db_key.js')
+const dbKey = require(dbkeyPath)
 
 // The built directory structure
 //
@@ -44,12 +45,6 @@ if (process.platform === 'win32') app.setAppUserModelId(app.getName())
 // This warning only shows in development mode
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
 // process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
-  // eslint-disable-line global-require
-  app.quit()
-}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -86,7 +81,8 @@ const createWindow = () => {
     win.loadFile(indexHtml)
     // only remove application menu in production
     // because need it to open devTools in development
-    Menu.setApplicationMenu(null)
+    // TODO: reactivate after fixing bug
+    // Menu.setApplicationMenu(null)
   }
 
   // Make all links open with the browser, not with the application
@@ -175,9 +171,12 @@ try {
   }
 }
 
+// console.log('index.js, dbPath:', dbPath)
+
 app.whenReady().then(() => {
   // safeStorage cannot be used before app is ready
   const key = safeStorage.decryptString(Buffer.from(dbKey))
+  // console.log('index.js, ready', { dbKey, key })
   db.pragma(`key='${key}'`)
   createWindow()
 })
