@@ -63,7 +63,7 @@ const User = () => {
           value: { ...filterUser, ...{ [field]: value } },
         })
       }
-      console.log('User, saveToDb', { value })
+
       updateField({
         table: 'users',
         parentModel: 'users',
