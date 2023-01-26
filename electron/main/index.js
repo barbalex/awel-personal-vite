@@ -11,6 +11,7 @@ const {
 const path = require('path')
 const Database = require('better-sqlite3')
 const fs = require('fs-extra')
+const os = require('os')
 
 const dbkeyPath = path.join(__dirname, './db_key.js')
 const dbKey = require(dbkeyPath)
@@ -81,8 +82,7 @@ const createWindow = () => {
     win.loadFile(indexHtml)
     // only remove application menu in production
     // because need it to open devTools in development
-    // TODO: reactivate after fixing bug
-    // Menu.setApplicationMenu(null)
+    Menu.setApplicationMenu(null)
   }
 
   // Make all links open with the browser, not with the application
@@ -271,24 +271,22 @@ ipcMain.handle('save-dialog-get-path', async (event, dialogOptions) => {
 })
 ipcMain.handle('open-dialog-get-path', openDialogGetPath)
 
-ipcMain.handle('get-user', async () => {
-  let userName
-  try {
-    const { username } = await import('username')
-    // TODO: this does not work on installed version
-    userName = await username()
-    console.log('index, get-user:', { userName, username })
-  } catch (error) {
-    return null
-  }
+ipcMain.handle('get-user', () => {
+  // This did not work on installed version
+  // github.com/electron/electron/issues/4343#issuecomment-427210702
+  // solution: seems that os works
+  const userName =
+    process.env.username ?? process.env.user ?? os?.userInfo?.()?.username
+
   const user = db.prepare(`select * from users where name = ?`).get(userName)
 
   return {
     userName,
     isAdmin: user?.isAdmin === 1,
-    pwd: safeStorage.decryptString(user?.pwd),
+    pwd: user?.pwd ? safeStorage.decryptString(user?.pwd) : undefined,
   }
 })
+
 ipcMain.handle('open-url', (event, url) => {
   return shell.openPath(url)
 })
