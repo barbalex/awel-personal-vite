@@ -146,37 +146,24 @@ const openDialogGetPath = async (event, chooseDbOptions) => {
   return filePath
 }
 
-let db
-let dbPath = getUserPath().dbPath || 'C:/Users/alexa/personal.db'
-try {
-  db = Database(dbPath, {
-    fileMustExist: true,
-  })
-} catch (error) {
-  console.log('index.js, Error opening db file:', error)
-  if (
-    (error.code && error.code === 'SQLITE_CANTOPEN') ||
-    error.message.includes('directory does not exist')
-  ) {
-    // user needs to choose db file
-    openDialogGetPath(undefined, chooseDbOptions).then((result) => {
-      dbPath = result.filePaths[0]
-      db = new Database(dbPath, { fileMustExist: true })
-      saveConfig(undefined, { dbPath })
-    })
-  } else {
-    // TODO: how to surface this error?
-    // store.addError(error)
-    return console.log('index.js, Error opening db file:', error)
-  }
-}
-
 // console.log('index.js, dbPath:', dbPath)
 
-app.whenReady().then(() => {
-  // safeStorage cannot be used before app is ready
+let db
+app.whenReady().then(async () => {
+  // dialog and safeStorage cannot be used before app is ready
+  let dbPath = getUserPath().dbPath || 'C:/Users/alexa/personal.db'
+  try {
+    db = Database(dbPath, {
+      fileMustExist: true,
+    })
+  } catch (error) {
+    console.log('index.js, Error opening db file:', error)
+    // user most probably needs to choose db file
+    dbPath = await openDialogGetPath(undefined, chooseDbOptions)
+    db = new Database(dbPath, { fileMustExist: true })
+    saveConfig(undefined, { dbPath })
+  }
   const key = safeStorage.decryptString(Buffer.from(dbKey))
-  // console.log('index.js, ready', { dbKey, key })
   db.pragma(`key='${key}'`)
   createWindow()
 })
