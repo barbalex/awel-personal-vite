@@ -48,7 +48,7 @@ const Login = () => {
   const navigate = useNavigate()
 
   // TODO: if no userPwd, inform
-  console.log('Login, userPwd:', { userPwd, userName })
+  // console.log('Login, userPwd:', { userPwd, userName })
 
   const [errorMsg, setErrorMsg] = useState()
   const [value, setValue] = useState('')
