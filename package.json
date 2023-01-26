@@ -68,7 +68,6 @@
     "typescript": "4.9.4",
     "url-loader": "4.1.1",
     "use-detect-print": "0.0.2",
-    "username": "6.0.0",
     "validator": "13.7.0",
     "vite": "4.0.4",
     "vite-electron-plugin": "0.7.4"
