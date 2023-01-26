@@ -98,7 +98,7 @@ const SharedInput = ({
           spellCheck={false}
         />
         <FormFeedback>{error}</FormFeedback>
-        {(stateValue ?? '').length && (
+        {!!(stateValue ?? '').length && (
           <Checks>
             <div>Anforderungen:</div>
             <div>{`${hasLetter() ? '✅' : '⛔️'} Enthält Buchstaben`}</div>
