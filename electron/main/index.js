@@ -6,15 +6,15 @@ const {
   dialog,
   shell,
   protocol,
-  safeStorage,
+  Notification,
 } = require('electron')
 const path = require('path')
 const Database = require('better-sqlite3')
 const fs = require('fs-extra')
 const os = require('os')
 
-const dbkeyPath = path.join(__dirname, './db_key.js')
-const dbKey = require(dbkeyPath)
+const dbKeyPath = path.join(__dirname, './db_key_obfuscated.js')
+const dbKey = require(dbKeyPath)
 
 // The built directory structure
 //
@@ -109,7 +109,11 @@ const createWindow = () => {
     // in case user has changed data inside an input and not blured yet,
     // force bluring so data is saved
     win.webContents.executeJavaScript('document.activeElement.blur()')
-    setTimeout(() => win.destroy(), 500)
+    setTimeout(() => {
+      db.close()
+      app.quit()
+      win.destroy()
+    }, 500)
   })
   // creating a secure protocol is necessary to enable loading local files
   // see: https://github.com/electron/electron/issues/23393#issuecomment-623759531
@@ -150,7 +154,8 @@ const openDialogGetPath = async (event, chooseDbOptions) => {
 
 let db
 app.whenReady().then(async () => {
-  // dialog and safeStorage cannot be used before app is ready
+  createWindow()
+  // dialog cannot be used before app is ready
   let dbPath = getUserPath().dbPath || 'C:/Users/alexa/personal.db'
   try {
     db = Database(dbPath, {
@@ -163,9 +168,7 @@ app.whenReady().then(async () => {
     db = new Database(dbPath, { fileMustExist: true })
     saveConfig(undefined, { dbPath })
   }
-  const key = safeStorage.decryptString(Buffer.from(dbKey))
-  db.pragma(`key='${key}'`)
-  createWindow()
+  db.pragma(`key='${dbKey}'`)
 })
 
 // Quit when all windows are closed.
@@ -264,13 +267,24 @@ ipcMain.handle('get-user', () => {
   // solution: seems that os works
   const userName =
     process.env.username ?? process.env.user ?? os?.userInfo?.()?.username
+  // console.log('index.js, get-user, userName:', userName)
 
-  const user = db.prepare(`select * from users where name = ?`).get(userName)
+  let user
+  try {
+    user = db.prepare(`select * from users where name = ?`).get(userName)
+  } catch (error) {
+    const notif20 = new Notification({
+      title: 'Personal, error fetching user:',
+      body: error.message,
+    })
+    notif20.show()
+  }
+  const isAdmin = user?.isAdmin === 1
 
   return {
     userName,
-    isAdmin: user?.isAdmin === 1,
-    pwd: user?.pwd ? safeStorage.decryptString(user?.pwd) : undefined,
+    isAdmin,
+    pwd: user?.pwd ? atob(user.pwd) : undefined,
   }
 })
 
@@ -278,12 +292,14 @@ ipcMain.handle('open-url', (event, url) => {
   return shell.openPath(url)
 })
 ipcMain.handle('encrypt-string', (event, string) => {
-  return safeStorage.encryptString(string)
+  return btoa(string)
 })
-ipcMain.handle('decrypt-string', (event, buffer) => {
-  return safeStorage.decryptString(buffer)
+ipcMain.handle('decrypt-string', (event, string) => {
+  // return safeStorage.decryptString(string)
+  return atob(string)
 })
 ipcMain.handle('quit', () => {
+  db.close()
   app.quit()
 })
 

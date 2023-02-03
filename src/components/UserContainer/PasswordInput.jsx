@@ -25,6 +25,7 @@ const SharedInput = ({
   const [stateValue, setStateValue] = useState(
     value || value === 0 ? value : '',
   )
+  // console.log('PasswordInput', { value, stateValue })
 
   const onBlur = useCallback(
     async (event) => {
@@ -62,17 +63,18 @@ const SharedInput = ({
     [stateValue],
   )
   const hasUppercase = useCallback(
-    () => stateValue.toLowerCase() !== stateValue,
+    () => stateValue?.toLowerCase?.() !== stateValue,
     [stateValue],
   )
   const hasLowercase = useCallback(
-    () => stateValue.toUpperCase() !== stateValue,
+    () => stateValue?.toUpperCase?.() !== stateValue,
     [stateValue],
   )
   // https://stackoverflow.com/a/28813213/712005
   const hasNumber = useCallback(() => /\d/.test(stateValue), [stateValue])
   const hasSpecial = useCallback(
-    () => !isAlphanumeric(stateValue, 'de-DE'),
+    () =>
+      typeof stateValue === 'string' && !isAlphanumeric(stateValue, 'de-DE'),
     [stateValue],
   )
   const minLength = user?.isAdmin ? 12 : 8

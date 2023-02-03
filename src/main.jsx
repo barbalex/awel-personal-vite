@@ -36,6 +36,7 @@ const run = async () => {
   const { setUserName, setUserIsAdmin, setUserPwd } = store
 
   const user = await window.electronAPI.getUser()
+  // console.log('main, user:', user)
   const userName = user?.userName
   const isAdmin = user?.isAdmin ?? false
   const pwd = user?.pwd
