@@ -30,4 +30,7 @@ pnpm-lock.yaml
 yarn.lock
 
 db_key.js
+db_key_obfuscated.js
+pw.js
+pw_obfuscated.js
 *.db
