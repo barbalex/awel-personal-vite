@@ -108,16 +108,14 @@ const User = () => {
             error={errors.isAdmin}
           />
           {!showFilter && (
-            <>
-              <PasswordInput
-                key={`${userId}pwd`}
-                value={pwd}
-                onChange={onChange}
-                saveToDb={saveToDb}
-                error={errors.pwd}
-                user={user}
-              />
-            </>
+            <PasswordInput
+              key={`${userId}pwd`}
+              value={pwd}
+              onChange={onChange}
+              saveToDb={saveToDb}
+              error={errors.pwd}
+              user={user}
+            />
           )}
           {!showFilter && <Zuletzt row={user} />}
         </StyledForm>
