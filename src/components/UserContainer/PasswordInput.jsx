@@ -84,7 +84,7 @@ const SharedInput = ({
   )
 
   return (
-    <StyledFormGroup>
+    <StyledFormGroup row>
       <Label for="pwd" sm={2}>
         Passwort
       </Label>
