@@ -56,7 +56,11 @@ const Login = () => {
   const onChange = useCallback((e) => setValue(e.target.value), [])
   const onBlur = useCallback(() => {
     if (!!value && value !== userPwd) {
-      return setErrorMsg('Das Passwort ist falsch')
+      // TODO: RESET
+      return setErrorMsg(
+        `Sie haben eingegeben: ${value}, das Passwort ist aber: ${userPwd}`,
+      )
+      // return setErrorMsg('Das Passwort ist falsch')
     }
     if (!value) {
       return setErrorMsg('Bitte Passwort eingeben')
