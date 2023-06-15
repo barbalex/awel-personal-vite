@@ -6,7 +6,7 @@ const fetchAbteilungen = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setAbteilungen(abteilungen)
+  setAbteilungen(abteilungen ?? [])
 }
 
 export default fetchAbteilungen
