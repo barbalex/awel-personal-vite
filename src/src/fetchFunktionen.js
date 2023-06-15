@@ -6,7 +6,7 @@ const fetchFunktionen = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setFunktionen(funktionen)
+  funktionen && setFunktionen(funktionen)
 }
 
 export default fetchFunktionen

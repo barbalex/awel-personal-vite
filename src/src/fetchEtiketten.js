@@ -6,7 +6,7 @@ const fetchEtiketten = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setEtiketten(etiketten)
+  etiketten && setEtiketten(etiketten)
 }
 
 export default fetchEtiketten

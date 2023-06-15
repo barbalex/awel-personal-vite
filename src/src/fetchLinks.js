@@ -6,7 +6,7 @@ const fetchLinks = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setLinks(links)
+  links && setLinks(links)
 }
 
 export default fetchLinks

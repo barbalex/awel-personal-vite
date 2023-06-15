@@ -6,7 +6,7 @@ const fetchKaderFunktionen = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setKaderFunktionen(funktionen)
+  funktionen && setKaderFunktionen(funktionen)
 }
 
 export default fetchKaderFunktionen
