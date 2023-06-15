@@ -13,8 +13,6 @@ const Database = require('better-sqlite3')
 const fs = require('fs-extra')
 const os = require('os')
 
-const dbKeyPath = path.join(__dirname, '../../db_key_obfuscated.js')
-const dbKey = require(dbKeyPath)
 
 // The built directory structure
 //
@@ -31,6 +29,10 @@ process.env.DIST = path.join(process.env.DIST_ELECTRON, '../dist')
 process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL
   ? path.join(process.env.DIST_ELECTRON, '../public')
   : process.env.DIST
+
+const dbKeyPath = path.join(process.env.PUBLIC, 'db_key_obfuscated.js')
+// const dbKeyPath = path.join(__dirname, '../../db_key_obfuscated.js')  // dev path
+const dbKey = require(dbKeyPath)
 
 // Set application name for Windows 10+ notifications
 if (process.platform === 'win32') app.setAppUserModelId(app.getName())
