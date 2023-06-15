@@ -101,7 +101,7 @@ const Filter = () => {
         addError(error)
         return []
       }
-      const ids = result.map((p) => p.id)
+      const ids = (result ?? []).map((p) => p.id)
       setFilterFulltextIds(ids)
       const activeNodeArray = pathname.split('/').filter((e) => e)
       if (
