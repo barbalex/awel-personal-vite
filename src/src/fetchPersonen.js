@@ -6,7 +6,7 @@ const fetchPersonen = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setPersonen(personen)
+  personen && setPersonen(personen)
 }
 
 export default fetchPersonen

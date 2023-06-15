@@ -6,7 +6,7 @@ const fetchMobileAbos = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setMobileAbos(mobileAbos)
+  mobileAbos && setMobileAbos(mobileAbos)
 }
 
 export default fetchMobileAbos

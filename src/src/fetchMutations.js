@@ -8,7 +8,7 @@ const fetchMutations = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setMutations(mutations)
+  mutations && setMutations(mutations)
 }
 
 export default fetchMutations

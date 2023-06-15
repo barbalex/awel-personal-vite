@@ -6,7 +6,7 @@ const fetchSchluessel = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setSchluessel(schluessel)
+  schluessel && setSchluessel(schluessel)
 }
 
 export default fetchSchluessel
