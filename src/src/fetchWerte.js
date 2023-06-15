@@ -6,8 +6,9 @@ const fetchWerte = async ({ table, store }) => {
   } catch (error) {
     addError(error)
   }
+  if (!values) return
   // TODO: this can be removed when historic field was removed
-  values = (values ?? []).filter((v) => {
+  values = values.filter((v) => {
     if (v.historic) return v.historic === 0
     return true
   })

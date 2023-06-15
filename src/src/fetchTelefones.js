@@ -6,7 +6,7 @@ const fetchTelefones = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setTelefones(telefones)
+  telefones && setTelefones(telefones)
 }
 
 export default fetchTelefones

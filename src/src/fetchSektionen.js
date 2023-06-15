@@ -6,7 +6,7 @@ const fetchSektionen = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setSektionen(sektionen)
+  sektionen && setSektionen(sektionen)
 }
 
 export default fetchSektionen
