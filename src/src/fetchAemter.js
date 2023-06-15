@@ -6,7 +6,7 @@ const fetchAemter = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setAemter(aemter)
+  if (aemter) setAemter(aemter)
 }
 
 export default fetchAemter

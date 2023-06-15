@@ -8,7 +8,7 @@ const fetchAnwesenheitstage = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setAnwesenheitstage(anwesenheitstage)
+  if (anwesenheitstage) setAnwesenheitstage(anwesenheitstage)
 }
 
 export default fetchAnwesenheitstage

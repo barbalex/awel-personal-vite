@@ -6,7 +6,7 @@ const fetchBereiche = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  setBereiche(bereiche)
+  bereiche && setBereiche(bereiche)
 }
 
 export default fetchBereiche
