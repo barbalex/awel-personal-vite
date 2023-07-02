@@ -12,6 +12,9 @@ const path = require('path')
 const Database = require('better-sqlite3')
 const fs = require('fs-extra')
 const os = require('os')
+// const username = require('username')
+// const exec = require('child_process').exec
+const spawn = require('child_process').spawn
 
 // The built directory structure
 //
@@ -31,6 +34,23 @@ process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL
 
 const dbKeyPath = path.join(process.env.PUBLIC, 'db_key_obfuscated.js')
 const dbKey = require(dbKeyPath)
+
+// function execute(command) {
+//   return new Promise((resolve) => {
+//     exec(command, (error, stdout) => {
+//       resolve(stdout)
+//     })
+//   })
+// }
+
+function executePowershell(command) {
+  return new Promise((resolve) => {
+    const powershell = spawn('powershell.exe', [command])
+    powershell.stdout.on('data', (data) => {
+      resolve(data.toString())
+    })
+  })
+}
 
 // Set application name for Windows 10+ notifications
 if (process.platform === 'win32') app.setAppUserModelId(app.getName())
@@ -302,13 +322,36 @@ ipcMain.handle('save-dialog-get-path', async (event, dialogOptions) => {
 })
 ipcMain.handle('open-dialog-get-path', openDialogGetPath)
 
-ipcMain.handle('get-user', () => {
-  // This did not work on installed version
-  // github.com/electron/electron/issues/4343#issuecomment-427210702
-  // solution: seems that os works
+ipcMain.handle('get-user', async () => {
+  // PROBLEM:
+  // multiple ways to get username
+  // but on installed version most return "SYSTEM"
+  // Only thing that seems to work is powershell
+  // example answer: PC_ALEX\\alexa\r\n
+  const usernameFromPS = await executePowershell(
+    '[System.Security.Principal.WindowsIdentity]::GetCurrent().Name',
+  )
+  const indexOfBackslash = usernameFromPS.indexOf('\\')
+  const usernameWithoutDomain = usernameFromPS.slice(indexOfBackslash + 1)
+  const usernameFromPsSanitized = usernameWithoutDomain.replace(/\r\n/g, '')
   const userName =
-    process.env.username ?? process.env.user ?? os?.userInfo?.()?.username
-  // console.log('index.js, get-user, userName:', userName)
+    usernameFromPsSanitized ??
+    process.env.username ??
+    process.env.user ??
+    os?.userInfo?.()?.username
+  // const usernameFromCmd = await execute('echo %USERNAME%')
+  // const usernameFromUsername = await username()
+
+  console.log('index.js, get-user, userName:', {
+    userName,
+    processEnvUsername: process.env.username,
+    processEnvUser: process.env.user,
+    osUserInfoUsername: os?.userInfo?.()?.username,
+    // usernameFromUsername,
+    // usernameFromCmd,
+    usernameFromPowershell: usernameFromPS,
+    usernameFromPsSanitized,
+  })
 
   let user
   try {
