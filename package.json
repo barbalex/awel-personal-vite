@@ -5,9 +5,11 @@
   "main": "dist-electron/main/index.js",
   "description": "Damit verwaltet das AWEL Kt. ZH Personal-Daten",
   "author": {
-    "name": "Alexander Gabriel",
+    "name": "AWEL Kt. Zürich, Schweiz",
+    "dev": "Alexander Gabriel",
     "email": "alex.barbalex@gmail.com"
   },
+  "copyright": "AWEL Kt. Zürich, Schweiz",
   "license": "MIT",
   "private": true,
   "debug": {
