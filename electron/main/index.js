@@ -13,7 +13,6 @@ const Database = require('better-sqlite3')
 const fs = require('fs-extra')
 const os = require('os')
 
-
 // The built directory structure
 //
 // ├─┬ dist-electron
@@ -31,7 +30,6 @@ process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL
   : process.env.DIST
 
 const dbKeyPath = path.join(process.env.PUBLIC, 'db_key_obfuscated.js')
-// const dbKeyPath = path.join(__dirname, '../../db_key_obfuscated.js')  // dev path
 const dbKey = require(dbKeyPath)
 
 // Set application name for Windows 10+ notifications
@@ -154,11 +152,20 @@ const openDialogGetPath = async (event, chooseDbOptions) => {
 
 // console.log('index.js, dbPath:', dbPath)
 
+const saveConfig = (event, data) => {
+  const userPath = app.getPath('userData')
+  const dataFilePath = path.join(userPath, 'awelPersonalConfig.json')
+  fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2))
+  return null
+}
+ipcMain.handle('save-config', saveConfig)
+
 let db
 app.whenReady().then(async () => {
   createWindow()
   // dialog cannot be used before app is ready
   let dbPath = getUserPath().dbPath || 'C:/Users/alexa/personal.db'
+  console.log('will open db from path:', dbPath)
   try {
     db = Database(dbPath, {
       fileMustExist: true,
@@ -170,7 +177,29 @@ app.whenReady().then(async () => {
     db = new Database(dbPath, { fileMustExist: true })
     saveConfig(undefined, { dbPath })
   }
-  db.pragma(`key='${dbKey}'`)
+  let pragmaRes
+  try {
+    pragmaRes = db.pragma(`key='${dbKey}'`)
+    console.log('index.js, pragmaRes:', { pragmaRes, dbKey })
+  } catch (error) {
+    console.log('index.js, Error setting db key:', error)
+  }
+  try {
+    // test query to see if db is working
+    // Otherwise queries from renderer process will fail with:
+    // SqliteError: file is not a database
+    db.prepare('select * from aemter').all()
+  } catch (error) {
+    console.log('index.js, Error test querying db:', error.message)
+    if (error.message.includes('file is not a database')) {
+      dbPath = await openDialogGetPath(undefined, chooseDbOptions)
+      // db = new Database(dbPath, { fileMustExist: true })
+      saveConfig(undefined, { dbPath })
+      db.close()
+      app.quit()
+      // app.relaunch()
+    }
+  }
 })
 
 // Quit when all windows are closed.
@@ -213,18 +242,28 @@ ipcMain.handle('get-user-data-path', () => {
   return path
 })
 
-const saveConfig = (event, data) => {
-  const userPath = app.getPath('userData')
-  const dataFilePath = path.join(userPath, 'awelPersonalConfig.json')
-  fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2))
-  return null
-}
-ipcMain.handle('save-config', saveConfig)
+// TODO: queries can error on start if connected db is not encrypted
+// Error invoking remote method 'query': SqliteError: file is not a database
+// Error invoking remote method 'query-with-param': SqliteError: file is not a database
+ipcMain.handle('query-with-param', (event, sql, param) => {
+  let res
+  try {
+    res = db.prepare(sql).all(param)
+  } catch (error) {
+    console.log('index.js, Error in query-with-param:', error.message)
+  }
+  return res
+})
+ipcMain.handle('query', (event, sql) => {
+  let res
+  try {
+    res = db.prepare(sql).all()
+  } catch (error) {
+    console.log('index.js, Error in query:', error.message)
+  }
+  return res
+})
 
-ipcMain.handle('query-with-param', (event, sql, param) =>
-  db.prepare(sql).all(param),
-)
-ipcMain.handle('query', (event, sql) => db.prepare(sql).all())
 ipcMain.handle('edit-with-param', (event, sql, param) =>
   db.prepare(sql).run(param),
 )
