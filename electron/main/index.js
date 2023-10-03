@@ -12,7 +12,7 @@ const path = require('path')
 const Database = require('better-sqlite3')
 const fs = require('fs-extra')
 const os = require('os')
-// const username = require('username')
+const username = require('username')
 // const exec = require('child_process').exec
 const spawn = require('child_process').spawn
 
@@ -97,7 +97,7 @@ const createWindow = () => {
     win.loadURL(url)
     // Open devTool if the app is not packaged
     // WARNING: this will disable focusing the login input
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
   } else {
     win.loadFile(indexHtml)
     // only remove application menu in production
@@ -328,9 +328,14 @@ ipcMain.handle('get-user', async () => {
   // but on installed version most return "SYSTEM"
   // Only thing that seems to work is powershell
   // example answer: PC_ALEX\\alexa\r\n
-  const usernameFromPS = await executePowershell(
-    '[System.Security.Principal.WindowsIdentity]::GetCurrent().Name',
-  )
+  let usernameFromPS
+  if (process.platform === 'darwin') {
+    usernameFromPS = await username()
+  } else {
+    usernameFromPS = await executePowershell(
+      '[System.Security.Principal.WindowsIdentity]::GetCurrent().Name',
+    )
+  }
   const indexOfBackslash = usernameFromPS.indexOf('\\')
   const usernameWithoutDomain = usernameFromPS.slice(indexOfBackslash + 1)
   const usernameFromPsSanitized = usernameWithoutDomain.replace(/\r\n/g, '')
@@ -342,16 +347,16 @@ ipcMain.handle('get-user', async () => {
   // const usernameFromCmd = await execute('echo %USERNAME%')
   // const usernameFromUsername = await username()
 
-  console.log('index.js, get-user, userName:', {
-    userName,
-    processEnvUsername: process.env.username,
-    processEnvUser: process.env.user,
-    osUserInfoUsername: os?.userInfo?.()?.username,
-    // usernameFromUsername,
-    // usernameFromCmd,
-    usernameFromPowershell: usernameFromPS,
-    usernameFromPsSanitized,
-  })
+  // console.log('index.js, get-user, userName:', {
+  //   userName,
+  //   processEnvUsername: process.env.username,
+  //   processEnvUser: process.env.user,
+  //   osUserInfoUsername: os?.userInfo?.()?.username,
+  //   // usernameFromUsername,
+  //   // usernameFromCmd,
+  //   usernameFromPowershell: usernameFromPS,
+  //   usernameFromPsSanitized,
+  // })
 
   let user
   try {
