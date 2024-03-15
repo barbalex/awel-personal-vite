@@ -37,14 +37,6 @@ process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL
 const dbKeyPath = path.join(process.env.PUBLIC, 'db_key_obfuscated.js')
 const dbKey = require(dbKeyPath)
 
-// function execute(command) {
-//   return new Promise((resolve) => {
-//     exec(command, (error, stdout) => {
-//       resolve(stdout)
-//     })
-//   })
-// }
-
 function executePowershell(command) {
   return new Promise((resolve) => {
     const powershell = spawn('powershell.exe', [command])
