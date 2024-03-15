@@ -6,7 +6,6 @@ import {
   Label,
   Input,
   InputGroup,
-  InputGroupAddon,
   FormFeedback,
 } from 'reactstrap'
 import moment from 'moment'
@@ -60,7 +59,7 @@ const StyledFormGroup = styled(FormGroup)`
 const NonRowLabel = styled(Label)`
   margin-bottom: 3px;
 `
-const StyledInputGroupAddon = styled(InputGroupAddon)`
+const StyledInputGroupAddon = styled.div`
   cursor: pointer;
   span {
     border-top-right-radius: 0.25rem !important;

@@ -12,6 +12,7 @@ const path = require('path')
 const Database = require('better-sqlite3')
 const fs = require('fs-extra')
 const os = require('os')
+// using an old version of username because newer use esm
 const username = require('username')
 // const exec = require('child_process').exec
 const spawn = require('child_process').spawn

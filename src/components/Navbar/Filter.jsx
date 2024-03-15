@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import {
   InputGroup,
-  InputGroupAddon,
   InputGroupText,
   Input,
   UncontrolledTooltip,
@@ -29,10 +28,12 @@ const VolltextInput = styled(Input)`
 `
 const VolltextFilterRemoveAddon = styled(InputGroupText)`
   background-color: #f7f791 !important;
+  cursor: pointer;
 `
 const StyledInputGroupText = styled(InputGroupText)`
   background-color: ${(props) =>
     props.existsfilter === 'true' ? '#f7f791 !important' : '#e9ecef'};
+  cursor: pointer;
 `
 const FilterIconContainer = styled.div`
   padding-right: 10px;
@@ -120,23 +121,20 @@ const Filter = () => {
       setFilterFulltextIds,
     ],
   )
-  const onBlurFilterFulltext = useCallback(
-    (e) => {
-      if (
-        [
-          'personFunktionen',
-          'personPensionierte',
-          'personKader',
-          'personVerzTel',
-          'personVerzMobiltel',
-          'personVerzKurzzeichen',
-        ].includes(report)
-      ) {
-        personPages.initiate()
-      }
-    },
-    [report, personPages],
-  )
+  const onBlurFilterFulltext = useCallback(() => {
+    if (
+      [
+        'personFunktionen',
+        'personPensionierte',
+        'personKader',
+        'personVerzTel',
+        'personVerzMobiltel',
+        'personVerzKurzzeichen',
+      ].includes(report)
+    ) {
+      personPages.initiate()
+    }
+  }, [report, personPages])
   const onKeyPressFilterFulltext = useCallback(
     (e) => {
       if (e.key === 'Enter') {
@@ -160,7 +158,7 @@ const Filter = () => {
     ) {
       personPages.initiate()
     }
-  }, [report, personPages, setFilterFulltext])
+  }, [setFilterFulltext, setFilterFulltextIds, report, personPages])
 
   const toggleFilterDropdown = useCallback(
     (e) => {
@@ -173,14 +171,14 @@ const Filter = () => {
     const model = pathname.startsWith('/Personen')
       ? 'filterPerson'
       : pathname.startsWith('/Abteilungen')
-      ? 'filterAbteilung'
-      : pathname.startsWith('/Bereiche')
-      ? 'filterBereich'
-      : pathname.startsWith('/Sektionen')
-      ? 'filterSektion'
-      : pathname.startsWith('/Aemter')
-      ? 'filterAmt'
-      : 'filterPerson'
+        ? 'filterAbteilung'
+        : pathname.startsWith('/Bereiche')
+          ? 'filterBereich'
+          : pathname.startsWith('/Sektionen')
+            ? 'filterSektion'
+            : pathname.startsWith('/Aemter')
+              ? 'filterAmt'
+              : 'filterPerson'
     setFilter({ model, value: { mutationNoetig: 1 } })
     setShowMutationNoetig(true)
   }, [pathname, setFilter, setShowMutationNoetig])
@@ -212,7 +210,7 @@ const Filter = () => {
             onKeyPress={onKeyPressFilterFulltext}
             existsfilter={filterFulltextIds.length ? 'true' : 'false'}
           />
-          <InputGroupAddon addonType="append">
+          <>
             {filterFulltext && (
               <VolltextFilterRemoveAddon
                 id="volltextFilterRemoveAddon"
@@ -259,14 +257,14 @@ const Filter = () => {
                       pathname.startsWith('/Personen')
                         ? filterPerson?.mutationNoetig === 1
                         : pathname.startsWith('/Abteilungen')
-                        ? filterAbteilung?.mutationNoetig === 1
-                        : pathname.startsWith('/Bereiche')
-                        ? filterBereich?.mutationNoetig === 1
-                        : pathname.startsWith('/Sektionen')
-                        ? filterSektion?.mutationNoetig === 1
-                        : pathname.startsWith('/Aemter')
-                        ? filterAmt?.mutationNoetig === 1
-                        : false
+                          ? filterAbteilung?.mutationNoetig === 1
+                          : pathname.startsWith('/Bereiche')
+                            ? filterBereich?.mutationNoetig === 1
+                            : pathname.startsWith('/Sektionen')
+                              ? filterSektion?.mutationNoetig === 1
+                              : pathname.startsWith('/Aemter')
+                                ? filterAmt?.mutationNoetig === 1
+                                : false
                     }
                     onClick={onClickAnstehendeMutationen}
                   >
@@ -318,7 +316,7 @@ const Filter = () => {
                 <FaTimes />
               </StyledInputGroupText>
             )}
-          </InputGroupAddon>
+          </>
         </InputGroup>
       </div>
     </ErrorBoundary>

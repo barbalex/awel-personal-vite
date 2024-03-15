@@ -28,7 +28,7 @@ const StyledInput = styled(Input)`
   margin-right: 10px;
   top: -2px;
   /* larger-sized Checkboxes */
-  -webkit-transform: scale(1.5);
+  -webkit-transform: scale(1.3);
 `
 const DateContainer = styled.div`
   width: 95px;
@@ -48,9 +48,8 @@ const Handlungsbedarf = ({
   errorMutationFrist,
   errorMutationBemerkung,
 }) => {
-  const [mutationNoetigStateValue, setMutationNoetigStateValue] = useState(
-    !!mutationNoetigValue,
-  )
+  const [mutationNoetigStateValue, setMutationNoetigStateValue] =
+    useState(!!mutationNoetigValue)
   const onChangeMutationNoetig = useCallback(() => {
     const newValue = !mutationNoetigStateValue
     saveToDb({ value: newValue ? 1 : 0, field: 'mutationNoetig' })

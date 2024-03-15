@@ -5,14 +5,8 @@ import styled from 'styled-components'
 
 const StyledInput = styled(Input)`
   position: relative;
-  top: ${props => (props['data-row'] ? '8px' : '1px')};
-  /* larger-sized Checkboxes */
-  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  top: ${(props) => (props['data-row'] ? '8px' : '1px')};
   padding: 10px;
-  margin-left: -1.1rem !important;
-`
-const StyledFormGroup = styled(FormGroup)`
-  margin-bottom: 8px !important;
 `
 const LabelSpan = styled.span`
   padding-left: 5px;
@@ -39,7 +33,7 @@ const SharedCheckbox = ({
 
   if (row) {
     return (
-      <StyledFormGroup row>
+      <FormGroup row>
         <Label for={field} sm={2}>
           {label}
         </Label>
@@ -56,7 +50,7 @@ const SharedCheckbox = ({
             <FormFeedback>{error}</FormFeedback>
           </FormGroup>
         </Col>
-      </StyledFormGroup>
+      </FormGroup>
     )
   }
 
