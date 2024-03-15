@@ -76,7 +76,7 @@ const MyNavbar = () => {
       <StyledNavbar color="dark" dark expand="xl">
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={open} navbar>
-          <Nav className="mr-auto" navbar>
+          <Nav className="me-auto" navbar>
             <Personen />
             <Bereiche />
             <Sektionen />
@@ -87,7 +87,7 @@ const MyNavbar = () => {
             <Stammdaten />
             {userIsAdmin && <User />}
           </Nav>
-          <Nav className="ml-auto" navbar>
+          <Nav navbar>
             <SaveButton
               disabled={!dirty}
               title={dirty ? 'speichern' : 'alles ist gespeichert'}
