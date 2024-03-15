@@ -7,6 +7,7 @@ const {
   shell,
   protocol,
   Notification,
+  // session,
 } = require('electron')
 const path = require('path')
 const Database = require('better-sqlite3')
@@ -55,13 +56,6 @@ function executePowershell(command) {
 
 // Set application name for Windows 10+ notifications
 if (process.platform === 'win32') app.setAppUserModelId(app.getName())
-
-// TODO: this happens. Why?
-// if (!app.requestSingleInstanceLock()) {
-//   console.log('5')
-//   app.quit()
-//   process.exit(0)
-// }
 
 // Remove electron security warnings
 // This warning only shows in development mode
@@ -125,7 +119,6 @@ const createWindow = () => {
   // save window state on close
   win.on('close', (e) => {
     e.preventDefault()
-
     // in case user has changed data inside an input and not blured yet,
     // force bluring so data is saved
     win.webContents.executeJavaScript('document.activeElement.blur()')
@@ -219,6 +212,24 @@ app.whenReady().then(async () => {
       app.quit()
       // app.relaunch()
     }
+  }
+
+  // this will block file:: access needed by vite in dev mode
+  if (!process.env.VITE_DEV_SERVER_URL) {
+    // https://www.electronjs.org/docs/latest/tutorial/security#csp-http-headers
+    // BUT: does not work due to styled-components
+    // https://github.com/styled-components/styled-components/issues/4258
+    // session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    //   callback({
+    //     responseHeaders: {
+    //       ...details.responseHeaders,
+    //       'Content-Security-Policy': [
+    //         "default-src 'self'",
+    //         "style-src 'self' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='",
+    //       ],
+    //     },
+    //   })
+    // })
   }
 })
 
