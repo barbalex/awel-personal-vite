@@ -75,7 +75,7 @@ const More = () => {
       <DropdownToggle nav caret>
         Mehr
       </DropdownToggle>
-      <DropdownMenu right>
+      <DropdownMenu end>
         <DropdownItem onClick={chooseDbConnection}>
           Datenbank wählen
           <br />
