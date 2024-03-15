@@ -22,7 +22,8 @@ const EFButtonGroup = styled(ButtonGroup)`
 const Row = styled.div`
   grid-column: 1;
   display: grid;
-  grid-template-columns: 2fr 2fr 2fr 1fr 20px;
+  grid-template-columns: ${(props) =>
+    props['data-nosymbol'] ? '2fr 2fr 2fr 1fr' : '2fr 2fr 2fr 1fr 20px'};
   grid-gap: 5px;
   border-bottom: thin solid #cccccc;
   padding: 3px 0;
@@ -99,12 +100,12 @@ const SchluesselsComponent = ({ row = true }) => {
   const Content = () => (
     <Container name="schluessel">
       {schluessels.length > 0 && (
-        <Row>
+        <Row data-nosymbol={showFilter}>
           <Typ>Typ</Typ>
           <Anlage>Anlage</Anlage>
           <Bezeichnung>Bezeichnung</Bezeichnung>
           <Nr>Nr.</Nr>
-          <div />
+          {!showFilter && <div />}
         </Row>
       )}
       {schluessels.map((schluessel) => (

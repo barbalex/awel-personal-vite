@@ -18,7 +18,8 @@ const StyledButton = styled(Button)`
 const Row = styled.div`
   grid-column: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 20px;
+  grid-template-columns: ${(props) =>
+    props['data-nosymbol'] ? '1fr 1fr 1fr' : '1fr 1fr 1fr 20px'};
   grid-gap: 5px;
   border-bottom: thin solid #cccccc;
   padding: 3px 0;
@@ -62,11 +63,11 @@ const MobileAbosComponent = ({ row = true }) => {
   const Content = () => (
     <Container name="mobileAbo">
       {mobileAbos.length > 0 && (
-        <Row>
+        <Row data-nosymbol={showFilter}>
           <Typ>Typ</Typ>
           <Kostenstelle>Kostenstelle</Kostenstelle>
           <Bemerkungen>Bemerkungen</Bemerkungen>
-          <div />
+          {!showFilter && <div />}
         </Row>
       )}
       {mobileAbos.map((mobileAbo) => (

@@ -49,7 +49,7 @@ const PersonTab = () => {
             Datenblatt
           </NavLink>
         </StyledNavItem>
-        <StyledNavItem active={tab === 'mutation'}>
+        <StyledNavItem>
           <NavLink
             className={classnames({
               active: tab === 'mutation',

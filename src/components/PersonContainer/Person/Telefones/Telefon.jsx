@@ -17,7 +17,7 @@ import updateField from '../../../../src/updateField'
 const Row = styled.div`
   display: grid;
   grid-template-columns: ${(props) =>
-    props.nosymbol ? '180px 160px 1fr' : '180px 160px 1fr 20px'};
+    props['data-nosymbol'] ? '180px 160px 1fr' : '180px 160px 1fr 20px'};
   grid-gap: 5px;
   border-bottom: thin solid #cccccc;
   padding: 3px 0;
@@ -131,7 +131,7 @@ const Telefon = ({ id }) => {
   )
 
   return (
-    <Row key={`${id}`} nosymbol={showFilter}>
+    <Row key={`${id}`} data-nosymbol={showFilter}>
       <Nr>
         <InputWithoutLabel
           key={`${id}nr`}

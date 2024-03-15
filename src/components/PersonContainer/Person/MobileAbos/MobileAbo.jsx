@@ -17,7 +17,7 @@ const Row = styled.div`
   grid-column: 1;
   display: grid;
   grid-template-columns: ${(props) =>
-    props.nosymbol ? '1fr 1fr 1fr' : '1fr 1fr 1fr 20px'};
+    props['data-nosymbol'] ? '1fr 1fr 1fr' : '1fr 1fr 1fr 20px'};
   grid-gap: 5px;
   border-bottom: thin solid #cccccc;
   padding: 3px 0;
@@ -146,7 +146,7 @@ const MobileAbo = ({ id }) => {
   )
 
   return (
-    <Row key={`${id}`} nosymbol={showFilter}>
+    <Row key={`${id}`} data-nosymbol={showFilter}>
       <Typ>
         <Select
           key={`${id}typ`}

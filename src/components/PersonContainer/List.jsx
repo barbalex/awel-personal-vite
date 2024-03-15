@@ -23,9 +23,9 @@ const Row = styled.div`
   border-bottom: 1px solid rgba(46, 125, 50, 0.5);
   cursor: pointer;
   background-color: ${(props) =>
-    props.active ? 'rgb(255, 250, 198)' : 'unset'};
+    props['data-active'] ? 'rgb(255, 250, 198)' : 'unset'};
   border-top: ${(props) =>
-    props.active ? '1px solid rgba(46, 125, 50, 0.5)' : 'unset'};
+    props['data-active'] ? '1px solid rgba(46, 125, 50, 0.5)' : 'unset'};
   height: 50px;
   padding: 15px;
   line-height: 1.25em;
@@ -62,7 +62,7 @@ const MutationFrist = styled.div`
   padding-right: 5px;
   font-size: 1rem;
 `
- 
+
 const PersonList = ({ dimensions, listRef }) => {
   const navigate = useNavigate()
   const { personId = 0 } = useParams()
@@ -98,7 +98,7 @@ const PersonList = ({ dimensions, listRef }) => {
                   navigate(`/Personen/${row.id}`)
                   if (showFilter) setShowFilter(false)
                 }}
-                active={!showFilter && +personId === row.id}
+                data-active={!showFilter && +personId === row.id}
               >
                 <RowContainer>
                   <Text>{`${row.name || ''} ${row.vorname || ''}`}</Text>
