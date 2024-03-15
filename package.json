@@ -21,7 +21,7 @@
     "dev": "vite",
     "build": "vite build && electron-builder",
     "build_sik": "tsc && vite build && electron-builder",
-    "preinstall": "cross-env-shell npm install better-sqlite3 --no-save --build-from-source --sqlite3=\"$INIT_CWD/sqlite-amalgamation\" --runtime=electron --target=27.3.6 --dist-url=https://electronjs.org/headers --force",
+    "preinstall": "cross-env-shell npm install better-sqlite3 --no-save --build-from-source --sqlite3=\"$INIT_CWD/sqlite-amalgamation\" --runtime=electron --target=28.2.7 --dist-url=https://electronjs.org/headers --force",
     "preview": "vite preview",
     "e2e": "npx playwright test"
   },
@@ -77,7 +77,7 @@
     "@babel/eslint-parser": "7.23.10",
     "@babel/preset-react": "7.23.3",
     "@playwright/test": "1.42.1",
-    "electron": "27.3.6",
+    "electron": "28.2.7",
     "electron-builder": "24.13.3",
     "eslint": "8.57.0",
     "eslint-config-react-app": "7.0.1",
