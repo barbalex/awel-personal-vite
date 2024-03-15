@@ -94,6 +94,7 @@
     "popper.js": "is peer, probably required by reactstrap",
     "react-dropzone": "do not upgrade from 12.1.0 to 14.1.0, due to accept filter not working (in electron?)",
     "versions": "need the preinstall script. See: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/compilation.md#custom-configuration and https://github.com/WiseLibs/better-sqlite3/issues/126#issuecomment-1379445811",
+    "better-sqlite3_comment": "when running npm i, need to remove below entry, then re-inject afterwards",
     "better-sqlite3": "file:./node_modules/better-sqlite3"
   },
   "engines": {
