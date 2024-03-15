@@ -6,12 +6,12 @@ import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 const StyledFormGroup = styled(FormGroup)`
-  margin-bottom: ${props =>
+  margin-bottom: ${(props) =>
     props['data-margin-bottom'] !== undefined
       ? `${props['data-margin-bottom']}px !important`
       : props.row
-      ? '16px'
-      : '8px !important'};
+        ? '16px'
+        : '8px !important'};
   .react-datepicker-wrapper {
     width: 100%;
   }
@@ -29,7 +29,9 @@ const StyledDatePicker = styled(DatePicker)`
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
   min-height: 34px;
   &:focus {
     color: #495057;
@@ -63,11 +65,11 @@ const DateField = ({
   saveToDb,
   error,
   row = true,
-  popperPlacement = 'auto',
+  popperPlacement = 'bottom',
   marginBottom = undefined,
 }) => {
   const onChangeDatePicker = useCallback(
-    date =>
+    (date) =>
       saveToDb({
         value: moment(date, 'DD.MM.YYYY').format('DD.MM.YYYY'),
         field,
