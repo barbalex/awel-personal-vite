@@ -23,7 +23,7 @@ const Container = styled.div`
 // seems needed to prevent unnessecary scrollbars
 const StyledReflexElement = styled(ReflexElement)`
   background-color: ${(props) =>
-    props.showfilter ? '#f7f791' : 'rgba(0,0,0,0)'};
+    props['data-showfilter'] ? '#f7f791' : 'rgba(0,0,0,0)'};
   overflow-x: hidden !important;
   > div {
     height: unset !important;
@@ -66,7 +66,7 @@ const BereichContainer = () => {
             <List {...bereichJson} listRef={listRef} />
           </ReflexElement>
           <ReflexSplitter />
-          <StyledReflexElement showfilter={showFilter}>
+          <StyledReflexElement data-showfilter={showFilter}>
             {!!bereichId && <Outlet context={[listRef]} />}
           </StyledReflexElement>
         </ReflexContainer>
