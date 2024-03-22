@@ -335,8 +335,12 @@ ipcMain.handle('get-user', async () => {
   if (process.platform === 'darwin') {
     usernameFromPS = await username()
   } else {
+    // does not work in zh-installations
+    // usernameFromPS = await executePowershell(
+    //   '[System.Security.Principal.WindowsIdentity]::GetCurrent().Name',
+    // )
     usernameFromPS = await executePowershell(
-      '[System.Security.Principal.WindowsIdentity]::GetCurrent().Name',
+      '$Env:UserName',
     )
   }
   const indexOfBackslash = usernameFromPS.indexOf('\\')
