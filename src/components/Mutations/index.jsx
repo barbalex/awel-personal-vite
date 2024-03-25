@@ -22,10 +22,6 @@ const Container = styled.div`
 `
 const RowDiv = styled.div`
   border-bottom: 1px solid rgba(46, 125, 50, 0.5);
-  background-color: ${(props) =>
-    props.active ? 'rgb(255, 250, 198)' : 'unset'};
-  border-top: ${(props) =>
-    props.active ? '1px solid rgba(46, 125, 50, 0.5)' : 'unset'};
   padding: 15px 8px;
   display: grid;
   grid-template-columns: 150px 100px 100px 200px 100px 160px 1fr 1fr 50px;
