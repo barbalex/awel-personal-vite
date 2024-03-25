@@ -314,7 +314,7 @@ ipcMain.handle(
   },
 )
 
-// 2021.08.27: not in use becaus printed too small
+// 2021.08.27: not in use because printed too small
 ipcMain.handle('print', async (event, options) => {
   await win.webContents.print(options)
   return null
@@ -331,17 +331,15 @@ ipcMain.handle('get-user', async () => {
   // but on installed version most return "SYSTEM"
   // Only thing that seems to work is powershell
   // example answer: PC_ALEX\\alexa\r\n
+  // 2024.03: additional issue:
+  // '[System.Security.Principal.WindowsIdentity]::GetCurrent().Name'
+  // does not work in zh-installations
+  // thus using $Env:UserName
   let usernameFromPS
   if (process.platform === 'darwin') {
     usernameFromPS = await username()
   } else {
-    // does not work in zh-installations
-    // usernameFromPS = await executePowershell(
-    //   '[System.Security.Principal.WindowsIdentity]::GetCurrent().Name',
-    // )
-    usernameFromPS = await executePowershell(
-      '$Env:UserName',
-    )
+    usernameFromPS = await executePowershell('$Env:UserName')
   }
   const indexOfBackslash = usernameFromPS.indexOf('\\')
   const usernameWithoutDomain = usernameFromPS.slice(indexOfBackslash + 1)
