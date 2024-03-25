@@ -16,7 +16,7 @@ import storeContext from '../../storeContext'
 const StyledUncontrolledDropdown = styled(UncontrolledDropdown)`
   display: flex;
   border: ${(props) =>
-    props.active ? '1px solid rgb(255, 255, 255, .5)' : 'unset'};
+    props['data-active'] ? '1px solid rgb(255, 255, 255, .5)' : 'unset'};
   border-radius: 0.25rem;
   margin-right: 5px;
 `
@@ -93,7 +93,7 @@ const Berichte = () => {
   }, [report, navigate, pathname, personId, settings.mutationFormPath])
 
   return (
-    <StyledUncontrolledDropdown nav inNavbar active={!!report}>
+    <StyledUncontrolledDropdown nav inNavbar data-active={!!report}>
       <DropdownToggle nav caret>
         Berichte
       </DropdownToggle>

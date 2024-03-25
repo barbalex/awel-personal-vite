@@ -16,7 +16,7 @@ const Sup = styled.sup`
 const StyledNavItem = styled(NavItem)`
   display: flex;
   border: ${(props) =>
-    props.active ? '1px solid rgb(255, 255, 255, .5)' : 'unset'};
+    props['data-active'] ? '1px solid rgb(255, 255, 255, .5)' : 'unset'};
   border-radius: 0.25rem;
   margin-right: 5px;
 `
@@ -105,7 +105,7 @@ const Bereich = () => {
   const existsActiveBereich = active && !!+bereichId
 
   return (
-    <StyledNavItem active={active}>
+    <StyledNavItem data-active={active}>
       <NavLink id="Bereiche" onClick={showTab}>
         Bereiche
         {active && <Sup>{bereicheSumSup}</Sup>}
