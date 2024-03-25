@@ -17,9 +17,9 @@ const Row = styled.div`
   border-bottom: 1px solid rgba(46, 125, 50, 0.5);
   cursor: pointer;
   background-color: ${(props) =>
-    props.active ? 'rgb(255, 250, 198)' : 'unset'};
+    props['data-active'] ? 'rgb(255, 250, 198)' : 'unset'};
   border-top: ${(props) =>
-    props.active ? '1px solid rgba(46, 125, 50, 0.5)' : 'unset'};
+    props['data-active'] ? '1px solid rgba(46, 125, 50, 0.5)' : 'unset'};
   height: 50px;
   padding: 15px;
   line-height: 1.25em;
@@ -72,7 +72,7 @@ const UserList = ({ dimensions, listRef }) => {
                   navigate(`/Users/${row.id}`)
                   if (showFilter) setShowFilter(false)
                 }}
-                active={!showFilter && +userId === row.id}
+                data-active={!showFilter && +userId === row.id}
               >
                 <RowContainer>
                   <Text>{`${row.name || ''}`}</Text>
