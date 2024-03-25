@@ -13,9 +13,9 @@ const Row = styled.div`
   border-bottom: 1px solid rgba(46, 125, 50, 0.5);
   cursor: pointer;
   background-color: ${(props) =>
-    props.active ? 'rgb(255, 250, 198)' : 'unset'};
+    props['data-active'] ? 'rgb(255, 250, 198)' : 'unset'};
   border-top: ${(props) =>
-    props.active ? '1px solid rgba(46, 125, 50, 0.5)' : 'unset'};
+    props['data-active'] ? '1px solid rgba(46, 125, 50, 0.5)' : 'unset'};
   height: 50px;
   padding: 15px;
   white-space: nowrap;
@@ -52,7 +52,7 @@ const StammdatenRow = ({ index, style }) => {
   )
 
   return (
-    <Row style={style} onClick={onClickRow} active={+tableId === row.id}>
+    <Row style={style} onClick={onClickRow} data-active={+tableId === row.id}>
       {row.value || '(kein Wert)'}
       {row.deleted === 1 && (
         <>

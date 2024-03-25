@@ -20,9 +20,9 @@ const Row = styled.div`
   border-bottom: 1px solid rgba(46, 125, 50, 0.5);
   cursor: pointer;
   background-color: ${(props) =>
-    props.active ? 'rgb(255, 250, 198)' : 'unset'};
+    props['data-active'] ? 'rgb(255, 250, 198)' : 'unset'};
   border-top: ${(props) =>
-    props.active ? '1px solid rgba(46, 125, 50, 0.5)' : 'unset'};
+    props['data-active'] ? '1px solid rgba(46, 125, 50, 0.5)' : 'unset'};
   height: 50px;
   padding: 15px;
   line-height: 1.25em;
@@ -93,7 +93,7 @@ const AmtList = ({ dimensions, listRef }) => {
                   navigate(`/Aemter/${row.id}`)
                   if (showFilter) setShowFilter(false)
                 }}
-                active={!showFilter && +amtId === row.id}
+                data-active={!showFilter && +amtId === row.id}
               >
                 <RowContainer>
                   <Text>{`${row.name || ''}`}</Text>
