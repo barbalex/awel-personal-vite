@@ -19,8 +19,8 @@ import storeContext from '../../storeContext'
 
 const StyledDropdownItem = styled(DropdownItem)`
   background-color: ${(props) =>
-    props.active ? '#f7f791 !important' : 'unset'};
-  color: ${(props) => (props.active ? '#212529 !important' : 'unset')};
+    props['data-active'] ? '#f7f791 !important' : 'unset'};
+  color: ${(props) => (props['data-active'] ? '#212529 !important' : 'unset')};
 `
 const VolltextInput = styled(Input)`
   background-color: ${(props) =>
@@ -253,7 +253,7 @@ const Filter = () => {
                 <DropdownMenu>
                   <DropdownItem header>vorbereitete Filter</DropdownItem>
                   <StyledDropdownItem
-                    active={
+                    data-active={
                       pathname.startsWith('/Personen')
                         ? filterPerson?.mutationNoetig === 1
                         : pathname.startsWith('/Abteilungen')
@@ -273,31 +273,31 @@ const Filter = () => {
                   {pathname.startsWith('/Personen') && (
                     <>
                       <StyledDropdownItem
-                        active={store.filterPersonAktivJetzt}
+                        data-active={store.filterPersonAktivJetzt}
                         onClick={onClickAktivJetzt}
                       >
                         aktuell aktiv (bereits eingetreten)
                       </StyledDropdownItem>
                       <StyledDropdownItem
-                        active={store.filterPersonAktivJetztMitTel}
+                        data-active={store.filterPersonAktivJetztMitTel}
                         onClick={onClickAktivJetztMitTel}
                       >
                         aktuell aktiv, mit Telefon
                       </StyledDropdownItem>
                       <StyledDropdownItem
-                        active={store.filterPersonAktivJetztMitMobiltel}
+                        data-active={store.filterPersonAktivJetztMitMobiltel}
                         onClick={onClickAktivJetztMitMobiltel}
                       >
                         aktuell aktiv, mit Mobil-Telefon
                       </StyledDropdownItem>
                       <StyledDropdownItem
-                        active={store.filterPersonAktivJetztMitKurzzeichen}
+                        data-active={store.filterPersonAktivJetztMitKurzzeichen}
                         onClick={onClickAktivJetztMitKurzzeichen}
                       >
                         aktuell aktiv, mit Kurzzeichen
                       </StyledDropdownItem>
                       <StyledDropdownItem
-                        active={store.filterPersonKader}
+                        data-active={store.filterPersonKader}
                         onClick={onClickKader}
                       >
                         Kader

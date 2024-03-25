@@ -23,7 +23,7 @@ const Sup = styled.sup`
 const StamdatenContainer = styled.div`
   display: flex;
   border: ${(props) =>
-    props.active ? '1px solid rgb(255, 255, 255, .5)' : 'unset'};
+    props['data-active'] ? '1px solid rgb(255, 255, 255, .5)' : 'unset'};
   border-radius: 0.25rem;
 `
 const StyledButton = styled(Button)`
@@ -96,8 +96,12 @@ const Stammdaten = () => {
   )
 
   return (
-    <StamdatenContainer active={tableName?.includes('Werte')}>
-      <UncontrolledDropdown nav inNavbar active={tableName?.includes('Werte')}>
+    <StamdatenContainer data-active={tableName?.includes('Werte')}>
+      <UncontrolledDropdown
+        nav
+        inNavbar
+        data-active={tableName?.includes('Werte')}
+      >
         <DropdownToggle nav caret>
           {tableName?.includes('Werte') ? (
             <span>
