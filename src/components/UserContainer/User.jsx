@@ -33,6 +33,7 @@ const User = () => {
     if (!user) user = {}
   }
   const userId = showFilter ? '' : +userIdInUrl
+  const isAdmin = user.isAdmin === 1
 
   const [errors, setErrors] = useState({})
   useEffect(() => {
@@ -99,14 +100,16 @@ const User = () => {
             saveToDb={saveToDb}
             error={errors.name}
           />
-          <SharedCheckbox
-            key={`${userId}isAdmin`}
-            value={user.isAdmin}
-            field="isAdmin"
-            label="Ist Admin"
-            saveToDb={saveToDb}
-            error={errors.isAdmin}
-          />
+          {isAdmin && (
+            <SharedCheckbox
+              key={`${userId}isAdmin`}
+              value={user.isAdmin}
+              field="isAdmin"
+              label="Ist Admin"
+              saveToDb={saveToDb}
+              error={errors.isAdmin}
+            />
+          )}
           {!showFilter && (
             <PasswordInput
               key={`${userId}pwd`}
