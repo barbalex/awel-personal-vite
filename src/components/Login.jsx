@@ -185,6 +185,15 @@ const Login = () => {
         "
       </P>
       <P>
+        {`Ausgelesener user entspricht diesem hier in der DB, wenn Gross-/Kleinschreibung ignoriert wird: "`}
+        <span style={{ fontStyle: 'italic', backgroundColor: '#e8e8e8' }}>
+          {(users ?? [])
+            .map((u) => u.name)
+            .filter((n) => n?.toLowerCase?.() === userName?.toLowerCase?.())}
+        </span>
+        "
+      </P>
+      <P>
         {`Passwort gemäss DB ist: "`}
         <span style={{ fontStyle: 'italic', backgroundColor: '#e8e8e8' }}>
           {userPwd}

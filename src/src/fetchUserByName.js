@@ -4,8 +4,10 @@ const fetchUserByName = async ({ store }) => {
 
   let result = []
   try {
+    // windows usernames are case insensitive
+    // thus: COLLATE NOCASE
     result = await window.electronAPI.queryWithParam(
-      'SELECT * from users where name = ?',
+      'SELECT * from users where name = ? COLLATE NOCASE',
       userName,
     )
   } catch (error) {

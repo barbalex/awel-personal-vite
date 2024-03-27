@@ -170,7 +170,7 @@ app.whenReady().then(async () => {
   createWindow()
   // dialog cannot be used before app is ready
   let dbPath = getUserPath().dbPath || 'C:/Users/alexa/personal.db'
-  console.log('will open db from path:', dbPath)
+  // console.log('will open db from path:', dbPath)
   try {
     db = Database(dbPath, {
       fileMustExist: true,
@@ -185,7 +185,7 @@ app.whenReady().then(async () => {
   let pragmaRes
   try {
     pragmaRes = db.pragma(`key='${dbKey}'`)
-    console.log('index.js, pragmaRes:', { pragmaRes, dbKey })
+    // console.log('index.js, pragmaRes:', { pragmaRes, dbKey })
   } catch (error) {
     console.log('index.js, Error setting db key:', error)
   }
@@ -365,7 +365,11 @@ ipcMain.handle('get-user', async () => {
 
   let user
   try {
-    user = db.prepare(`select * from users where name = ?`).get(userName)
+    // windows usernames are case insensitive
+    // thus: COLLATE NOCASE
+    user = db
+      .prepare(`select * from users where name = ? COLLATE NOCASE`)
+      .get(userName)
   } catch (error) {
     const notif20 = new Notification({
       title: 'Personal, error fetching user:',
@@ -376,6 +380,7 @@ ipcMain.handle('get-user', async () => {
   const isAdmin = user?.isAdmin === 1
 
   return {
+    // explicitely use the username as passed in from windows
     userName,
     isAdmin,
     pwd: user?.pwd ? atob(user.pwd) : undefined,
