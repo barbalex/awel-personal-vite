@@ -33,6 +33,7 @@ const User = () => {
   const {
     usersFiltered,
     users,
+    userName,
     setDeletionMessage,
     setDeletionTitle,
     setDeletionCallback,
@@ -80,7 +81,12 @@ const User = () => {
       ? `${usersFiltered.length}/${users.length}`
       : usersFiltered.length
   const active = pathname.startsWith('/Users')
-  const existsActiveUser = active && +userId
+  const existsActiveUser = active && !!+userId
+  const activeUserId = users.find((p) => p.id === +userId)?.id
+  const loggedInUserId = users.find(
+    (u) => u.name?.toLowerCase?.() === userName?.toLowerCase?.(),
+  )?.id
+  const userMayBeDeleted = activeUserId && activeUserId !== loggedInUserId
 
   return (
     <StyledNavItem data-active={active}>
@@ -104,15 +110,15 @@ const User = () => {
           <StyledButton
             id="deleteUserButton"
             onClick={deleteUser}
-            disabled={!existsActiveUser}
+            disabled={!existsActiveUser || !userMayBeDeleted}
           >
             <FaTrashAlt />
           </StyledButton>
-          {existsActiveUser && (
-            <UncontrolledTooltip placement="bottom" target="deleteUserButton">
-              markierten Benutzer löschen
-            </UncontrolledTooltip>
-          )}
+          <UncontrolledTooltip placement="bottom" target="deleteUserButton">
+            {userMayBeDeleted
+              ? 'markierten Benutzer löschen'
+              : 'angemeldete Benutzer können sich nicht selber löschen'}
+          </UncontrolledTooltip>
         </>
       )}
     </StyledNavItem>

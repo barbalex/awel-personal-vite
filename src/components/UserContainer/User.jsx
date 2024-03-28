@@ -23,7 +23,7 @@ const User = () => {
   const [listRef] = useOutletContext()
 
   const store = useContext(storeContext)
-  const { users, showFilter, filterUser, setFilter, setDirty } = store
+  const { users, userName, showFilter, filterUser, setFilter, setDirty } = store
 
   let user
   if (showFilter) {
@@ -33,7 +33,13 @@ const User = () => {
     if (!user) user = {}
   }
   const userId = showFilter ? '' : +userIdInUrl
+  // logged in user may not change own isAdmin status
   const isAdmin = user.isAdmin === 1
+  const loggedInUserId = users.find(
+    (u) => u.name?.toLowerCase?.() === userName?.toLowerCase?.(),
+  )?.id
+  const thisUserIsLoggedIn = loggedInUserId === user.id
+  const userMaySetAdmin = !thisUserIsLoggedIn && isAdmin
 
   const [errors, setErrors] = useState({})
   useEffect(() => {
@@ -56,6 +62,17 @@ const User = () => {
     ({ field, value }) => {
       if (!user && !showFilter) {
         throw new Error(`User with id ${userId} not found`)
+      }
+
+      // logged in user may not change own name (other than change casing)
+      if (
+        field === 'name' &&
+        thisUserIsLoggedIn &&
+        userName?.toLowerCase?.() !== value?.toLowerCase?.()
+      ) {
+        return setErrors({
+          name: 'Angemeldete Benutzer können am eigenen Namen nur die Gross-/Kleinschreibung ändern',
+        })
       }
 
       if (showFilter) {
@@ -82,12 +99,23 @@ const User = () => {
         listRef.current.scrollToItem(index)
       }
     },
-    [user, showFilter, userId, setFilter, filterUser, store, listRef],
+    [
+      user,
+      showFilter,
+      thisUserIsLoggedIn,
+      store,
+      userId,
+      setFilter,
+      filterUser,
+      listRef,
+    ],
   )
   const onChange = useCallback((val) => setPwd(val), [])
 
   if (!showFilter && !userId) return null
 
+  // TODO: loggged in user may not change own isAdmin status
+  // TODO: logged in user may not change own name (other than change casing)
   return (
     <ErrorBoundary>
       <Container showfilter={showFilter}>
@@ -100,16 +128,20 @@ const User = () => {
             saveToDb={saveToDb}
             error={errors.name}
           />
-          {isAdmin && (
-            <SharedCheckbox
-              key={`${userId}isAdmin`}
-              value={user.isAdmin}
-              field="isAdmin"
-              label="Ist Admin"
-              saveToDb={saveToDb}
-              error={errors.isAdmin}
-            />
-          )}
+          <SharedCheckbox
+            key={`${userId}isAdmin`}
+            value={user.isAdmin}
+            field="isAdmin"
+            label="Ist Admin"
+            saveToDb={saveToDb}
+            error={errors.isAdmin}
+            formText={
+              !showFilter && !userMaySetAdmin
+                ? 'Angemeldete Admins können ihre eigenen Admin-Rechte nicht entfernen'
+                : undefined
+            }
+            disabled={showFilter || !userMaySetAdmin}
+          />
           {!showFilter && (
             <PasswordInput
               key={`${userId}pwd`}

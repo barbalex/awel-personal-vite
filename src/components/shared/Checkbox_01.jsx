@@ -1,6 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
-import { Col, FormGroup, Label, Input, FormFeedback } from 'reactstrap'
+import {
+  Col,
+  FormGroup,
+  Label,
+  Input,
+  FormFeedback,
+  FormText,
+} from 'reactstrap'
 import styled from 'styled-components'
 
 const StyledInput = styled(Input)`
@@ -18,7 +25,9 @@ const SharedCheckbox = ({
   label,
   saveToDb,
   error,
+  formText = undefined,
   row = true,
+  disabled = false,
 }) => {
   const [stateValue, setStateValue] = useState(!!value)
   const onChange = useCallback(() => {
@@ -46,9 +55,11 @@ const SharedCheckbox = ({
               onChange={onChange}
               invalid={!!error}
               data-row={row}
+              disabled={disabled}
             />
-            <FormFeedback>{error}</FormFeedback>
           </FormGroup>
+          <FormFeedback>{error}</FormFeedback>
+          {!!formText && <FormText>{formText}</FormText>}
         </Col>
       </FormGroup>
     )
@@ -64,10 +75,12 @@ const SharedCheckbox = ({
           onChange={onChange}
           invalid={!!error}
           data-row={row}
+          disabled={disabled}
         />
         {!row && <LabelSpan>{` ${label}`}</LabelSpan>}
       </Label>
       <FormFeedback>{error}</FormFeedback>
+      {!!(<FormText>{formText}</FormText>)}
     </FormGroup>
   )
 }
