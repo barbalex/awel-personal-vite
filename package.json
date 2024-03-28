@@ -1,7 +1,7 @@
 {
   "name": "personal",
   "productName": "Personal",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "main": "dist-electron/main/index.js",
   "description": "Damit verwaltet das AWEL Kt. ZH Personal-Daten",
   "author": {
