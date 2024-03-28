@@ -25,7 +25,7 @@ const SharedInput = ({
   const [stateValue, setStateValue] = useState(
     value || value === 0 ? value : '',
   )
-  console.warn('PasswordInput', { value, stateValue, user })
+  // console.warn('PasswordInput', { value, stateValue, user })
 
   const onBlur = useCallback(
     async (event) => {
