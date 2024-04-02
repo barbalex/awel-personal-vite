@@ -44,7 +44,7 @@ const StyledButton = styled(Button)`
 // SOLVED. Reason was electron opening dev tools
 const Login = () => {
   const store = useContext(storeContext)
-  const { setUserIsLoggedIn, userName, userPwd, users } = store
+  const { setUserIsLoggedIn, userName, userPwd } = store
 
   const navigate = useNavigate()
 
@@ -121,13 +121,14 @@ const Login = () => {
       >
         anmelden
       </StyledButton>
-      <div style={{ height: 30 }} />
-      <P>
+      <div style={{ height: 40 }} />
+      <P style={{ marginBottom: 0 }}>
         Verbundene Datenbank:{' '}
         <span style={{ fontStyle: 'italic', backgroundColor: '#e8e8e8' }}>
           {dbPath ?? 'keine'}
         </span>
-        {'. '}
+      </P>
+      <P>
         <a
           href="#"
           onClick={chooseDbConnection}
@@ -138,80 +139,6 @@ const Login = () => {
         >
           Andere Wählen
         </a>
-      </P>
-
-      <div style={{ height: 30 }} />
-      <div
-        style={{
-          fontWeight: 'bold',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingBottom: 10,
-        }}
-      >
-        PROVISORISCHE ANZEIGE TEILWEISE GEHEIMER DATEN
-      </div>
-      <div
-        style={{
-          fontWeight: 'bold',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingBottom: 10,
-        }}
-      >
-        Anleitung: Bitte Passwort eingeben, dann Bildschirm-Print machen (direkt
-        nach Angabe des Passworts, ohne das Paswwort-Feld zu verlassen) und an
-        Alex schicken
-      </div>
-      <P>
-        {`Von Windows ausgelesener User-Name ist: "`}
-        <span style={{ fontStyle: 'italic', backgroundColor: '#e8e8e8' }}>
-          {userName}
-        </span>
-        "
-      </P>
-      <P>
-        {`Liste aller in der DB enthaltenen User-Namen: "`}
-        <span style={{ fontStyle: 'italic', backgroundColor: '#e8e8e8' }}>
-          {(users ?? []).map((u) => u.name).join('", "')}
-        </span>
-        "
-      </P>
-      <P>
-        {`Ausgelesener user entspricht diesem hier in der DB: "`}
-        <span style={{ fontStyle: 'italic', backgroundColor: '#e8e8e8' }}>
-          {(users ?? []).map((u) => u.name).filter((n) => n === userName)}
-        </span>
-        "
-      </P>
-      <P>
-        {`Ausgelesener user entspricht diesem hier in der DB, wenn Gross-/Kleinschreibung ignoriert wird: "`}
-        <span style={{ fontStyle: 'italic', backgroundColor: '#e8e8e8' }}>
-          {(users ?? [])
-            .map((u) => u.name)
-            .filter((n) => n?.toLowerCase?.() === userName?.toLowerCase?.())}
-        </span>
-        "
-      </P>
-      <P>
-        {`Passwort gemäss DB ist: "`}
-        <span style={{ fontStyle: 'italic', backgroundColor: '#e8e8e8' }}>
-          {userPwd}
-        </span>
-        "
-      </P>
-      <P>
-        {`Eigegebenes Passwort ist: "`}
-        <span style={{ fontStyle: 'italic', backgroundColor: '#e8e8e8' }}>
-          {value}
-        </span>
-        "
-      </P>
-      <P>
-        {`DB-Passwort und eingegebenes sind gleich: `}
-        <span style={{ fontStyle: 'italic', backgroundColor: '#e8e8e8' }}>
-          {!!value && value === userPwd ? 'Ja' : 'Nein'}
-        </span>
       </P>
     </Container>
   )
