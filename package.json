@@ -1,7 +1,7 @@
 {
   "name": "personal",
   "productName": "Personal",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "main": "dist-electron/main/index.js",
   "description": "Damit verwaltet das AWEL Kt. ZH Personal-Daten",
   "author": {
@@ -26,10 +26,10 @@
     "e2e": "npx playwright test"
   },
   "dependencies": {
-    "@types/react": "18.2.73",
-    "@types/react-dom": "18.2.22",
-    "@typescript-eslint/eslint-plugin": "7.4.0",
-    "@typescript-eslint/parser": "7.4.0",
+    "@types/react": "18.2.74",
+    "@types/react-dom": "18.2.23",
+    "@typescript-eslint/eslint-plugin": "7.5.0",
+    "@typescript-eslint/parser": "7.5.0",
     "@vitejs/plugin-react": "4.2.1",
     "babel-loader": "9.1.3",
     "better-sqlite3": "file:./node_modules/better-sqlite3",
@@ -43,8 +43,8 @@
     "file-loader": "6.2.0",
     "fs-extra": "11.2.0",
     "jquery": "3.7.1",
-    "mobx": "6.12.1",
-    "mobx-react-lite": "4.0.6",
+    "mobx": "6.12.3",
+    "mobx-react-lite": "4.0.7",
     "mobx-state-tree": "5.4.1",
     "moment": "2.30.1",
     "mst-middlewares": "6.0.0",
@@ -70,7 +70,7 @@
     "use-detect-print": "0.0.2",
     "username": "5.1.0",
     "validator": "13.11.0",
-    "vite": "5.2.6",
+    "vite": "5.2.7",
     "vite-electron-plugin": "0.8.3"
   },
   "devDependencies": {
