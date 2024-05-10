@@ -39,7 +39,6 @@
     "better-sqlite3": "file:./node_modules/better-sqlite3",
     "date-fns": "3.6.0",
     "exceljs": "4.4.0",
-    "file-loader": "6.2.0",
     "fs-extra": "11.2.0",
     "jquery": "3.7.1",
     "mobx": "6.12.3",
