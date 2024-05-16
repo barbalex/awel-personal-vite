@@ -35,11 +35,13 @@ const User = () => {
   const userId = showFilter ? '' : +userIdInUrl
   // logged in user may not change own isAdmin status
   const isAdmin = user.isAdmin === 1
-  const loggedInUserId = users.find(
+  const loggedInUser = users.find(
     (u) => u.name?.toLowerCase?.() === userName?.toLowerCase?.(),
-  )?.id
+  )
+  const loggedInUserIsAdmin = loggedInUser?.isAdmin === 1
+  const loggedInUserId = loggedInUser?.id
   const thisUserIsLoggedIn = loggedInUserId === user.id
-  const userMaySetAdmin = !thisUserIsLoggedIn && isAdmin
+  const loggedInUserMaySetAdmin = !thisUserIsLoggedIn && loggedInUserIsAdmin
 
   const [errors, setErrors] = useState({})
   useEffect(() => {
@@ -64,6 +66,13 @@ const User = () => {
         throw new Error(`User with id ${userId} not found`)
       }
 
+      if (showFilter) {
+        return setFilter({
+          model: 'filterUser',
+          value: { ...filterUser, ...{ [field]: value } },
+        })
+      }
+
       // logged in user may not change own name (other than change casing)
       if (
         field === 'name' &&
@@ -72,13 +81,6 @@ const User = () => {
       ) {
         return setErrors({
           name: 'Angemeldete Benutzer können am eigenen Namen nur die Gross-/Kleinschreibung ändern',
-        })
-      }
-
-      if (showFilter) {
-        return setFilter({
-          model: 'filterUser',
-          value: { ...filterUser, ...{ [field]: value } },
         })
       }
 
@@ -103,6 +105,7 @@ const User = () => {
       user,
       showFilter,
       thisUserIsLoggedIn,
+      userName,
       store,
       userId,
       setFilter,
@@ -113,6 +116,17 @@ const User = () => {
   const onChange = useCallback((val) => setPwd(val), [])
 
   if (!showFilter && !userId) return null
+
+  console.log('User', {
+    user: { ...user },
+    loggedInUser: { ...loggedInUser },
+    showFilter,
+    userId,
+    isAdmin,
+    loggedInUserMaySetAdmin,
+    loggedInUserId,
+    filterUser: { ...filterUser },
+  })
 
   // TODO: loggged in user may not change own isAdmin status
   // TODO: logged in user may not change own name (other than change casing)
@@ -136,11 +150,11 @@ const User = () => {
             saveToDb={saveToDb}
             error={errors.isAdmin}
             formText={
-              !showFilter && !userMaySetAdmin
+              !showFilter && !loggedInUserMaySetAdmin
                 ? 'Angemeldete Admins können ihre eigenen Admin-Rechte nicht entfernen'
                 : undefined
             }
-            disabled={showFilter || !userMaySetAdmin}
+            disabled={!showFilter && !loggedInUserMaySetAdmin}
           />
           {!showFilter && (
             <PasswordInput
