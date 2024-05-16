@@ -12,9 +12,7 @@ export default types
       types.union(types.string, types.integer, types.null),
     ),
   })
-  .volatile(() => ({
-    pwd: null,
-  }))
+  .volatile(() => ({ pwd: null }))
   .actions((self) => ({
     setPwd(pwd) {
       self.pwd = pwd

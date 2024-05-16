@@ -34,14 +34,13 @@ const User = () => {
   }
   const userId = showFilter ? '' : +userIdInUrl
   // logged in user may not change own isAdmin status
-  const isAdmin = user.isAdmin === 1
   const loggedInUser = users.find(
     (u) => u.name?.toLowerCase?.() === userName?.toLowerCase?.(),
   )
   const loggedInUserIsAdmin = loggedInUser?.isAdmin === 1
   const loggedInUserId = loggedInUser?.id
-  const thisUserIsLoggedIn = loggedInUserId === user.id
-  const loggedInUserMaySetAdmin = !thisUserIsLoggedIn && loggedInUserIsAdmin
+  const shownUserIsLoggedIn = loggedInUserId === user.id
+  const loggedInUserMaySetAdmin = !shownUserIsLoggedIn && loggedInUserIsAdmin
 
   const [errors, setErrors] = useState({})
   useEffect(() => {
@@ -76,7 +75,7 @@ const User = () => {
       // logged in user may not change own name (other than change casing)
       if (
         field === 'name' &&
-        thisUserIsLoggedIn &&
+        shownUserIsLoggedIn &&
         userName?.toLowerCase?.() !== value?.toLowerCase?.()
       ) {
         return setErrors({
@@ -104,7 +103,7 @@ const User = () => {
     [
       user,
       showFilter,
-      thisUserIsLoggedIn,
+      shownUserIsLoggedIn,
       userName,
       store,
       userId,
@@ -122,14 +121,15 @@ const User = () => {
     loggedInUser: { ...loggedInUser },
     showFilter,
     userId,
-    isAdmin,
     loggedInUserMaySetAdmin,
+    loggedInUserIsAdmin,
     loggedInUserId,
     filterUser: { ...filterUser },
+    shownUserIsLoggedIn,
   })
 
-  // TODO: loggged in user may not change own isAdmin status
-  // TODO: logged in user may not change own name (other than change casing)
+  // loggged in user may not change own isAdmin status
+  // logged in user may not change own name (other than change casing)
   return (
     <ErrorBoundary>
       <Container showfilter={showFilter}>
