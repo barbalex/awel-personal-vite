@@ -12,7 +12,7 @@ import Textarea from '../../../shared/Textarea'
 import storeContext from '../../../../storeContext.js'
 import Select from '../Select'
 import deleteSchluessel from '../../../../src/deleteSchluessel'
-import updateField from '../../../../src/updateField'
+import updateField from '../../../../src/updateField.js'
 
 const Row = styled.div`
   grid-column: 1;

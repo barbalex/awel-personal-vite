@@ -22,9 +22,9 @@ import Date from '../shared/Date'
 import Select from '../shared/Select.jsx'
 import Textarea from '../shared/Textarea'
 import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber.js'
-import isDateField from '../../src/isDateField'
+import isDateField from '../../src/isDateField.js'
 import storeContext from '../../storeContext.js'
-import updateField from '../../src/updateField'
+import updateField from '../../src/updateField.js'
 import setSettingsKey from '../../src/setSettingsKey'
 
 const Container = styled.div`

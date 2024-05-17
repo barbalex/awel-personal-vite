@@ -11,7 +11,7 @@ import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber.js'
 import Textarea from '../../../shared/Textarea'
 import storeContext from '../../../../storeContext.js'
 import deleteMobileAbo from '../../../../src/deleteMobileAbo'
-import updateField from '../../../../src/updateField'
+import updateField from '../../../../src/updateField.js'
 
 const Row = styled.div`
   grid-column: 1;

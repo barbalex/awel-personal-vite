@@ -12,7 +12,7 @@ import SharedCheckbox from '../shared/Checkbox_01.jsx'
 import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber.js'
 import tables from '../../src/tables'
 import storeContext from '../../storeContext.js'
-import updateField from '../../src/updateField'
+import updateField from '../../src/updateField.js'
 
 const Container = styled.div``
 const StyledForm = styled(Form)`

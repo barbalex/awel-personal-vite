@@ -12,7 +12,7 @@ import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber.js'
 import InputWithoutLabel from '../../../shared/InputWithoutLabel'
 import storeContext from '../../../../storeContext.js'
 import deleteTelefon from '../../../../src/deleteTelefon'
-import updateField from '../../../../src/updateField'
+import updateField from '../../../../src/updateField.js'
 
 const Row = styled.div`
   display: grid;

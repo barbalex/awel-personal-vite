@@ -11,7 +11,7 @@ import PasswordInput from './PasswordInput'
 import SharedCheckbox from '../shared/Checkbox_01.jsx'
 import Zuletzt from '../shared/Zuletzt.jsx'
 import storeContext from '../../storeContext.js'
-import updateField from '../../src/updateField'
+import updateField from '../../src/updateField.js'
 
 const Container = styled.div``
 const StyledForm = styled(Form)`

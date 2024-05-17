@@ -19,10 +19,10 @@ import Select from '../../shared/Select.jsx'
 import SharedCheckbox from '../../shared/Checkbox_01.jsx'
 import Handlungsbedarf from '../../shared/Handlungsbedarf.jsx'
 import ifIsNumericAsNumber from '../../../src/ifIsNumericAsNumber.js'
-import isDateField from '../../../src/isDateField'
+import isDateField from '../../../src/isDateField.js'
 import Zuletzt from '../../shared/Zuletzt.jsx'
 import storeContext from '../../../storeContext.js'
-import updateField from '../../../src/updateField'
+import updateField from '../../../src/updateField.js'
 
 const Container = styled.div``
 const StyledForm = styled(Form)`
