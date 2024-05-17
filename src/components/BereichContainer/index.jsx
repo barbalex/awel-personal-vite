@@ -10,7 +10,7 @@ import fetchPersonen from '../../src/fetchPersonen'
 import fetchBereiche from '../../src/fetchBereiche'
 import fetchAbteilungen from '../../src/fetchAbteilungen'
 import fetchWerte from '../../src/fetchWerte'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import fetchBereich from '../../src/fetchBereich'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});

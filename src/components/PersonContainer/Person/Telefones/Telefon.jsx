@@ -10,7 +10,7 @@ import Select from '../Select'
 import Textarea from '../../../shared/Textarea'
 import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber.js'
 import InputWithoutLabel from '../../../shared/InputWithoutLabel'
-import storeContext from '../../../../storeContext'
+import storeContext from '../../../../storeContext.js'
 import deleteTelefon from '../../../../src/deleteTelefon'
 import updateField from '../../../../src/updateField'
 

@@ -4,7 +4,7 @@ import { Input } from 'reactstrap'
 import { observer } from 'mobx-react-lite'
 import { useLocation } from 'react-router-dom'
 
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 
 const Container = styled.div``
 const StyledTitle = styled.h4`

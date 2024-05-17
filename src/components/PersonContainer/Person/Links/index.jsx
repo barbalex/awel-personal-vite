@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Col, FormGroup, Label } from 'reactstrap'
 import { useParams } from 'react-router-dom'
 
-import storeContext from '../../../../storeContext'
+import storeContext from '../../../../storeContext.js'
 import Link from './Link'
 import addLink from '../../../../src/addLink'
 

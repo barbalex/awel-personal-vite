@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components'
 import { observer } from 'mobx-react-lite'
 import { useParams } from 'react-router-dom'
 
-import storeContext from '../storeContext'
+import storeContext from '../storeContext.js'
 import PersonPrint from './PersonContainer/PersonPrint'
 import PersonMutationPrint from './PersonContainer/PersonMutationPrint'
 import PersonPrintFunktionen from './PersonContainer/PersonPrintFunktionen'

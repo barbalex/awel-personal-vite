@@ -21,7 +21,7 @@ import Handlungsbedarf from '../../shared/Handlungsbedarf.jsx'
 import ifIsNumericAsNumber from '../../../src/ifIsNumericAsNumber.js'
 import isDateField from '../../../src/isDateField'
 import Zuletzt from '../../shared/Zuletzt.jsx'
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 import updateField from '../../../src/updateField'
 
 const Container = styled.div``

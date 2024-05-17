@@ -2,7 +2,7 @@ import React, { useContext, useState, useCallback, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Input, FormFeedback } from 'reactstrap'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 
 const SharedInputWithoutLabel = ({
   value,

@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom'
 import Select from '../Select'
 import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber.js'
 import Textarea from '../../../shared/Textarea'
-import storeContext from '../../../../storeContext'
+import storeContext from '../../../../storeContext.js'
 import deleteMobileAbo from '../../../../src/deleteMobileAbo'
 import updateField from '../../../../src/updateField'
 

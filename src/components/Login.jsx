@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
 
 import chooseDbConnection from '../src/chooseDbConnection'
-import storeContext from '../storeContext'
+import storeContext from '../storeContext.js'
 
 const StyledFormGroup = styled(FormGroup)`
   margin-bottom: 20px !important;

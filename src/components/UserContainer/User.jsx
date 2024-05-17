@@ -10,7 +10,7 @@ import Input from '../shared/Input.jsx'
 import PasswordInput from './PasswordInput'
 import SharedCheckbox from '../shared/Checkbox_01.jsx'
 import Zuletzt from '../shared/Zuletzt.jsx'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import updateField from '../../src/updateField'
 
 const Container = styled.div``

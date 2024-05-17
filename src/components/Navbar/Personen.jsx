@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import addPerson from '../../src/addPerson'
 import setPersonDeleted from '../../src/setPersonDeleted'
 import fetchPersonen from '../../src/fetchPersonen'

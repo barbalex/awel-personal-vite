@@ -3,7 +3,7 @@ import moment from 'moment'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 import Column from './Column'
 
 /*

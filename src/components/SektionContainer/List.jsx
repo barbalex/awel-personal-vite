@@ -8,7 +8,7 @@ import { FaRegEdit } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 
 const Container = styled.div`
   border-right: 1px solid rgb(46, 125, 50);

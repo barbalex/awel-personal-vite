@@ -6,7 +6,7 @@ import { FaTimes } from 'react-icons/fa'
 import { UncontrolledTooltip } from 'reactstrap'
 import { useParams } from 'react-router-dom'
 
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 import updateField from '../../../src/updateField'
 
 const Container = styled.div`

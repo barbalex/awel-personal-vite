@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 import get from 'lodash/get'
 
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 
 /*
  * need defined height and overflow

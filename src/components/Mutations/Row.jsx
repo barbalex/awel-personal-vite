@@ -8,7 +8,7 @@ import ReactJson from 'react-json-view'
 import { FaUndo } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import revertMutation from '../../src/revertMutation'
 
 moment.locale('de')

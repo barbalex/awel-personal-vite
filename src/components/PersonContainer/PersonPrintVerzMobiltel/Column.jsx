@@ -2,7 +2,7 @@ import React, { useContext, useRef } from 'react'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 
 /*
  * need defined height and overflow

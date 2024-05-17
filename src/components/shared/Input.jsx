@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import { Col, FormGroup, Label, Input, FormFeedback } from 'reactstrap'
 import styled from 'styled-components'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 
 const NonRowLabel = styled(Label)`
   margin-bottom: 3px;

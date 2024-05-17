@@ -6,7 +6,7 @@ import { FaPlus } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
 import Telefon from './Telefon'
-import storeContext from '../../../../storeContext'
+import storeContext from '../../../../storeContext.js'
 import addTelefon from '../../../../src/addTelefon'
 
 const Container = styled.div``

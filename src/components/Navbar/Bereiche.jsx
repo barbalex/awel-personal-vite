@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import addBereichModule from '../../src/addBereich'
 import setBereichDeleted from '../../src/setBereichDeleted'
 import deleteBereichModule from '../../src/deleteBereich'

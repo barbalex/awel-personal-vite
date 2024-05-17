@@ -23,7 +23,7 @@ import Select from '../shared/Select.jsx'
 import Textarea from '../shared/Textarea'
 import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber.js'
 import isDateField from '../../src/isDateField'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import updateField from '../../src/updateField'
 import setSettingsKey from '../../src/setSettingsKey'
 

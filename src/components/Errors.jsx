@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 
 import ErrorBoundary from './shared/ErrorBoundary.jsx'
-import storeContext from '../storeContext'
+import storeContext from '../storeContext.js'
 
 const Container = styled.div`
   position: absolute;

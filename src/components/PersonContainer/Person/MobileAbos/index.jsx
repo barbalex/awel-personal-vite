@@ -6,7 +6,7 @@ import { FaPlus } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
 import MobileAbo from './MobileAbo'
-import storeContext from '../../../../storeContext'
+import storeContext from '../../../../storeContext.js'
 import addMobileAbo from '../../../../src/addMobileAbo'
 
 const Container = styled.div`

@@ -12,7 +12,7 @@ import { observer } from 'mobx-react-lite'
 import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import addWertModule from '../../src/addWert'
 import setWertDeleted from '../../src/setWertDeleted'
 import deleteWertModule from '../../src/deleteWert'

@@ -11,7 +11,7 @@ import { FaTrashAlt } from 'react-icons/fa'
 import { FaRegEdit } from 'react-icons/fa'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import chooseDbConnection from '../../src/chooseDbConnection'
 
 const DbPath = styled.span`

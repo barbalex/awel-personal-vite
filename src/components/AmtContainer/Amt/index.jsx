@@ -20,7 +20,7 @@ import SharedCheckbox from '../../shared/Checkbox_01.jsx'
 import Handlungsbedarf from '../../shared/Handlungsbedarf.jsx'
 import ifIsNumericAsNumber from '../../../src/ifIsNumericAsNumber.js'
 import Zuletzt from '../../shared/Zuletzt.jsx'
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 import isDateField from '../../../src/isDateField'
 import updateField from '../../../src/updateField'
 

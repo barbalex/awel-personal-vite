@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import { FaPrint, FaRegFilePdf } from 'react-icons/fa'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 
 const StyledUncontrolledDropdown = styled(UncontrolledDropdown)`
   display: flex;

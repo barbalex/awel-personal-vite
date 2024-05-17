@@ -6,7 +6,7 @@ import sortBy from 'lodash/sortBy'
 import { useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../../shared/ErrorBoundary.jsx'
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 import Row from './Row'
 
 const Container = styled.div`

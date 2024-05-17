@@ -7,7 +7,7 @@ import { FaPlus } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
 import Schluessel from './Schluessel'
-import storeContext from '../../../../storeContext'
+import storeContext from '../../../../storeContext.js'
 import addSchluessel from '../../../../src/addSchluessel'
 import setSettingsKey from '../../../../src/setSettingsKey'
 

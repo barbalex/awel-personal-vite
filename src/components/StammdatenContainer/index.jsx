@@ -8,7 +8,7 @@ import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import Data from './Data'
 import List from './List'
 import fetchWerte from '../../src/fetchWerte'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
 // above does not work

@@ -7,7 +7,7 @@ import { Outlet, useParams } from 'react-router-dom'
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import List from './List'
 import fetchUsers from '../../src/fetchUsers'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import fetchUser from '../../src/fetchUser'
 
 // seems needed to prevent unnessecary scrollbars

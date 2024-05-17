@@ -6,7 +6,7 @@ import { Outlet, useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import List from './List'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import useDetectPrint from '../../src/useDetectPrint'
 import fetchPerson from '../../src/fetchPerson'
 

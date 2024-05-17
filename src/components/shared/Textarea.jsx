@@ -5,7 +5,7 @@ import Textarea from 'react-textarea-autosize'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 
 const NonRowLabel = styled(Label)`
   margin-bottom: 3px;

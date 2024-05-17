@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 
 const Label = styled.label`
   font-size: smaller;

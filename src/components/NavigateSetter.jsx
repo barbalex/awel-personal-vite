@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import StoreContext from '../storeContext'
+import StoreContext from '../storeContext.js'
 
 const NavigateSetter = () => {
   const store = useContext(StoreContext)

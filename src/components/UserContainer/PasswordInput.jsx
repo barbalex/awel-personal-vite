@@ -4,7 +4,7 @@ import { Col, FormGroup, Label, Input, FormFeedback } from 'reactstrap'
 import styled from 'styled-components'
 import isAlphanumeric from 'validator/es/lib/isAlphanumeric'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 
 const StyledFormGroup = styled(FormGroup)`
   margin-bottom: 16px !important;

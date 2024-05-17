@@ -5,7 +5,7 @@ import { UncontrolledTooltip } from 'reactstrap'
 import { FaTimes } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
-import storeContext from '../../../../storeContext'
+import storeContext from '../../../../storeContext.js'
 import deleteLink from '../../../../src/deleteLink'
 
 const Field = styled.div`

@@ -14,7 +14,7 @@ import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { FaCalendarAlt } from 'react-icons/fa'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 
 moment.locale('de')
 

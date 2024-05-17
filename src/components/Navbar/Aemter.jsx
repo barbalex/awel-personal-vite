@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import addAmtModule from '../../src/addAmt'
 import setAmtDeleted from '../../src/setAmtDeleted'
 import deleteAmtModule from '../../src/deleteAmt'

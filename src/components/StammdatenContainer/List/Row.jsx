@@ -7,7 +7,7 @@ import { FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import tables from '../../../src/tables'
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 
 const Row = styled.div`
   border-bottom: 1px solid rgba(46, 125, 50, 0.5);

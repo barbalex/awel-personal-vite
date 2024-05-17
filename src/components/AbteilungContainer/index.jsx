@@ -9,7 +9,7 @@ import List from './List'
 import fetchAemter from '../../src/fetchAemter'
 import fetchAbteilungen from '../../src/fetchAbteilungen'
 import fetchWerte from '../../src/fetchWerte'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import fetchAbteilung from '../../src/fetchAbteilung'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});

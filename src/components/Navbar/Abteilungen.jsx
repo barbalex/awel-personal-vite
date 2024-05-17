@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import addAbteilungModule from '../../src/addAbteilung'
 import setAbteilungDeleted from '../../src/setAbteilungDeleted'
 import deleteAbteilungModule from '../../src/deleteAbteilung'

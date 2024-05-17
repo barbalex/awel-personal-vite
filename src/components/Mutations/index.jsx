@@ -9,7 +9,7 @@ import moment from 'moment'
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import fetchMutations from '../../src/fetchMutations'
 import Filter from './Filter'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import Row from './Row'
 
 moment.locale('de')

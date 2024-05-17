@@ -11,7 +11,7 @@ import Input from '../shared/Input.jsx'
 import SharedCheckbox from '../shared/Checkbox_01.jsx'
 import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber.js'
 import tables from '../../src/tables'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import updateField from '../../src/updateField'
 
 const Container = styled.div``

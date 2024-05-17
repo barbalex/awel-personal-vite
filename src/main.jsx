@@ -23,7 +23,7 @@ import fetchKaderFunktionen from './src/fetchKaderFunktionen'
 import fetchWerte from './src/fetchWerte'
 import fetchSettings from './src/fetchSettings'
 
-import { StoreContextProvider } from './storeContext'
+import { StoreContextProvider } from './storeContext.js'
 
 const container = document.getElementById('root')
 const root = createRoot(container)

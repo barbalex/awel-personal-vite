@@ -3,7 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 
-import storeContext from '../storeContext'
+import storeContext from '../storeContext.js'
 
 const Container = styled.div`
   height: 100%;

@@ -17,7 +17,7 @@ import Export from './Export'
 import Berichte from './Berichte'
 import User from './User'
 import More from './More'
-import storeContext from '../../storeContext'
+import storeContext from '../../storeContext.js'
 import revertMutation from '../../src/revertMutation'
 
 const StyledNavbar = styled(Navbar)`

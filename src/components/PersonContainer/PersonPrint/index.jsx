@@ -5,7 +5,7 @@ import get from 'lodash/get'
 import { useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../../shared/ErrorBoundary.jsx'
-import storeContext from '../../../storeContext'
+import storeContext from '../../../storeContext.js'
 import InputValue from './InputValue'
 import Telefones from './Telefones'
 import Links from './Links'
