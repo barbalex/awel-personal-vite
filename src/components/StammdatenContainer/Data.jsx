@@ -10,7 +10,7 @@ import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import Input from '../shared/Input.jsx'
 import SharedCheckbox from '../shared/Checkbox_01.jsx'
 import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber.js'
-import tables from '../../src/tables'
+import tables from '../../src/tables.js'
 import storeContext from '../../storeContext.js'
 import updateField from '../../src/updateField.js'
 

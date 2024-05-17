@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import Textarea from './Textarea.jsx'
-import Date from './Date'
+import Date from './Date.jsx'
 
 const Container = styled.div`
   grid-column: 1;

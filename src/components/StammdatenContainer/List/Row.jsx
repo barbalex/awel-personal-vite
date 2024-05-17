@@ -6,7 +6,7 @@ import sortBy from 'lodash/sortBy'
 import { FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import tables from '../../../src/tables'
+import tables from '../../../src/tables.js'
 import storeContext from '../../../storeContext.js'
 
 const Row = styled.div`
