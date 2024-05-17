@@ -2,7 +2,7 @@ import { types, getParent } from 'mobx-state-tree'
 
 import PersonVerzeichnisColumn, {
   standard as standardColumn,
-} from './PersonVerzeichnisColumn'
+} from './PersonVerzeichnisColumn.js'
 
 export default types
   .model('PersonVerzeichnisPage', {
@@ -12,7 +12,7 @@ export default types
     activeColumnIndex: types.optional(types.integer, 0),
     full: types.optional(types.boolean, false),
   })
-  .actions(self => ({
+  .actions((self) => ({
     addRow(row) {
       self[`column${self.activeColumnIndex}`].addRow(row)
     },

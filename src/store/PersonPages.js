@@ -1,6 +1,6 @@
 import { types, getParent } from 'mobx-state-tree'
 
-import PersonPage from './PersonPage'
+import PersonPage from './PersonPage.js'
 
 export default types
   .model('PersonPage', {
@@ -10,7 +10,7 @@ export default types
     building: types.optional(types.boolean, false),
     title: types.optional(types.union(types.string, types.integer), ''),
   })
-  .actions(self => ({
+  .actions((self) => ({
     reset() {
       self.pages = []
       self.activePageIndex = 0
@@ -22,7 +22,7 @@ export default types
       const store = getParent(self, 1)
       const { personenFilteredSorted } = store
       self.reset()
-      self.remainingRows = personenFilteredSorted.map(p => p.id)
+      self.remainingRows = personenFilteredSorted.map((p) => p.id)
       self.building = true
       self.pages.push({ rows: [], full: false })
     },
@@ -55,7 +55,7 @@ export default types
       self.building = false
     },
   }))
-  .views(self => ({
+  .views((self) => ({
     get modal() {
       const store = getParent(self, 1)
       const msgLine2Txt = `Bisher ${self.pages.length} Seiten, noch ${self.remainingRows.length} Personen zu verarbeiten`

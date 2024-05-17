@@ -1,6 +1,6 @@
 import { onPatch } from 'mobx-state-tree'
 
-import addMutation from './addMutation'
+import addMutation from './addMutation.js'
 
 const watchMutations = ({ store }) => {
   const {

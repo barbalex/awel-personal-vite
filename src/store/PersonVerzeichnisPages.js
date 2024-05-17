@@ -1,10 +1,10 @@
 import { types, getParent } from 'mobx-state-tree'
 
-import idWithCapitalMapFromPers from '../src/idWithCapitalMapFromPers'
+import idWithCapitalMapFromPers from '../src/idWithCapitalMapFromPers.js'
 
 import PersonVerzeichnisPage, {
   standard as standardPage,
-} from './PersonVerzeichnisPage'
+} from './PersonVerzeichnisPage.js'
 
 export default types
   .model('PersonVerzeichnisPages', {
@@ -13,7 +13,7 @@ export default types
     remainingRows: types.array(types.union(types.integer, types.string)),
     building: types.optional(types.boolean, false),
   })
-  .actions(self => ({
+  .actions((self) => ({
     reset() {
       self.pages = []
       self.activePageIndex = 0
@@ -61,7 +61,7 @@ export default types
       self.building = false
     },
   }))
-  .views(self => ({
+  .views((self) => ({
     get modal() {
       const store = getParent(self, 1)
       const msgLine2Txt = `Bisher ${self.pages.length} Seiten, noch ${self.remainingRows.length} Personen zu verarbeiten`

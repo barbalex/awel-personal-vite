@@ -1,4 +1,4 @@
-import fetchAnwesenheitstage from './fetchAnwesenheitstage'
+import fetchAnwesenheitstage from './fetchAnwesenheitstage.js'
 
 const addPerson = async ({ store }) => {
   const { userName, addError, navigate } = store

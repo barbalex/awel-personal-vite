@@ -2,7 +2,7 @@ import { splitJsonPath } from 'mobx-state-tree'
 import flatten from 'lodash/flatten'
 import findLast from 'lodash/findLast'
 
-import { undoManager } from '../store'
+import { undoManager } from '../store/index.js'
 
 const addMutation = ({ tableName, patch, inversePatch, store }) => {
   // watchMutations is false while data is loaded from server
