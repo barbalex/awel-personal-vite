@@ -6,7 +6,7 @@ import { Outlet, useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import List from './List'
-import fetchAemter from '../../src/fetchAemter'
+import fetchAemter from '../../src/fetchAemter.js'
 import fetchWerte from '../../src/fetchWerte'
 import storeContext from '../../storeContext.js'
 import fetchAmt from '../../src/fetchAmt'
