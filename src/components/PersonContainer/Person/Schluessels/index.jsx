@@ -6,10 +6,10 @@ import { MdEdit } from 'react-icons/md'
 import { FaPlus } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
-import Schluessel from './Schluessel'
+import Schluessel from './Schluessel.jsx'
 import storeContext from '../../../../storeContext.js'
-import addSchluessel from '../../../../src/addSchluessel'
-import setSettingsKey from '../../../../src/setSettingsKey'
+import addSchluessel from '../../../../src/addSchluessel.js'
+import setSettingsKey from '../../../../src/setSettingsKey.js'
 
 const Container = styled.div``
 const StyledButton = styled(Button)`

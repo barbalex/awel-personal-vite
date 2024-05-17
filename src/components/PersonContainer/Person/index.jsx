@@ -15,7 +15,7 @@ import { useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../../shared/ErrorBoundary.jsx'
 import Input from '../../shared/Input.jsx'
-import Date from '../../shared/Date'
+import Date from '../../shared/Date.jsx'
 import Select from '../../shared/Select.jsx'
 import SelectMulti from '../../shared/SelectMulti'
 import Textarea from '../../shared/Textarea'

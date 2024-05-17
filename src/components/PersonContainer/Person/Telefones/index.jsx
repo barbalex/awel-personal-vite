@@ -5,9 +5,9 @@ import { Col, FormGroup, Label, Button } from 'reactstrap'
 import { FaPlus } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
-import Telefon from './Telefon'
+import Telefon from './Telefon.jsx'
 import storeContext from '../../../../storeContext.js'
-import addTelefon from '../../../../src/addTelefon'
+import addTelefon from '../../../../src/addTelefon.js'
 
 const Container = styled.div``
 const StyledButton = styled(Button)`

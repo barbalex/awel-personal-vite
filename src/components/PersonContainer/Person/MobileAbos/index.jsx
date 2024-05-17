@@ -5,9 +5,9 @@ import { Col, FormGroup, Label, Button } from 'reactstrap'
 import { FaPlus } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
-import MobileAbo from './MobileAbo'
+import MobileAbo from './MobileAbo.jsx'
 import storeContext from '../../../../storeContext.js'
-import addMobileAbo from '../../../../src/addMobileAbo'
+import addMobileAbo from '../../../../src/addMobileAbo.js'
 
 const Container = styled.div`
   border: none;

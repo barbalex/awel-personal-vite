@@ -18,7 +18,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import Input from '../shared/Input.jsx'
-import Date from '../shared/Date'
+import Date from '../shared/Date.jsx'
 import Select from '../shared/Select.jsx'
 import Textarea from '../shared/Textarea'
 import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber.js'

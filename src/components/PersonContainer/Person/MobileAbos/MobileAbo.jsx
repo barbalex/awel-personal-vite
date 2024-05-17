@@ -6,11 +6,11 @@ import sortBy from 'lodash/sortBy'
 import { FaTimes } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
-import Select from '../Select'
+import Select from '../Select.jsx'
 import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber.js'
-import Textarea from '../../../shared/Textarea'
+import Textarea from '../../../shared/Textarea.jsx'
 import storeContext from '../../../../storeContext.js'
-import deleteMobileAbo from '../../../../src/deleteMobileAbo'
+import deleteMobileAbo from '../../../../src/deleteMobileAbo.js'
 import updateField from '../../../../src/updateField.js'
 
 const Row = styled.div`

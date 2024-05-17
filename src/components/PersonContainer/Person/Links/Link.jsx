@@ -6,7 +6,7 @@ import { FaTimes } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
 import storeContext from '../../../../storeContext.js'
-import deleteLink from '../../../../src/deleteLink'
+import deleteLink from '../../../../src/deleteLink.js'
 
 const Field = styled.div`
   grid-column: 1;

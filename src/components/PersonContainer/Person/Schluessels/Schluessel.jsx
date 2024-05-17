@@ -7,11 +7,11 @@ import sortBy from 'lodash/sortBy'
 import { useParams } from 'react-router-dom'
 
 import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber.js'
-import InputWithoutLabel from '../../../shared/InputWithoutLabel'
-import Textarea from '../../../shared/Textarea'
+import InputWithoutLabel from '../../../shared/InputWithoutLabel.jsx'
+import Textarea from '../../../shared/Textarea.jsx'
 import storeContext from '../../../../storeContext.js'
-import Select from '../Select'
-import deleteSchluessel from '../../../../src/deleteSchluessel'
+import Select from '../Select.jsx'
+import deleteSchluessel from '../../../../src/deleteSchluessel.js'
 import updateField from '../../../../src/updateField.js'
 
 const Row = styled.div`
