@@ -1,4 +1,4 @@
-import updatePersonsMutation from './updatePersonsMutation'
+import updatePersonsMutation from './updatePersonsMutation.js'
 
 const addTelefon = async ({ personId, store }) => {
   // 1. create new link in db, returning id

@@ -1,4 +1,4 @@
-import updatePersonsMutation from './updatePersonsMutation'
+import updatePersonsMutation from './updatePersonsMutation.js'
 
 const addFunktion = async ({ funktion, personId, store }) => {
   // 1. create new funktion in db, returning id

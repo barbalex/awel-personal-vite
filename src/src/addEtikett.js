@@ -1,4 +1,4 @@
-import updatePersonsMutation from './updatePersonsMutation'
+import updatePersonsMutation from './updatePersonsMutation.js'
 
 const addEtikett = async ({ etikett, personId, store }) => {
   // 1. create new etikett in db, returning id

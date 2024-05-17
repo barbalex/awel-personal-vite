@@ -1,4 +1,4 @@
-import updatePersonsMutation from './updatePersonsMutation'
+import updatePersonsMutation from './updatePersonsMutation.js'
 
 const deleteFunktion = async ({ funktion, personId, store }) => {
   // write to db

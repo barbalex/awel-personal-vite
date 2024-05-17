@@ -1,4 +1,4 @@
-import updatePersonsMutation from './updatePersonsMutation'
+import updatePersonsMutation from './updatePersonsMutation.js'
 
 const updateField = async ({
   table,

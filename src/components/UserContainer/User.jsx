@@ -7,7 +7,7 @@ import { useParams, useOutletContext } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import Input from '../shared/Input.jsx'
-import PasswordInput from './PasswordInput'
+import PasswordInput from './PasswordInput.jsx'
 import SharedCheckbox from '../shared/Checkbox_01.jsx'
 import Zuletzt from '../shared/Zuletzt.jsx'
 import storeContext from '../../storeContext.js'

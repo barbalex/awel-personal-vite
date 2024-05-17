@@ -4,14 +4,14 @@ import { observer } from 'mobx-react-lite'
 import { useParams } from 'react-router-dom'
 
 import storeContext from '../storeContext.js'
-import PersonPrint from './PersonContainer/PersonPrint'
-import PersonMutationPrint from './PersonContainer/PersonMutationPrint'
-import PersonPrintFunktionen from './PersonContainer/PersonPrintFunktionen'
-import PersonPrintPensionierte from './PersonContainer/PersonPrintPensionierte'
-import PersonPrintKader from './PersonContainer/PersonPrintKader'
-import PersonPrintVerzTel from './PersonContainer/PersonPrintVerzTel'
-import PersonPrintVerzMobiltel from './PersonContainer/PersonPrintVerzMobiltel'
-import PersonPrintVerzKurzzeichen from './PersonContainer/PersonPrintVerzKurzzeichen'
+import PersonPrint from './PersonContainer/PersonPrint/index.jsx'
+import PersonMutationPrint from './PersonContainer/PersonMutationPrint.jsx'
+import PersonPrintFunktionen from './PersonContainer/PersonPrintFunktionen/index.jsx'
+import PersonPrintPensionierte from './PersonContainer/PersonPrintPensionierte/index.jsx'
+import PersonPrintKader from './PersonContainer/PersonPrintKader/index.jsx'
+import PersonPrintVerzTel from './PersonContainer/PersonPrintVerzTel/index.jsx'
+import PersonPrintVerzMobiltel from './PersonContainer/PersonPrintVerzMobiltel/index.jsx'
+import PersonPrintVerzKurzzeichen from './PersonContainer/PersonPrintVerzKurzzeichen/index.jsx'
 
 const A4Portrait = createGlobalStyle`
   @page {

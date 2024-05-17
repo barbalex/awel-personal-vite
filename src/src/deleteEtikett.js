@@ -1,4 +1,4 @@
-import updatePersonsMutation from './updatePersonsMutation'
+import updatePersonsMutation from './updatePersonsMutation.js'
 
 const deleteEtikett = async ({ etikett, personId, store }) => {
   // write to db

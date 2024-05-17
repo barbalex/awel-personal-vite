@@ -4,7 +4,7 @@ import { FormGroup, Input, FormFeedback, Button } from 'reactstrap'
 import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
 
-import chooseDbConnection from '../src/chooseDbConnection'
+import chooseDbConnection from '../src/chooseDbConnection.js'
 import storeContext from '../storeContext.js'
 
 const StyledFormGroup = styled(FormGroup)`
