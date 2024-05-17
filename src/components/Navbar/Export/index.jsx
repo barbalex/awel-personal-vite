@@ -10,18 +10,18 @@ import {
 import pick from 'lodash/pick'
 import { observer } from 'mobx-react-lite'
 
-import personenPrepareData from './personenPrepareData'
-import personenKaderPrepareData from './personenKaderPrepareData'
-import bereichePrepareData from './bereichePrepareData'
-import sektionenPrepareData from './sektionenPrepareData'
-import abteilungenPrepareData from './abteilungenPrepareData'
-import aemterPrepareData from './aemterPrepareData'
-import doExport from './doExport'
+import personenPrepareData from './personenPrepareData.js'
+import personenKaderPrepareData from './personenKaderPrepareData.js'
+import bereichePrepareData from './bereichePrepareData.js'
+import sektionenPrepareData from './sektionenPrepareData.js'
+import abteilungenPrepareData from './abteilungenPrepareData.js'
+import aemterPrepareData from './aemterPrepareData.js'
+import doExport from './doExport.js'
 import storeContext from '../../../storeContext.js'
 import fetchAemter from '../../../src/fetchAemter.js'
 import fetchAbteilungen from '../../../src/fetchAbteilungen.js'
 import fetchBereiche from '../../../src/fetchBereiche.js'
-import fetchSektionen from '../../../src/fetchSektionen'
+import fetchSektionen from '../../../src/fetchSektionen.js'
 
 const adressenFields = ['name', 'vorname', 'adresse', 'plz', 'ort', 'land']
 

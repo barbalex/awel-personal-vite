@@ -1,8 +1,8 @@
 /**
  * gets save path
  */
-import writeExport from './writeExport'
-import getDataArrayFromExportObjects from './getDataArrayFromExportObjects'
+import writeExport from './writeExport.js'
+import getDataArrayFromExportObjects from './getDataArrayFromExportObjects.js'
 
 const doExport = async ({
   exportObjects,

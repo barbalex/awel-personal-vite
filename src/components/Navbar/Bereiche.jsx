@@ -6,9 +6,9 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 
 import storeContext from '../../storeContext.js'
-import addBereichModule from '../../src/addBereich'
-import setBereichDeleted from '../../src/setBereichDeleted'
-import deleteBereichModule from '../../src/deleteBereich'
+import addBereichModule from '../../src/addBereich.js'
+import setBereichDeleted from '../../src/setBereichDeleted.js'
+import deleteBereichModule from '../../src/deleteBereich.js'
 
 const Sup = styled.sup`
   padding-left: 3px;
