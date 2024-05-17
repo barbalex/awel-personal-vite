@@ -4,8 +4,8 @@ import classnames from 'classnames'
 import styled from 'styled-components'
 import { useOutletContext } from 'react-router-dom'
 
-import Person from './Person'
-import PersonMutation from './PersonMutation'
+import Person from './Person/index.jsx'
+import PersonMutation from './PersonMutation.jsx'
 
 const Container = styled.div`
   height: 100%;

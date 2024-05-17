@@ -21,7 +21,7 @@ const Pre = styled.pre`
   background-color: rgba(128, 128, 128, 0.09);
 `
 
-const ErrorFallback = ({ error, componentStack, resetErrorBoundary }) => (
+const ErrorFallback = ({ error, componentStack }) => (
   <Container>
     <p>Sorry, ein Fehler ist aufgetreten:</p>
     <PreWrapping>{error.message}</PreWrapping>
