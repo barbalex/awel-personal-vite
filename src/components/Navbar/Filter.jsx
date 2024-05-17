@@ -14,7 +14,7 @@ import {
 import { FaTimes, FaEdit, FaFilter } from 'react-icons/fa'
 import { Navigate, useLocation, useParams } from 'react-router-dom'
 
-import ErrorBoundary from '../shared/ErrorBoundary'
+import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import storeContext from '../../storeContext'
 
 const StyledDropdownItem = styled(DropdownItem)`

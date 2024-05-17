@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap'
 
-import ErrorBoundary from '../../shared/ErrorBoundary'
+import ErrorBoundary from '../../shared/ErrorBoundary.jsx'
 import storeContext from '../../../storeContext'
 import Page from './Page'
 

@@ -6,7 +6,7 @@ import moment from 'moment'
 import get from 'lodash/get'
 import { useParams } from 'react-router-dom'
 
-import ErrorBoundary from '../shared/ErrorBoundary'
+import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import storeContext from '../../storeContext'
 import LogoAwel from '../../etc/LogoAwel.jpg'
 

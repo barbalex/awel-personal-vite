@@ -6,7 +6,7 @@ import { VariableSizeList as List } from 'react-window'
 import sortBy from 'lodash/sortBy'
 import moment from 'moment'
 
-import ErrorBoundary from '../shared/ErrorBoundary'
+import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import fetchMutations from '../../src/fetchMutations'
 import Filter from './Filter'
 import storeContext from '../../storeContext'

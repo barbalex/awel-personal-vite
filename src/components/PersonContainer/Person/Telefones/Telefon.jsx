@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom'
 
 import Select from '../Select'
 import Textarea from '../../../shared/Textarea'
-import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber'
+import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber.js'
 import InputWithoutLabel from '../../../shared/InputWithoutLabel'
 import storeContext from '../../../../storeContext'
 import deleteTelefon from '../../../../src/deleteTelefon'

@@ -6,7 +6,7 @@ import { FaTimes } from 'react-icons/fa'
 import sortBy from 'lodash/sortBy'
 import { useParams } from 'react-router-dom'
 
-import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber'
+import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber.js'
 import InputWithoutLabel from '../../../shared/InputWithoutLabel'
 import Textarea from '../../../shared/Textarea'
 import storeContext from '../../../../storeContext'

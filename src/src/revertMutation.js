@@ -1,7 +1,7 @@
 import keys from 'lodash/keys'
 import lValues from 'lodash/values'
 
-import ifIsNumericAsNumber from '../src/ifIsNumericAsNumber'
+import ifIsNumericAsNumber from '../src/ifIsNumericAsNumber.js'
 import updateField from '../src/updateField'
 
 const revertMutation = async ({ store, mutationId }) => {

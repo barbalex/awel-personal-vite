@@ -7,7 +7,7 @@ import { FaTimes } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
 import Select from '../Select'
-import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber'
+import ifIsNumericAsNumber from '../../../../src/ifIsNumericAsNumber.js'
 import Textarea from '../../../shared/Textarea'
 import storeContext from '../../../../storeContext'
 import deleteMobileAbo from '../../../../src/deleteMobileAbo'

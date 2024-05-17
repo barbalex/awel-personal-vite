@@ -5,7 +5,7 @@ import { FaUndo, FaSave } from 'react-icons/fa'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 
-import ErrorBoundary from '../shared/ErrorBoundary'
+import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import Filter from './Filter'
 import Stammdaten from './Stammdaten'
 import Personen from './Personen'
