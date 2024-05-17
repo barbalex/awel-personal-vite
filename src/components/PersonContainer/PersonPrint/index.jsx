@@ -6,11 +6,11 @@ import { useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../../shared/ErrorBoundary.jsx'
 import storeContext from '../../../storeContext.js'
-import InputValue from './InputValue'
-import Telefones from './Telefones'
-import Links from './Links'
-import Schluessels from './Schluessels'
-import MobileAbos from './MobileAbos'
+import InputValue from './InputValue.jsx'
+import Telefones from './Telefones.jsx'
+import Links from './Links.jsx'
+import Schluessels from './Schluessels.jsx'
+import MobileAbos from './MobileAbos.jsx'
 import LogoAwel from '../../../etc/LogoAwel.jpg'
 
 /*

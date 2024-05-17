@@ -25,7 +25,7 @@ import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber.js'
 import isDateField from '../../src/isDateField.js'
 import storeContext from '../../storeContext.js'
 import updateField from '../../src/updateField.js'
-import setSettingsKey from '../../src/setSettingsKey'
+import setSettingsKey from '../../src/setSettingsKey.js'
 
 const Container = styled.div`
   hyphens: auto;

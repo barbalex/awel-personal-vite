@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 
 import storeContext from '../../../storeContext.js'
-import Column from './Column'
+import Column from './Column.jsx'
 
 /*
  * need defined height and overflow
@@ -72,7 +72,7 @@ const InnerPageContainer = styled.div`
    * need overflow while building list
    * so list does not flow outside padding
    */
-  overflow-y: ${props => (props.building ? 'auto' : 'hidden')};
+  overflow-y: ${(props) => (props.building ? 'auto' : 'hidden')};
   overflow-x: hidden;
 `
 const Footer = styled.div`

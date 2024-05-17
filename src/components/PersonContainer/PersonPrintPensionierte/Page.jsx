@@ -5,8 +5,8 @@ import { observer } from 'mobx-react-lite'
 
 import storeContext from '../../../storeContext.js'
 import LogoAwel from '../../../etc/LogoAwel.jpg'
-import PageTitle from './PageTitle'
-import Row from './Row'
+import PageTitle from './PageTitle.jsx'
+import Row from './Row.jsx'
 
 /*
  * need defined height and overflow

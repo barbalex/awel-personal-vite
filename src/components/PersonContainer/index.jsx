@@ -7,8 +7,8 @@ import { Outlet, useParams } from 'react-router-dom'
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import List from './List.jsx'
 import storeContext from '../../storeContext.js'
-import useDetectPrint from '../../src/useDetectPrint'
-import fetchPerson from '../../src/fetchPerson'
+import useDetectPrint from '../../src/useDetectPrint.js'
+import fetchPerson from '../../src/fetchPerson.js'
 
 // seems needed to prevent unnessecary scrollbars
 const StyledReflexElement = styled(ReflexElement)`

@@ -5,7 +5,7 @@ import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap'
 
 import ErrorBoundary from '../../shared/ErrorBoundary.jsx'
 import storeContext from '../../../storeContext.js'
-import Page from './Page'
+import Page from './Page.jsx'
 
 const Container = styled.div`
   background-color: #eee;
