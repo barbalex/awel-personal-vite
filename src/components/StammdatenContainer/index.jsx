@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import Data from './Data'
 import List from './List'
-import fetchWerte from '../../src/fetchWerte'
+import fetchWerte from '../../src/fetchWerte.js'
 import storeContext from '../../storeContext.js'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});

@@ -9,7 +9,7 @@ import List from './List'
 import fetchPersonen from '../../src/fetchPersonen'
 import fetchBereiche from '../../src/fetchBereiche'
 import fetchAbteilungen from '../../src/fetchAbteilungen.js'
-import fetchWerte from '../../src/fetchWerte'
+import fetchWerte from '../../src/fetchWerte.js'
 import storeContext from '../../storeContext.js'
 import fetchBereich from '../../src/fetchBereich'
 

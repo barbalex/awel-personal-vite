@@ -8,9 +8,9 @@ import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import List from './List.jsx'
 import fetchAemter from '../../src/fetchAemter.js'
 import fetchAbteilungen from '../../src/fetchAbteilungen.js'
-import fetchWerte from '../../src/fetchWerte'
+import fetchWerte from '../../src/fetchWerte.js'
 import storeContext from '../../storeContext.js'
-import fetchAbteilung from '../../src/fetchAbteilung'
+import fetchAbteilung from '../../src/fetchAbteilung.js'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
 // above does not work

@@ -20,7 +20,7 @@ import fetchMobileAbos from './src/fetchMobileAbos'
 import fetchTelefones from './src/fetchTelefones'
 import fetchFunktionen from './src/fetchFunktionen'
 import fetchKaderFunktionen from './src/fetchKaderFunktionen'
-import fetchWerte from './src/fetchWerte'
+import fetchWerte from './src/fetchWerte.js'
 import fetchSettings from './src/fetchSettings'
 
 import { StoreContextProvider } from './storeContext.js'
