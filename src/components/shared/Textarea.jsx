@@ -15,8 +15,8 @@ const StyledFormGroup = styled(FormGroup)`
     props['data-margin-bottom'] !== undefined
       ? `${props['data-margin-bottom']}px !important`
       : props.row
-      ? '16px'
-      : '8px !important'};
+        ? '16px'
+        : '8px !important'};
 `
 const StyledTextarea = styled(Textarea)`
   display: block;
@@ -33,7 +33,8 @@ const StyledTextarea = styled(Textarea)`
   &:focus {
     border-color: #66afe9;
     outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    box-shadow:
+      inset 0 1px 1px rgba(0, 0, 0, 0.075),
       0 0 8px rgba(102, 175, 233, 0.6);
   }
   @media print {
