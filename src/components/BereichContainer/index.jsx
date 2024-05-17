@@ -5,13 +5,13 @@ import { observer } from 'mobx-react-lite'
 import { Outlet, useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
-import List from './List'
-import fetchPersonen from '../../src/fetchPersonen'
-import fetchBereiche from '../../src/fetchBereiche'
+import List from './List.jsx'
+import fetchPersonen from '../../src/fetchPersonen.js'
+import fetchBereiche from '../../src/fetchBereiche.js'
 import fetchAbteilungen from '../../src/fetchAbteilungen.js'
 import fetchWerte from '../../src/fetchWerte.js'
 import storeContext from '../../storeContext.js'
-import fetchBereich from '../../src/fetchBereich'
+import fetchBereich from '../../src/fetchBereich.js'
 
 // height: calc(100% - ${document.getElementsByClassName('navbar')[0].clientHeight});
 // above does not work

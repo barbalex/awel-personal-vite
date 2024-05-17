@@ -20,7 +20,7 @@ import doExport from './doExport'
 import storeContext from '../../../storeContext.js'
 import fetchAemter from '../../../src/fetchAemter.js'
 import fetchAbteilungen from '../../../src/fetchAbteilungen.js'
-import fetchBereiche from '../../../src/fetchBereiche'
+import fetchBereiche from '../../../src/fetchBereiche.js'
 import fetchSektionen from '../../../src/fetchSektionen'
 
 const adressenFields = ['name', 'vorname', 'adresse', 'plz', 'ort', 'land']

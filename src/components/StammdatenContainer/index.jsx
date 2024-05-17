@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
 import Data from './Data'
-import List from './List'
+import List from './List/index.jsx'
 import fetchWerte from '../../src/fetchWerte.js'
 import storeContext from '../../storeContext.js'
 

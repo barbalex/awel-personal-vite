@@ -8,7 +8,7 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import storeContext from '../../storeContext.js'
 import addPerson from '../../src/addPerson'
 import setPersonDeleted from '../../src/setPersonDeleted'
-import fetchPersonen from '../../src/fetchPersonen'
+import fetchPersonen from '../../src/fetchPersonen.js'
 
 const Sup = styled.sup`
   padding-left: 3px;
