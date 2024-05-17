@@ -6,8 +6,8 @@ import { observer } from 'mobx-react-lite'
 import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 
 import storeContext from '../../storeContext.js'
-import addPerson from '../../src/addPerson'
-import setPersonDeleted from '../../src/setPersonDeleted'
+import addPerson from '../../src/addPerson.js'
+import setPersonDeleted from '../../src/setPersonDeleted.js'
 import fetchPersonen from '../../src/fetchPersonen.js'
 
 const Sup = styled.sup`

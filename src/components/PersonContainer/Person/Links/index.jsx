@@ -6,8 +6,8 @@ import { Col, FormGroup, Label } from 'reactstrap'
 import { useParams } from 'react-router-dom'
 
 import storeContext from '../../../../storeContext.js'
-import Link from './Link'
-import addLink from '../../../../src/addLink'
+import Link from './Link.jsx'
+import addLink from '../../../../src/addLink.js'
 
 const Container = styled.div`
   grid-area: areaLinks;

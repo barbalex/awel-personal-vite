@@ -12,7 +12,7 @@ import { FaRegEdit } from 'react-icons/fa'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import storeContext from '../../storeContext.js'
-import chooseDbConnection from '../../src/chooseDbConnection'
+import chooseDbConnection from '../../src/chooseDbConnection.js'
 
 const DbPath = styled.span`
   font-style: italic;

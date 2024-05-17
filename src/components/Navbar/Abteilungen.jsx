@@ -6,9 +6,9 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 
 import storeContext from '../../storeContext.js'
-import addAbteilungModule from '../../src/addAbteilung'
-import setAbteilungDeleted from '../../src/setAbteilungDeleted'
-import deleteAbteilungModule from '../../src/deleteAbteilung'
+import addAbteilungModule from '../../src/addAbteilung.js'
+import setAbteilungDeleted from '../../src/setAbteilungDeleted.js'
+import deleteAbteilungModule from '../../src/deleteAbteilung.js'
 
 const Sup = styled.sup`
   padding-left: 3px;

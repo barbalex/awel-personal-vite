@@ -6,8 +6,8 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
 import storeContext from '../../storeContext.js'
-import addUserModule from '../../src/addUser'
-import deleteUserModule from '../../src/deleteUser'
+import addUserModule from '../../src/addUser.js'
+import deleteUserModule from '../../src/deleteUser.js'
 
 const Sup = styled.sup`
   padding-left: 3px;
