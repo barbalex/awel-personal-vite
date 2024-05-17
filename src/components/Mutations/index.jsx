@@ -7,10 +7,10 @@ import sortBy from 'lodash/sortBy'
 import moment from 'moment'
 
 import ErrorBoundary from '../shared/ErrorBoundary.jsx'
-import fetchMutations from '../../src/fetchMutations'
-import Filter from './Filter'
+import fetchMutations from '../../src/fetchMutations.js'
+import Filter from './Filter.jsx'
 import storeContext from '../../storeContext.js'
-import Row from './Row'
+import Row from './Row.jsx'
 
 moment.locale('de')
 

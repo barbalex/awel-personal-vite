@@ -9,7 +9,7 @@ import { FaUndo } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 
 import storeContext from '../../storeContext.js'
-import revertMutation from '../../src/revertMutation'
+import revertMutation from '../../src/revertMutation.js'
 
 moment.locale('de')
 

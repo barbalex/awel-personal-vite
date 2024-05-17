@@ -18,7 +18,7 @@ import Berichte from './Berichte'
 import User from './User'
 import More from './More'
 import storeContext from '../../storeContext.js'
-import revertMutation from '../../src/revertMutation'
+import revertMutation from '../../src/revertMutation.js'
 
 const StyledNavbar = styled(Navbar)`
   @media print {
