@@ -30,8 +30,9 @@ const spawn = require('child_process').spawn
 //
 process.env.DIST_ELECTRON = path.join(__dirname, '../')
 process.env.DIST = path.join(process.env.DIST_ELECTRON, '../dist')
-process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL
-  ? path.join(process.env.DIST_ELECTRON, '../public')
+process.env.PUBLIC =
+  process.env.VITE_DEV_SERVER_URL ?
+    path.join(process.env.DIST_ELECTRON, '../public')
   : process.env.DIST
 
 const dbKeyPath = path.join(process.env.PUBLIC, 'db_key_obfuscated.js')
@@ -61,6 +62,8 @@ let win
 const preload = path.join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = path.join(process.env.DIST, 'index.html')
+
+let db
 
 const createWindow = () => {
   // Create the browser window.
@@ -111,11 +114,11 @@ const createWindow = () => {
   // save window state on close
   win.on('close', (e) => {
     e.preventDefault()
-    // in case user has changed data inside an input and not blured yet,
-    // force bluring so data is saved
+    // in case user has changed data inside an input and not blurred yet,
+    // force blurring so data is saved
     win.webContents.executeJavaScript('document.activeElement.blur()')
     setTimeout(() => {
-      db.close()
+      db?.close?.()
       app.quit()
       win.destroy()
     }, 500)
@@ -165,7 +168,6 @@ const saveConfig = (event, data) => {
 }
 ipcMain.handle('save-config', saveConfig)
 
-let db
 app.whenReady().then(async () => {
   createWindow()
   // dialog cannot be used before app is ready
@@ -182,9 +184,10 @@ app.whenReady().then(async () => {
     db = new Database(dbPath, { fileMustExist: true })
     saveConfig(undefined, { dbPath })
   }
-  let pragmaRes
+  // let pragmaRes
   try {
-    pragmaRes = db.pragma(`key='${dbKey}'`)
+    db.pragma(`key='${dbKey}'`)
+    // pragmaRes = db.pragma(`key='${dbKey}'`)
     // console.log('index.js, pragmaRes:', { pragmaRes, dbKey })
   } catch (error) {
     console.log('index.js, Error setting db key:', error)
@@ -192,8 +195,8 @@ app.whenReady().then(async () => {
   try {
     // test query to see if db is working
     // Otherwise queries from renderer process will fail with:
-    // SqliteError: file is not a database
-    db.prepare('select * from aemter').all()
+    // SQLiteError: file is not a database
+    db?.prepare?.('select * from aemter')?.all?.()
   } catch (error) {
     console.log('index.js, Error test querying db:', error.message)
     if (error.message.includes('file is not a database')) {
@@ -271,26 +274,31 @@ ipcMain.handle('get-user-data-path', () => {
 ipcMain.handle('query-with-param', (event, sql, param) => {
   let res
   try {
-    res = db.prepare(sql).all(param)
+    res = db?.prepare?.(sql)?.all?.(param)
   } catch (error) {
     console.log('index.js, Error in query-with-param:', error.message)
   }
   return res
 })
 ipcMain.handle('query', (event, sql) => {
+  if (!db) return
   let res
   try {
-    res = db.prepare(sql).all()
+    res = db?.prepare?.(sql)?.all?.()
   } catch (error) {
     console.log('index.js, Error in query:', error.message)
   }
   return res
 })
 
-ipcMain.handle('edit-with-param', (event, sql, param) =>
-  db.prepare(sql).run(param),
-)
-ipcMain.handle('edit', (event, sql) => db.prepare(sql).run())
+ipcMain.handle('edit-with-param', (event, sql, param) => {
+  if (!db) return
+  db?.prepare?.(sql)?.run?.(param)
+})
+ipcMain.handle('edit', (event, sql) => {
+  if (!db) return
+  db?.prepare?.(sql).run?.()
+})
 
 ipcMain.handle('get-config', () => getUserPath())
 
@@ -365,11 +373,12 @@ ipcMain.handle('get-user', async () => {
 
   let user
   try {
+    if (!db) return
     // windows usernames are case insensitive
     // thus: COLLATE NOCASE
     user = db
-      .prepare(`select * from users where name = ? COLLATE NOCASE`)
-      .get(userName)
+      ?.prepare?.(`select * from users where name = ? COLLATE NOCASE`)
+      ?.get?.(userName)
   } catch (error) {
     const notif20 = new Notification({
       title: 'Personal, error fetching user:',
@@ -380,7 +389,7 @@ ipcMain.handle('get-user', async () => {
   const isAdmin = user?.isAdmin === 1
 
   return {
-    // explicitely use the username as passed in from windows
+    // explicitly use the username as passed in from windows
     userName,
     isAdmin,
     pwd: user?.pwd ? atob(user.pwd) : undefined,
@@ -398,7 +407,7 @@ ipcMain.handle('decrypt-string', (event, string) => {
   return atob(string)
 })
 ipcMain.handle('quit', () => {
-  db.close()
+  db?.close?.()
   app.quit()
 })
 
