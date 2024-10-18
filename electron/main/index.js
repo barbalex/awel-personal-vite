@@ -293,11 +293,11 @@ ipcMain.handle('query', (event, sql) => {
 
 ipcMain.handle('edit-with-param', (event, sql, param) => {
   if (!db) return
-  db?.prepare?.(sql)?.run?.(param)
+  return db?.prepare?.(sql)?.run?.(param)
 })
 ipcMain.handle('edit', (event, sql) => {
   if (!db) return
-  db?.prepare?.(sql).run?.()
+  return db?.prepare?.(sql).run?.()
 })
 
 ipcMain.handle('get-config', () => getUserPath())

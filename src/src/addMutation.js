@@ -20,9 +20,9 @@ const addMutation = ({ tableName, patch, inversePatch, store }) => {
     if (field && field.includes('letzteMutation')) return
     let previousValue = null
     const value =
-      valueIn !== null && typeof valueIn === 'object'
-        ? JSON.stringify(valueIn)
-        : valueIn
+      valueIn !== null && typeof valueIn === 'object' ?
+        JSON.stringify(valueIn)
+      : valueIn
     let rowId
     switch (op) {
       case 'add':
@@ -76,9 +76,11 @@ const addMutation = ({ tableName, patch, inversePatch, store }) => {
         },
       )
     } catch (error) {
+      console.log('Error adding mutation:', error)
       store.addError(error)
       return console.log(error)
     }
+    console.log('Mutation added:', info)
     // 2. add to store
     // need to call other action as this happens inside timeout
     store.addMutation({
