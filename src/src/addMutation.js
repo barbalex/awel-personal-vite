@@ -76,11 +76,9 @@ const addMutation = ({ tableName, patch, inversePatch, store }) => {
         },
       )
     } catch (error) {
-      console.log('Error adding mutation:', error)
       store.addError(error)
       return console.log(error)
     }
-    console.log('Mutation added:', info)
     // 2. add to store
     // need to call other action as this happens inside timeout
     store.addMutation({
