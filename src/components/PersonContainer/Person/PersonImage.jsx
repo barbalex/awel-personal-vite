@@ -100,7 +100,17 @@ const PersonImage = () => {
       const file = files?.[0]
       console.log('PersonImage.onDrop, file:', file)
 
-      const filePathOrig = await window.electronAPI.getPathForFile(file)
+      // TODO: when clicking this
+      // when dropping a file, files is an event WITHOUT files in the dataTransfer property
+      let filePathOrig
+      try {
+        filePathOrig = await window.electronAPI.getPathForFile(file)
+      } catch (error) {
+        return console.log(
+          'PersonImage.onDrop, error getting path for file:',
+          error,
+        )
+      }
       const filePath = filePathOrig.replace(/\\/g, '/')
       console.log('PersonImage.onDrop, filePath from webUtils:', {
         filePath,
@@ -121,7 +131,11 @@ const PersonImage = () => {
   )
 
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
-    useDropzone({ onDrop })
+    useDropzone({
+      onDrop,
+      // useFsAccessApi: false
+      noDragEventsBubbling: true,
+    })
 
   const imageSrc =
     person.bildUrl ? `secure-protocol://${person.bildUrl}` : undefined
@@ -144,6 +158,7 @@ const PersonImage = () => {
               'image/webp': ['.webp'],
               'image/vnd.microsoft.icon': ['.ico'],
             }}
+            getFilesFromEvent={(e) => Array.from(e.dataTransfer.files)}
             onDrop={onDrop}
           >
             {!!imageSrc ?
