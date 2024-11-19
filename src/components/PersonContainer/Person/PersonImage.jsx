@@ -1,5 +1,5 @@
 import React, { useContext, useCallback, useEffect, useState } from 'react'
-import Dropzone from 'react-dropzone'
+import Dropzone, { useDropzone } from 'react-dropzone'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { FaTimes } from 'react-icons/fa'
@@ -28,12 +28,12 @@ const DropzoneContainer = styled.div`
   display: block;
   cursor: pointer;
 `
-const StyledDropzone = styled(Dropzone)`
+const StyledDropzone = styled.div`
   width: 100%;
   height: 100%;
   border-color: transparent;
 `
-const DropzoneInnerDiv = styled.div`
+const DropzoneInnerContainer = styled.div`
   width: 100%;
   height: 100%;
   border-width: 2px;
@@ -78,28 +78,6 @@ const PersonImage = () => {
     setErrors({})
   }, [person.id])
 
-  const [image, setImage] = useState(null)
-
-  useEffect(() => {
-    setImage(person.bildUrl ? `secure-protocol://${person.bildUrl}` : null)
-  }, [person.bildUrl])
-
-  const onDrop = useCallback(
-    (files) => {
-      //console.log({ files })
-      updateField({
-        table: 'personen',
-        parentModel: 'personen',
-        field: 'bildUrl',
-        value: files[0].path,
-        id: person.id,
-        personId: +personId,
-        setErrors,
-        store,
-      })
-    },
-    [person.id, personId, store],
-  )
   const onClickRemove = useCallback(
     (e) => {
       updateField({
@@ -116,71 +94,88 @@ const PersonImage = () => {
     },
     [person.id, personId, store],
   )
+  const onDrop = useCallback(
+    async (files) => {
+      console.log('PersonImage.onDrop, files:', files)
+      const file = files?.[0]
+      console.log('PersonImage.onDrop, file:', file)
+
+      const filePathOrig = await window.electronAPI.getPathForFile(file)
+      const filePath = filePathOrig.replace(/\\/g, '/')
+      console.log('PersonImage.onDrop, filePath from webUtils:', {
+        filePath,
+        filePathOrig,
+      })
+      updateField({
+        table: 'personen',
+        parentModel: 'personen',
+        field: 'bildUrl',
+        value: filePath,
+        id: person.id,
+        personId: +personId,
+        setErrors,
+        store,
+      })
+    },
+    [person.id, personId, store],
+  )
+
+  const { getRootProps, getInputProps, isDragActive, isDragReject } =
+    useDropzone({ onDrop })
+
+  const imageSrc =
+    person.bildUrl ? `secure-protocol://${person.bildUrl}` : undefined
+
+  console.log('PersonImage', { bildUrl: person.bildUrl, imageSrc })
 
   if (showFilter) return null
 
   return (
     <Container name="links">
       <DropzoneContainer title="Bild wählen">
-        <StyledDropzone
-          onDrop={onDrop}
-          accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/vnd.microsoft.icon"
-          // react-dropzone > v12 expects the following:
-          // BUT THAT ERRORS
-          // accept={[
-          //   {
-          //     description: 'image files',
-          //     accept: {
-          //       'image/*': ['.jpeg', '.png'],
-          //     },
-          //   },
-          // ]}
-        >
-          {({ getRootProps, getInputProps, isDragActive, isDragReject }) => {
-            if (isDragActive) {
-              return (
-                <DropzoneInnerDiv {...getRootProps()}>
-                  <Text>jetzt fallen lassen...</Text>
-                </DropzoneInnerDiv>
-              )
-            }
-            if (isDragReject) {
-              return (
-                <DropzoneInnerDiv {...getRootProps()}>
-                  <Text>Hm. Da ging etwas schief :-(</Text>
-                </DropzoneInnerDiv>
-              )
-            }
-            if (image) {
-              return (
-                <DropzoneInnerDiv {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <Img
-                    src={image}
-                    alt={`${person.vorname} ${person.name}`}
-                    //width="185"
-                  />
-                  <RemoveIcon
-                    id={`removeImage${person.Id}`}
-                    onClick={onClickRemove}
-                  />
-                  <UncontrolledTooltip
-                    placement="right"
-                    target={`removeImage${person.Id}`}
-                  >
-                    Bild entfernen
-                  </UncontrolledTooltip>
-                </DropzoneInnerDiv>
-              )
-            }
-            return (
-              <DropzoneInnerDiv {...getRootProps()}>
+        <StyledDropzone>
+          <DropzoneInnerContainer
+            {...getRootProps()}
+            accept={{
+              'image/png': ['.png'],
+              'image/jpeg': ['.jpg', '.jpeg'],
+              'image/gif': ['.gif'],
+              'image/bmp': ['.bmp'],
+              'image/webp': ['.webp'],
+              'image/vnd.microsoft.icon': ['.ico'],
+            }}
+            onDrop={onDrop}
+          >
+            {!!imageSrc ?
+              <>
+                <input {...getInputProps()} />
+                <Img
+                  src={imageSrc}
+                  alt={`${person.vorname} ${person.name}`}
+                  //width="185"
+                />
+                <RemoveIcon
+                  id={`removeImage${person.Id}`}
+                  onClick={onClickRemove}
+                />
+                <UncontrolledTooltip
+                  placement="right"
+                  target={`removeImage${person.Id}`}
+                >
+                  Bild entfernen
+                </UncontrolledTooltip>
+              </>
+            : isDragActive ?
+              <Text>jetzt fallen lassen...</Text>
+            : isDragReject ?
+              <Text>Hm. Da ging etwas schief :-(</Text>
+            : <>
                 <input {...getInputProps()} />
                 <Text>Bild hierhin ziehen...</Text>
                 <Text>...oder klicken, um es zu wählen.</Text>
-              </DropzoneInnerDiv>
-            )
-          }}
+              </>
+            }
+          </DropzoneInnerContainer>
         </StyledDropzone>
       </DropzoneContainer>
     </Container>

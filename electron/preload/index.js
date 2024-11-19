@@ -1,9 +1,13 @@
-const { contextBridge, ipcRenderer } = require('electron')
+// BEWARE:
+// webUtils is available in the renderer process but not in the main process
+// thus here, not in index.js
+const { contextBridge, ipcRenderer, webUtils } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
   printToPdf: (dialogOptions) =>
     ipcRenderer.invoke('print-to-pdf', dialogOptions),
   getConfig: () => ipcRenderer.invoke('get-config'),
+  getPathForFile: (file) => webUtils.getPathForFile(file),
   saveConfig: (config) => ipcRenderer.invoke('save-config', config),
   reloadMainWindow: () => ipcRenderer.invoke('reload-main-window'),
   openDialogGetPath: () => ipcRenderer.invoke('open-dialog-get-path'),
