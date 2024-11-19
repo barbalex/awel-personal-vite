@@ -91,7 +91,6 @@ const PersonImage = () => {
         setErrors,
         store,
       })
-      e.preventDefault()
     },
     [person.id, personId, store],
   )
