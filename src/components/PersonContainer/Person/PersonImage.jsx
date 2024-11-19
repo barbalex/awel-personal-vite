@@ -80,6 +80,7 @@ const PersonImage = () => {
 
   const onClickRemove = useCallback(
     (e) => {
+      e.stopPropagation()
       updateField({
         table: 'personen',
         parentModel: 'personen',
