@@ -21,7 +21,6 @@
     "dev": "vite",
     "build": "vite build && electron-builder",
     "build_sik": "tsc && vite build && electron-builder",
-    "preinstall-old": "cross-env-shell npm install better-sqlite3 --no-save --build-from-source --sqlite3=\"$INIT_CWD/sqlite-amalgamation\" --runtime=electron --target=33.0.1 --dist-url=https://electronjs.org/headers --force",
     "preinstall": "cross-env-shell npm install better-sqlite3@'11.4.0' --no-save --build-from-source --sqlite3=\"$(pwd)/sqlite-amalgamation\" --runtime=electron --target=33.0.1 --dist-url=https://electronjs.org/headers --force",
     "preview": "vite preview",
     "e2e": "npx playwright test"
