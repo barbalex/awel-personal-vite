@@ -346,6 +346,11 @@ ipcMain.handle('get-user', async () => {
   let usernameFromPS
   if (process.platform === 'darwin') {
     usernameFromPS = await username()
+  } else if (process.platform === 'linux') {
+    // problem: on previous windows pc my username was "alexa"
+    // but now on linux it is "alex"
+    const linuxUserName = await username()
+    usernameFromPS = linuxUserName === 'alex' ? 'alexa' : linuxUserName
   } else {
     usernameFromPS = await executePowershell('$Env:UserName')
   }
@@ -365,8 +370,6 @@ ipcMain.handle('get-user', async () => {
   //   processEnvUsername: process.env.username,
   //   processEnvUser: process.env.user,
   //   osUserInfoUsername: os?.userInfo?.()?.username,
-  //   // usernameFromUsername,
-  //   // usernameFromCmd,
   //   usernameFromPowershell: usernameFromPS,
   //   usernameFromPsSanitized,
   // })
