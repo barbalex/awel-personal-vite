@@ -88,6 +88,7 @@
     "depsVsDevDeps": "only placing sqlite in deps makes webpack bundle the right deps while ommitting sqlite, see: https://github.com/electron-userland/electron-forge/issues/1451#issuecomment-606039498",
     "react-dropzone": "do not upgrade from 12.1.0 to 14.1.0, due to accept filter not working (in electron?)",
     "versions": "need the preinstall script. See: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/compilation.md#custom-configuration and https://github.com/WiseLibs/better-sqlite3/issues/126#issuecomment-1379445811",
+    "electron": "could not get things to work with 34.0.0 or 35.0.0",
     "better-sqlite3_comment": "when running npm i, need to remove below entry, then re-inject afterwards",
     "better-sqlite3": "file:./node_modules/better-sqlite3",
     "mobx-state-tree": "Do not upgrade from 5.4.2 to 6.0.0: Failed to find the environment of UndoManager@/history: https://github.com/coolsoftwaretyler/mst-middlewares/issues/22",
