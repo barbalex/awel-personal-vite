@@ -33,7 +33,7 @@
     "fs-extra": "11.3.0",
     "mobx": "6.13.7",
     "mobx-react-lite": "4.1.0",
-    "mobx-state-tree": "6.0.1",
+    "mobx-state-tree": "7.0.2",
     "moment": "2.30.1",
     "mst-middlewares": "6.1.0",
     "path": "0.12.7",

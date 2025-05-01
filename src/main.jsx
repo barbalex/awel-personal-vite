@@ -30,8 +30,9 @@ const container = document.getElementById('root')
 const root = createRoot(container)
 
 const run = async () => {
-  // since mobx-state-tree v6.0.0 the undoManager middleware had problems
+  // upgrade from 5.4.2 to 6.0.0:
   // Failed to find the environment of UndoManager@/history
+  // manually set the targetStore to the store instead
   // https://github.com/coolsoftwaretyler/mst-middlewares/issues/22#issuecomment-2800127997
   const store = createStore().create(
     {},
