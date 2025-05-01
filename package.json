@@ -62,7 +62,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "7.27.1",
     "@babel/preset-react": "7.27.1",
-    "@eslint/compat": "1.2.8",
+    "@eslint/compat": "1.2.9",
     "@eslint/eslintrc": "3.3.1",
     "@eslint/js": "9.25.1",
     "@playwright/test": "1.52.0",
@@ -91,7 +91,6 @@
     "electron": "could not get things to work with 34.0.0 or 35.0.0",
     "better-sqlite3_comment": "when running npm i, need to remove below entry, then re-inject afterwards",
     "better-sqlite3": "file:./node_modules/better-sqlite3",
-    "mobx-state-tree": "Do not upgrade from 5.4.2 to 6.0.0: Failed to find the environment of UndoManager@/history: https://github.com/coolsoftwaretyler/mst-middlewares/issues/22",
     "username": "do not upgrade from 5.1.0 to 6 or 7.0.0: gives esm error"
   },
   "engines": {
