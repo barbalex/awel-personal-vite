@@ -1,5 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+import { getEnv } from 'mobx-state-tree'
 
 import App from './components/App.jsx'
 import './styles.css'
@@ -29,7 +30,18 @@ const container = document.getElementById('root')
 const root = createRoot(container)
 
 const run = async () => {
-  const store = createStore().create()
+  // since mobx-state-tree v6.0.0 the undoManager middleware had problems
+  // Failed to find the environment of UndoManager@/history
+  // https://github.com/coolsoftwaretyler/mst-middlewares/issues/22#issuecomment-2800127997
+  const store = createStore().create(
+    {},
+    {
+      history: { targetStore: {} },
+    },
+  )
+  // Now set the circular reference after the store is created
+  const storeEnv = getEnv(store)
+  storeEnv.history.targetStore = store
   const { setUserName, setUserIsAdmin, setUserPwd } = store
 
   const user = await window.electronAPI.getUser()
