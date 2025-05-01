@@ -761,6 +761,12 @@ const store = () =>
         },
         updatePersonsMutation(idPerson) {
           const person = self.personen.find((p) => p.id === idPerson)
+          if (!person) {
+            console.error(
+              `Error: no person with id "${idPerson}" found in store`,
+            )
+            return
+          }
           person.letzteMutationUser = self.userName
           person.letzteMutationZeit = Date.now()
         },
