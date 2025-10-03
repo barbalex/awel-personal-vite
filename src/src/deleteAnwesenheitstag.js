@@ -13,7 +13,7 @@ const deleteAnwesenheitstag = async ({ tag, personId, store }) => {
   }
   // write to store
   store.deleteAnwesenheitstag({ tag, personId })
-  updatePersonsMutation({ personId, store: store })
+  updatePersonsMutation({ personId, store })
 }
 
 export default deleteAnwesenheitstag

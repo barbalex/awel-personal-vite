@@ -25,7 +25,7 @@ const addEtikett = async ({ etikett, personId, store }) => {
     letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
-  updatePersonsMutation({ personId, store: store })
+  updatePersonsMutation({ personId, store })
 }
 
 export default addEtikett

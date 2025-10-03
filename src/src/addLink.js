@@ -2,6 +2,7 @@ import updatePersonsMutation from './updatePersonsMutation.js'
 
 const addLink = async ({ url, personId, store }) => {
   // 1. create new link in db, returning id
+  console.log('addLink', { url, personId })
   let info
   try {
     info = await window.electronAPI.editWithParam(
@@ -25,7 +26,7 @@ const addLink = async ({ url, personId, store }) => {
     letzteMutationUser: store.userName,
     letzteMutationZeit: Date.now(),
   })
-  updatePersonsMutation({ personId, store: store })
+  updatePersonsMutation({ personId, store })
 }
 
 export default addLink

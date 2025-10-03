@@ -13,7 +13,7 @@ const deleteEtikett = async ({ etikett, personId, store }) => {
   }
   // write to store
   store.deleteEtikett({ etikett, personId })
-  updatePersonsMutation({ personId, store: store })
+  updatePersonsMutation({ personId, store })
 }
 
 export default deleteEtikett

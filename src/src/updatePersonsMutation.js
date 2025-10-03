@@ -1,4 +1,4 @@
-const updatePersonsMutation = async ({ idPerson, store }) => {
+const updatePersonsMutation = async ({ personId, store }) => {
   // in db
   try {
     await window.electronAPI.editWithParam(
@@ -6,7 +6,7 @@ const updatePersonsMutation = async ({ idPerson, store }) => {
       {
         user: store.userName,
         time: Date.now(),
-        id: idPerson,
+        id: personId,
       },
     )
   } catch (error) {
@@ -14,7 +14,7 @@ const updatePersonsMutation = async ({ idPerson, store }) => {
     return console.log(error)
   }
   // in store
-  store.updatePersonsMutation(idPerson)
+  store.updatePersonsMutation({ personId, store })
 }
 
 export default updatePersonsMutation

@@ -11,7 +11,7 @@ const deleteLink = async ({ id, personId, store }) => {
   // write to store
   store.deleteLink(id)
   // set persons letzteMutation
-  updatePersonsMutation({ personId, store: store })
+  updatePersonsMutation({ personId, store })
 }
 
 export default deleteLink
