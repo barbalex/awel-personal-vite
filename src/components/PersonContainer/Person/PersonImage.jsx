@@ -124,17 +124,9 @@ const PersonImage = () => {
       <DropzoneContainer title="Bild wählen">
         <StyledDropzone
           onDrop={onDrop}
-          accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/vnd.microsoft.icon"
-          // react-dropzone > v12 expects the following:
-          // BUT THAT ERRORS
-          // accept={[
-          //   {
-          //     description: 'image files',
-          //     accept: {
-          //       'image/*': ['.jpeg', '.png'],
-          //     },
-          //   },
-          // ]}
+          // react-dropzone until v12:
+          // accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/vnd.microsoft.icon"
+          accept={{ 'image/*': ['.jpeg', '.png'] }}
         >
           {({ getRootProps, getInputProps, isDragActive, isDragReject }) => {
             if (isDragActive) {
