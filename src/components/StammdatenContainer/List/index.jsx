@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { FixedSizeList as List } from 'react-window'
+import { useContext } from 'react'
+import { List } from 'react-window'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 import sortBy from 'lodash/sortBy'
@@ -11,6 +11,7 @@ import Row from './Row.jsx'
 
 const Container = styled.div`
   border-right: 1px solid rgb(46, 125, 50);
+  height: ${(props) => props['data-height']}px;
 `
 
 const DataList = ({ dimensions, listRef }) => {
@@ -20,7 +21,6 @@ const DataList = ({ dimensions, listRef }) => {
   const { showDeleted } = store
 
   const height = isNaN(dimensions.height) ? 250 : dimensions.height
-  const width = isNaN(dimensions.width) ? 250 : dimensions.width - 1
   let data = store[tableName].slice().filter((p) => {
     if (!showDeleted) return p.deleted === 0
     return true
@@ -29,16 +29,14 @@ const DataList = ({ dimensions, listRef }) => {
 
   return (
     <ErrorBoundary>
-      <Container>
+      <Container data-height={height}>
         <List
-          height={height}
-          itemCount={data.length}
-          itemSize={50}
-          width={width}
+          rowComponent={Row}
+          rowHeight={50}
+          rowCount={data.length}
+          rowProps={{ data }}
           ref={listRef}
-        >
-          {({ index, style }) => <Row style={style} index={index} />}
-        </List>
+        />
       </Container>
     </ErrorBoundary>
   )

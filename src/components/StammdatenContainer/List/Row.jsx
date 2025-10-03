@@ -1,13 +1,10 @@
-import React, { useContext, useCallback } from 'react'
+import { useCallback } from 'react'
 import styled from 'styled-components'
-import { observer } from 'mobx-react-lite'
 import { UncontrolledTooltip } from 'reactstrap'
-import sortBy from 'lodash/sortBy'
 import { FaTrashAlt } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import tables from '../../../src/tables.js'
-import storeContext from '../../../storeContext.js'
 
 const Row = styled.div`
   border-bottom: 1px solid rgba(46, 125, 50, 0.5);
@@ -31,18 +28,10 @@ const Row = styled.div`
   }
 `
 
-const StammdatenRow = ({ index, style }) => {
+const StammdatenRow = ({ index, style, data }) => {
   const navigate = useNavigate()
   const { tableId, tableName } = useParams()
 
-  const store = useContext(storeContext)
-  const { showDeleted } = store
-
-  let data = store[tableName].slice().filter((p) => {
-    if (!showDeleted) return p.deleted === 0
-    return true
-  })
-  data = sortBy(data, ['sort', 'value'])
   const table = tables.find((t) => t.table === tableName)
   const row = data[index]
 
@@ -52,12 +41,19 @@ const StammdatenRow = ({ index, style }) => {
   )
 
   return (
-    <Row style={style} onClick={onClickRow} data-active={+tableId === row.id}>
+    <Row
+      style={style}
+      onClick={onClickRow}
+      data-active={+tableId === row.id}
+    >
       {row.value || '(kein Wert)'}
       {row.deleted === 1 && (
         <>
           <FaTrashAlt id={`deletedIcon${row.id}`} />
-          <UncontrolledTooltip placement="left" target={`deletedIcon${row.id}`}>
+          <UncontrolledTooltip
+            placement="left"
+            target={`deletedIcon${row.id}`}
+          >
             {`Dieser ${table ? table.model : 'Datensatz'} wurde gelöscht`}
           </UncontrolledTooltip>
         </>
@@ -66,4 +62,4 @@ const StammdatenRow = ({ index, style }) => {
   )
 }
 
-export default observer(StammdatenRow)
+export default StammdatenRow

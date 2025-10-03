@@ -60,11 +60,11 @@ const RevertButton = styled(Button)`
   align-self: center;
 `
 
-const MutationsRow = ({ style, listIndex, mutations }) => {
+const MutationsRow = ({ style, index, mutations }) => {
   const { mutationId = 0 } = useParams()
 
   const store = useContext(storeContext)
-  const row = mutations[listIndex]
+  const row = mutations[index]
   const { id, time, user, tableName, rowId, field, op, value, previousValue } =
     row
 

@@ -2,7 +2,7 @@
 import React, { useContext, useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
-import { VariableSizeList as List } from 'react-window'
+import { List } from 'react-window'
 import sortBy from 'lodash/sortBy'
 import moment from 'moment'
 
@@ -215,11 +215,6 @@ const Mutations = () => {
           .includes(previousValueFilter.toLowerCase())
       )
     })
-  const rowHeights = mutations.map((m) => {
-    if (m.value && m.value[0] === '{') return 176
-    if (m.previousValue && m.previousValue[0] === '{') return 176
-    return 50
-  })
 
   return (
     <ErrorBoundary>
@@ -292,15 +287,17 @@ const Mutations = () => {
         </TitleRow>
         <ListDiv>
           <List
-            height={window.innerHeight - 56 - 65}
-            itemCount={mutations.length}
-            itemSize={(index) => rowHeights[index] || 50}
-            width={window.innerWidth}
-          >
-            {({ index, style }) => (
-              <Row style={style} listIndex={index} mutations={mutations} />
-            )}
-          </List>
+            rowComponent={Row}
+            rowHeight={(index, { mutations }) => {
+              const mutation = mutations[index]
+              if (mutation.value && mutation.value[0] === '{') return 176
+              if (mutation.previousValue && mutation.previousValue[0] === '{')
+                return 176
+              return 50
+            }}
+            rowCount={mutations.length}
+            rowProps={{ mutations }}
+          />
         </ListDiv>
       </Container>
     </ErrorBoundary>
