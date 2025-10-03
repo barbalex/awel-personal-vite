@@ -4,7 +4,7 @@ const addLink = async ({ url, personId, store }) => {
   // 1. create new link in db, returning id
   let info
   try {
-    await window.electronAPI.editWithParam(
+    info = await window.electronAPI.editWithParam(
       'insert into links (idPerson, url, letzteMutationUser, letzteMutationZeit) values (@idPerson, @url, @letzteMutationUser, @letzteMutationZeit)',
       {
         idPerson: personId,
