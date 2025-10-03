@@ -14,7 +14,7 @@ const updatePersonsMutation = async ({ personId, store }) => {
     return console.log(error)
   }
   // in store
-  store.updatePersonsMutation({ personId, store })
+  store.updatePersonsMutation(personId)
 }
 
 export default updatePersonsMutation
