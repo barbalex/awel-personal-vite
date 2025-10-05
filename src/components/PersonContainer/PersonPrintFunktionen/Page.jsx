@@ -86,7 +86,8 @@ const StyledRowsContainer = styled.div`
    * need overflow while building list
    * so list does not flow outside padding
    */
-  overflow-y: ${(props) => (props.building ? 'auto' : 'hidden')};
+  overflow-y: ${(props) =>
+    props['data-building'] === 'true' ? 'auto' : 'hidden'};
   overflow-x: hidden;
   /* grow to fill page and thus move single rows to top */
   flex-grow: 2;
@@ -172,12 +173,10 @@ const PersonPrintFunktionenPage = ({ pageIndex }) => {
      */
     // don't do anything on not active pages
     if (pageIndex === activePageIndex) {
-      const offsetHeight = rowsContainer
-        ? rowsContainer.current?.offsetHeight
-        : null
-      const scrollHeight = rowsContainer
-        ? rowsContainer.current?.scrollHeight
-        : null
+      const offsetHeight =
+        rowsContainer ? rowsContainer.current?.offsetHeight : null
+      const scrollHeight =
+        rowsContainer ? rowsContainer.current?.scrollHeight : null
       const activePageIsFull = page.full
 
       if (!activePageIsFull && remainingRows.length > 0) {
@@ -233,9 +232,16 @@ const PersonPrintFunktionenPage = ({ pageIndex }) => {
             <Field>Funktionen</Field>
           </HeaderRow>
         </StyledHeader>
-        <StyledRowsContainer building={building} ref={rowsContainer}>
+        <StyledRowsContainer
+          data-building={building.toString()}
+          ref={rowsContainer}
+        >
           {personen.map((p, i) => (
-            <Row key={p.id} p={p} i={i} />
+            <Row
+              key={p.id}
+              p={p}
+              i={i}
+            />
           ))}
         </StyledRowsContainer>
         <Footer>

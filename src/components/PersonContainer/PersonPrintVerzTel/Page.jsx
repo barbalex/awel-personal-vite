@@ -72,7 +72,8 @@ const InnerPageContainer = styled.div`
    * need overflow while building list
    * so list does not flow outside padding
    */
-  overflow-y: ${(props) => (props.building ? 'auto' : 'hidden')};
+  overflow-y: ${(props) =>
+    props['data-building'] === 'true' ? 'auto' : 'hidden'};
   overflow-x: hidden;
 `
 const Footer = styled.div`
@@ -110,15 +111,24 @@ const PersonPrintVerzTelPage = ({ pageIndex }) => {
   return (
     <Container>
       <Title>AWEL Telefon-Verzeichnis</Title>
-      <InnerPageContainer building={building}>
+      <InnerPageContainer data-building={building.toString()}>
         <Column0>
-          <Column pageIndex={pageIndex} columnIndex={0} />
+          <Column
+            pageIndex={pageIndex}
+            columnIndex={0}
+          />
         </Column0>
         <Column1>
-          <Column pageIndex={pageIndex} columnIndex={1} />
+          <Column
+            pageIndex={pageIndex}
+            columnIndex={1}
+          />
         </Column1>
         <Column2>
-          <Column pageIndex={pageIndex} columnIndex={2} />
+          <Column
+            pageIndex={pageIndex}
+            columnIndex={2}
+          />
         </Column2>
       </InnerPageContainer>
       <Footer>

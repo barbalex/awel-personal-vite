@@ -15,7 +15,8 @@ const Container = styled.div`
  * need overflow while building list
  * so list does not flow outside padding
  */
-  overflow-y: ${props => (props.building ? 'auto' : 'hidden')};
+  overflow-y: ${(props) =>
+    props['data-building'] === 'true' ? 'auto' : 'hidden'};
   overflow-x: hidden;
 
   height: 17.35cm;
@@ -50,35 +51,26 @@ const Row = styled.div`
   align-items: stretch;
   padding: 0;
   page-break-inside: avoid !important;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.type === 'title' ? 'rgba(0,0,0,0.1)' : 'unset'};
   /* get background colors to show */
   @media print {
     -webkit-print-color-adjust: exact;
   }
-  border-top: ${props =>
+  border-top: ${(props) =>
     props.topborder === 'true' ? '1px rgba(0, 0, 0, 0.5) solid' : 'unset'};
   border-bottom: 1px rgba(0, 0, 0, 0.5) solid;
-  font-weight: ${props => (props.type === 'title' ? '800' : 'unset')};
-  font-family: ${props => (props.type === 'title' ? 'Arial Black' : 'unset')};
+  font-weight: ${(props) => (props.type === 'title' ? '800' : 'unset')};
+  font-family: ${(props) => (props.type === 'title' ? 'Arial Black' : 'unset')};
 `
 
 const PersonPrintVerzTelColumn = ({ pageIndex, columnIndex }) => {
   const containerEl = useRef(null)
   const store = useContext(storeContext)
-  const {
-    abteilungen,
-    telefones,
-    personVerzeichnis,
-    personenFilteredSorted,
-  } = store
-  const {
-    pages,
-    activePageIndex,
-    remainingRows,
-    stop,
-    addRow,
-  } = personVerzeichnis
+  const { abteilungen, telefones, personVerzeichnis, personenFilteredSorted } =
+    store
+  const { pages, activePageIndex, remainingRows, stop, addRow } =
+    personVerzeichnis
 
   const page = pages[pageIndex]
   const { full: pageIsFull, moveRowToNewColumn } = page
@@ -97,11 +89,13 @@ const PersonPrintVerzTelColumn = ({ pageIndex, columnIndex }) => {
      */
     // don't do anything on not active pages
     if (pageIndex === activePageIndex) {
-      const offsetHeight = get(containerEl, 'current?.offsetHeight')
-        ? containerEl.current?.offsetHeight
+      const offsetHeight =
+        get(containerEl, 'current?.offsetHeight') ?
+          containerEl.current?.offsetHeight
         : null
-      const scrollHeight = get(containerEl, 'current?.scrollHeight')
-        ? containerEl.current?.scrollHeight
+      const scrollHeight =
+        get(containerEl, 'current?.scrollHeight') ?
+          containerEl.current?.scrollHeight
         : null
 
       if (!pageIsFull && remainingRows.length > 0) {
@@ -130,21 +124,23 @@ const PersonPrintVerzTelColumn = ({ pageIndex, columnIndex }) => {
   if (!rows) return null
 
   const data = rows
-    .map(r => {
+    .map((r) => {
       if (isNaN(r)) {
         return { type: 'title', name: r }
       }
-      return personenFilteredSorted.find(p => p.id === r)
+      return personenFilteredSorted.find((p) => p.id === r)
     })
     // while new filter is applied, undefined rows exist
-    .filter(r => !!r)
+    .filter((r) => !!r)
 
   return (
-    <Container building={!columnIsFull} ref={containerEl}>
+    <Container
+      data-building={!columnIsFull.toString()}
+      ref={containerEl}
+    >
       {data.map((r, i) => {
-        const abteilung = r.abteilung
-          ? abteilungen.find(a => a.id === r.abteilung)
-          : null
+        const abteilung =
+          r.abteilung ? abteilungen.find((a) => a.id === r.abteilung) : null
         const abteilungKurzzeichen =
           abteilung && abteilung.kurzzeichen ? abteilung.kurzzeichen : ''
 
@@ -160,10 +156,10 @@ const PersonPrintVerzTelColumn = ({ pageIndex, columnIndex }) => {
             <StyledTelefon>
               {
                 telefones
-                  .filter(f => f.idPerson === r.id)
-                  .filter(f => f.typ === 'Festnetz')
-                  .filter(f => f.deleted === 0)
-                  .map(f => f.nr)[0]
+                  .filter((f) => f.idPerson === r.id)
+                  .filter((f) => f.typ === 'Festnetz')
+                  .filter((f) => f.deleted === 0)
+                  .map((f) => f.nr)[0]
               }
             </StyledTelefon>
             <StyledBueroNr>{r.bueroNr || ''}</StyledBueroNr>

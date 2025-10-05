@@ -14,7 +14,8 @@ const Container = styled.div`
  * need overflow while building list
  * so list does not flow outside padding
  */
-  overflow-y: ${(props) => (props.building ? 'auto' : 'hidden')};
+  overflow-y: ${(props) =>
+    props['data-building'] === 'true' ? 'auto' : 'hidden'};
   overflow-x: hidden;
 
   height: 17.35cm;
@@ -129,7 +130,7 @@ const PersonPrintVerzKurzzeichenColumn = ({ pageIndex, columnIndex }) => {
 
   return (
     <Container
-      building={!columnIsFull}
+      data-building={!columnIsFull.toString()}
       ref={containerEl}
     >
       {data.map((r, i) => {
