@@ -1,4 +1,4 @@
-const fetchPersonen = async ({ store }) => {
+export const fetchPersonen = async ({ store }) => {
   const { setPersonen, addError } = store
   let personen = []
   try {
@@ -6,7 +6,5 @@ const fetchPersonen = async ({ store }) => {
   } catch (error) {
     addError(error)
   }
-  personen && setPersonen(personen)
+  if (personen) setPersonen(personen)
 }
-
-export default fetchPersonen

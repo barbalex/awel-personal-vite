@@ -18,7 +18,7 @@ import abteilungenPrepareData from './abteilungenPrepareData.js'
 import aemterPrepareData from './aemterPrepareData.js'
 import doExport from './doExport.js'
 import storeContext from '../../../storeContext.js'
-import fetchAemter from '../../../src/fetchAemter.js'
+import { fetchAemter } from '../../../src/fetchAemter.js'
 import fetchAbteilungen from '../../../src/fetchAbteilungen.js'
 import fetchBereiche from '../../../src/fetchBereiche.js'
 import fetchSektionen from '../../../src/fetchSektionen.js'
@@ -176,8 +176,14 @@ const Export = () => {
   const toggleModal = useCallback(() => setModalOpen(!modalOpen), [modalOpen])
 
   return (
-    <UncontrolledDropdown nav inNavbar>
-      <DropdownToggle nav caret>
+    <UncontrolledDropdown
+      nav
+      inNavbar
+    >
+      <DropdownToggle
+        nav
+        caret
+      >
         Exporte
       </DropdownToggle>
       <DropdownMenu>
@@ -204,7 +210,10 @@ const Export = () => {
         </DropdownItem>
         <DropdownItem onClick={onClickExportPersonenKader}>Kader</DropdownItem>
       </DropdownMenu>
-      <Modal isOpen={modalOpen} toggle={toggleModal}>
+      <Modal
+        isOpen={modalOpen}
+        toggle={toggleModal}
+      >
         <ModalBody>{modalMessage}</ModalBody>
       </Modal>
     </UncontrolledDropdown>

@@ -6,7 +6,7 @@ import { useParams, Outlet } from 'react-router-dom'
 
 import { ErrorBoundary } from '../shared/ErrorBoundary.jsx'
 import List from './List.jsx'
-import fetchPersonen from '../../src/fetchPersonen.js'
+import { fetchPersonen } from '../../src/fetchPersonen.js'
 import fetchSektionen from '../../src/fetchSektionen.js'
 import fetchAbteilungen from '../../src/fetchAbteilungen.js'
 import fetchWerte from '../../src/fetchWerte.js'
@@ -61,7 +61,10 @@ const SektionContainer = () => {
             renderOnResizeRate={100}
             renderOnResize
           >
-            <List {...sektionJson} listRef={listRef} />
+            <List
+              {...sektionJson}
+              listRef={listRef}
+            />
           </ReflexElement>
           <ReflexSplitter />
           <StyledReflexElement showfilter={showFilter}>

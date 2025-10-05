@@ -1,4 +1,4 @@
-const fetchAemter = async ({ store }) => {
+export const fetchAemter = async ({ store }) => {
   const { setAemter, addError } = store
   let aemter = []
   try {
@@ -8,5 +8,3 @@ const fetchAemter = async ({ store }) => {
   }
   if (aemter) setAemter(aemter)
 }
-
-export default fetchAemter

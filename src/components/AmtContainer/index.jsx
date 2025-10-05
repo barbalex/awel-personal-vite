@@ -6,7 +6,7 @@ import { Outlet, useParams } from 'react-router-dom'
 
 import { ErrorBoundary } from '../shared/ErrorBoundary.jsx'
 import List from './List.jsx'
-import fetchAemter from '../../src/fetchAemter.js'
+import { fetchAemter } from '../../src/fetchAemter.js'
 import fetchWerte from '../../src/fetchWerte.js'
 import storeContext from '../../storeContext.js'
 import fetchAmt from '../../src/fetchAmt.js'
@@ -56,7 +56,10 @@ const AmtContainer = () => {
             renderOnResizeRate={100}
             renderOnResize
           >
-            <List {...amtJson} listRef={listRef} />
+            <List
+              {...amtJson}
+              listRef={listRef}
+            />
           </ReflexElement>
           <ReflexSplitter />
           <StyledReflexElement showfilter={showFilter}>

@@ -8,7 +8,7 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa'
 import storeContext from '../../storeContext.js'
 import addPerson from '../../src/addPerson.js'
 import setPersonDeleted from '../../src/setPersonDeleted.js'
-import fetchPersonen from '../../src/fetchPersonen.js'
+import { fetchPersonen } from '../../src/fetchPersonen.js'
 
 const Sup = styled.sup`
   padding-left: 3px;
@@ -59,8 +59,9 @@ const Person = () => {
         setDeletionTitle(null)
         fetchPersonen({ store })
       })
-      const name = activePerson.name
-        ? `"${activePerson.name} ${activePerson.vorname}"`
+      const name =
+        activePerson.name ?
+          `"${activePerson.name} ${activePerson.vorname}"`
         : 'Dieser Datensatz'
       const namer1 = activePerson.anrede === 'Frau' ? 'sie' : 'ihn'
       const namer2 = activePerson.anrede === 'Frau' ? 'sie' : 'er'
@@ -81,9 +82,9 @@ const Person = () => {
     })
     setDeletionMessage(
       `${
-        activePerson.name
-          ? `"${activePerson.name} ${activePerson.vorname}"`
-          : 'Diesen Datensatz'
+        activePerson.name ?
+          `"${activePerson.name} ${activePerson.vorname}"`
+        : 'Diesen Datensatz'
       } wirklich löschen?`,
     )
     setDeletionTitle('Person löschen')
@@ -97,23 +98,30 @@ const Person = () => {
   ])
 
   const existsActivePerson = pathname.startsWith('/Personen') && !!+personId
-  const personenSum = showDeleted
-    ? personen.length
+  const personenSum =
+    showDeleted ?
+      personen.length
     : personen.filter((p) => p.deleted === 0).length
   const personenSumSup =
-    personenFiltered.length !== personenSum
-      ? `${personenFiltered.length}/${personenSum}`
-      : personenFiltered.length
+    personenFiltered.length !== personenSum ?
+      `${personenFiltered.length}/${personenSum}`
+    : personenFiltered.length
   const active = pathname.startsWith('/Personen') && !report
 
   return (
     <StyledNavItem data-active={active}>
-      <NavLink id="Personen" onClick={showTab}>
+      <NavLink
+        id="Personen"
+        onClick={showTab}
+      >
         Personen
         {active && <Sup>{personenSumSup}</Sup>}
       </NavLink>
       {!pathname.startsWith('/Personen') && (
-        <UncontrolledTooltip placement="bottom" target="Personen">
+        <UncontrolledTooltip
+          placement="bottom"
+          target="Personen"
+        >
           Personen anzeigen
         </UncontrolledTooltip>
       )}
@@ -125,7 +133,10 @@ const Person = () => {
           >
             <FaPlus />
           </StyledButton>
-          <UncontrolledTooltip placement="bottom" target="newPersonButton">
+          <UncontrolledTooltip
+            placement="bottom"
+            target="newPersonButton"
+          >
             neue Person erfassen
           </UncontrolledTooltip>
           <StyledButton
@@ -136,7 +147,10 @@ const Person = () => {
             <FaTrashAlt />
           </StyledButton>
           {existsActivePerson && (
-            <UncontrolledTooltip placement="bottom" target="deletePersonButton">
+            <UncontrolledTooltip
+              placement="bottom"
+              target="deletePersonButton"
+            >
               markierte Person löschen
             </UncontrolledTooltip>
           )}
