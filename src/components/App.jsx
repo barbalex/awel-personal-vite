@@ -54,10 +54,7 @@ const RouterComponent = () => (
             <Route path="print-preview/:report" element={<PrintPreview />} />
             <Route  path=":personId">
               <Route path="*" element={<PersonTab />} />
-              <Route
-                path="print-preview/:report"
-                element={<PrintPreview />}
-              />
+              <Route path="print-preview/:report" element={<PrintPreview />} />
             </Route>
           </Route>
           <Route path="/Aemter" element={<AmtContainer />}>
@@ -77,10 +74,7 @@ const RouterComponent = () => (
           </Route>
           <Route path="/Werte">
             <Route path=":tableName"  element={<StammdatenContainer />} >
-              <Route
-                path=":tableId"
-                element={<StammdatenContainer />}
-              />
+              <Route path=":tableId" element={<StammdatenContainer />} />
             </Route>
           </Route>
           <Route path="/mutations" element={<Mutations />} />
