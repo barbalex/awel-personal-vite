@@ -1,9 +1,10 @@
 import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
 
 import StoreContext from '../storeContext.js'
 
-const NavigateSetter = () => {
+export const NavigateSetter = observer(() => {
   const store = useContext(StoreContext)
   const navigate = useNavigate()
 
@@ -14,5 +15,4 @@ const NavigateSetter = () => {
   }, [navigate, store])
 
   return null
-}
-export default NavigateSetter
+})

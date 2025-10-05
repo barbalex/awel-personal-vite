@@ -42,7 +42,7 @@ const StyledButton = styled(Button)`
 // now renders only once
 // but neither autoFocus nor ref.focus() work
 // SOLVED. Reason was electron opening dev tools
-const Login = () => {
+export const Login = observer(() => {
   const store = useContext(storeContext)
   const { setUserIsLoggedIn, userName, userPwd } = store
 
@@ -142,6 +142,4 @@ const Login = () => {
       </P>
     </Container>
   )
-}
-
-export default observer(Login)
+})

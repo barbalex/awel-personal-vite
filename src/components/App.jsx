@@ -22,10 +22,10 @@ import StammdatenContainer from './StammdatenContainer/index.jsx'
 import DeletionModal from './DeletionModal.jsx'
 import Mutations from './Mutations/index.jsx'
 import Errors from './Errors.jsx'
-import NavigateSetter from './NavigateSetter.jsx'
+import { NavigateSetter } from './NavigateSetter.jsx'
 import { Print } from './Print.jsx'
 import { Layout } from './Layout.jsx'
-import Login from './Login.jsx'
+import { Login } from './Login.jsx'
 
 registerLocale('de', de)
 setDefaultLocale('de')
@@ -43,7 +43,7 @@ const Container = styled.div`
 // TODO: when upgrading react-router to v7, prints for all persons are broken (others too?)
 // that seams to be due to react-router using transitions instead of state
 // https://reactrouter.com/upgrading/v6#v7_starttransition
-const RouterComponent = () => (
+export const App = () => (
   <Container>
     <HashRouter
       future={{
@@ -152,5 +152,3 @@ const RouterComponent = () => (
     </HashRouter>
   </Container>
 )
-
-export default RouterComponent

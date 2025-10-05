@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import { getEnv } from 'mobx-state-tree'
 
-import App from './components/App.jsx'
+import { App } from './components/App.jsx'
 import './styles.css'
 import { createStore } from './store/index.js'
 import { watchMutations } from './src/watchMutations.js'
