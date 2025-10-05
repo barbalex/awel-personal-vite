@@ -1,4 +1,3 @@
-import React from 'react'
 
 const StoreContext = React.createContext({})
 export const StoreContextProvider = StoreContext.Provider

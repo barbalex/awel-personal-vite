@@ -13,7 +13,7 @@ const Container = styled.div`
 
 import Navbar from './Navbar'
 
-const Layout = () => {
+export const Layout = observer(() => {
   const { userIsLoggedIn } = useContext(storeContext)
 
   if (!userIsLoggedIn) {
@@ -30,6 +30,4 @@ const Layout = () => {
       <Outlet />
     </Container>
   )
-}
-
-export default observer(Layout)
+})

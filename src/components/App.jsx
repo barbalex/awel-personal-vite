@@ -1,4 +1,3 @@
-import React from 'react'
 // need to use HashRouter instead of BrowserRouter
 // https://stackoverflow.com/a/50404777/712005
 import { Routes, Route, HashRouter } from 'react-router-dom'
@@ -25,7 +24,7 @@ import Mutations from './Mutations/index.jsx'
 import Errors from './Errors.jsx'
 import NavigateSetter from './NavigateSetter.jsx'
 import { Print } from './Print.jsx'
-import Layout from './Layout.jsx'
+import { Layout } from './Layout.jsx'
 import Login from './Login.jsx'
 
 registerLocale('de', de)
