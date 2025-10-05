@@ -24,7 +24,7 @@ const A4Landscape = createGlobalStyle`
   }
 `
 
-const Print = () => {
+export const Print = observer(() => {
   const { report, personId } = useParams()
 
   const store = useContext(storeContext)
@@ -101,6 +101,4 @@ const Print = () => {
   }
 
   return null
-}
-
-export default observer(Print)
+})

@@ -24,7 +24,7 @@ import DeletionModal from './DeletionModal.jsx'
 import Mutations from './Mutations/index.jsx'
 import Errors from './Errors.jsx'
 import NavigateSetter from './NavigateSetter.jsx'
-import Print from './Print.jsx'
+import { Print } from './Print.jsx'
 import Layout from './Layout.jsx'
 import Login from './Login.jsx'
 
@@ -46,45 +46,105 @@ const Container = styled.div`
 // https://reactrouter.com/upgrading/v6#v7_starttransition
 const RouterComponent = () => (
   <Container>
-    <HashRouter 
+    <HashRouter
       future={{
         v7_relativeSplatPath: true,
         // v7_startTransition: true,
       }}
     >
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/Personen/print/:report" element={<Print />} />
-        <Route path="/Personen/print/:report/:personId" element={<Print />} />
+        <Route
+          path="/"
+          element={<Login />}
+        />
+        <Route
+          path="/Personen/print/:report"
+          element={<Print />}
+        />
+        <Route
+          path="/Personen/print/:report/:personId"
+          element={<Print />}
+        />
         <Route element={<Layout />}>
-          <Route path="/Personen" element={<PersonContainer />}>
-            <Route path="print-preview/:report" element={<PrintPreview />} />
-            <Route  path=":personId" >
-              <Route index element={<PersonTab />} />
-              <Route path="print-preview/:report" element={<PrintPreview />} />
+          <Route
+            path="/Personen"
+            element={<PersonContainer />}
+          >
+            <Route
+              path="print-preview/:report"
+              element={<PrintPreview />}
+            />
+            <Route path=":personId">
+              <Route
+                index
+                element={<PersonTab />}
+              />
+              <Route
+                path="print-preview/:report"
+                element={<PrintPreview />}
+              />
             </Route>
           </Route>
-          <Route path="/Aemter" element={<AmtContainer />}>
-            <Route path=":amtId" element={<Amt />} />
+          <Route
+            path="/Aemter"
+            element={<AmtContainer />}
+          >
+            <Route
+              path=":amtId"
+              element={<Amt />}
+            />
           </Route>
-          <Route path="/Users" element={<UserContainer />}>
-            <Route path=":userId" element={<User />} />
+          <Route
+            path="/Users"
+            element={<UserContainer />}
+          >
+            <Route
+              path=":userId"
+              element={<User />}
+            />
           </Route>
-          <Route path="/Sektionen" element={<SektionContainer />} >
-            <Route path=":sektionId" element={<Sektion />} />
+          <Route
+            path="/Sektionen"
+            element={<SektionContainer />}
+          >
+            <Route
+              path=":sektionId"
+              element={<Sektion />}
+            />
           </Route>
-          <Route path="/Bereiche" element={<BereichContainer />}>
-            <Route path=":bereichId" element={<Bereich />} />
+          <Route
+            path="/Bereiche"
+            element={<BereichContainer />}
+          >
+            <Route
+              path=":bereichId"
+              element={<Bereich />}
+            />
           </Route>
-          <Route path="/Abteilungen" element={<AbteilungContainer />}>
-            <Route path=":abteilungId" element={<Abteilung />} />
+          <Route
+            path="/Abteilungen"
+            element={<AbteilungContainer />}
+          >
+            <Route
+              path=":abteilungId"
+              element={<Abteilung />}
+            />
           </Route>
           <Route path="/Werte">
-            <Route path=":tableName"  element={<StammdatenContainer />} >
-              <Route path=":tableId" element={<StammdatenContainer />} />
+            <Route
+              path=":tableName"
+              element={<StammdatenContainer />}
+            >
+              <Route
+                path=":tableId"
+                element={<StammdatenContainer />}
+              />
             </Route>
           </Route>
-          <Route path="/mutations" element={<Mutations />} />
+          <Route
+            path="/mutations"
+            element={<Mutations />}
+          />
         </Route>
       </Routes>
       <Errors />
