@@ -60,19 +60,19 @@ const RouterComponent = () => (
               />
             </Route>
           </Route>
-          <Route path="/Aemter/*" element={<AmtContainer />}>
+          <Route path="/Aemter" element={<AmtContainer />}>
             <Route path=":amtId" element={<Amt />} />
           </Route>
-          <Route path="/Users/*" element={<UserContainer />}>
+          <Route path="/Users" element={<UserContainer />}>
             <Route path=":userId" element={<User />} />
           </Route>
-          <Route path="/Sektionen/*" element={<SektionContainer />}>
+          <Route path="/Sektionen" element={<SektionContainer />} >
             <Route path=":sektionId" element={<Sektion />} />
           </Route>
-          <Route path="/Bereiche/*" element={<BereichContainer />}>
+          <Route path="/Bereiche" element={<BereichContainer />}>
             <Route path=":bereichId" element={<Bereich />} />
           </Route>
-          <Route path="/Abteilungen/*" element={<AbteilungContainer />}>
+          <Route path="/Abteilungen" element={<AbteilungContainer />}>
             <Route path=":abteilungId" element={<Abteilung />} />
           </Route>
           <Route path="/Werte/*" element={<StammdatenContainer />}>
