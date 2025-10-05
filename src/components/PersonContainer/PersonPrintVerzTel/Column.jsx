@@ -97,11 +97,11 @@ const PersonPrintVerzTelColumn = ({ pageIndex, columnIndex }) => {
      */
     // don't do anything on not active pages
     if (pageIndex === activePageIndex) {
-      const offsetHeight = get(containerEl, 'current.offsetHeight')
-        ? containerEl.current.offsetHeight
+      const offsetHeight = get(containerEl, 'current?.offsetHeight')
+        ? containerEl.current?.offsetHeight
         : null
-      const scrollHeight = get(containerEl, 'current.scrollHeight')
-        ? containerEl.current.scrollHeight
+      const scrollHeight = get(containerEl, 'current?.scrollHeight')
+        ? containerEl.current?.scrollHeight
         : null
 
       if (!pageIsFull && remainingRows.length > 0) {

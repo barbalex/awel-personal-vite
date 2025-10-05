@@ -173,10 +173,10 @@ const PersonPrintFunktionenPage = ({ pageIndex }) => {
     // don't do anything on not active pages
     if (pageIndex === activePageIndex) {
       const offsetHeight = rowsContainer
-        ? rowsContainer.current.offsetHeight
+        ? rowsContainer.current?.offsetHeight
         : null
       const scrollHeight = rowsContainer
-        ? rowsContainer.current.scrollHeight
+        ? rowsContainer.current?.scrollHeight
         : null
       const activePageIsFull = page.full
 

@@ -96,8 +96,8 @@ const PersonPrintVerzMobiltelColumn = ({ pageIndex, columnIndex }) => {
      */
     // don't do anything on not active pages
     if (pageIndex === activePageIndex) {
-      const offsetHeight = containerEl ? containerEl.current.offsetHeight : null
-      const scrollHeight = containerEl ? containerEl.current.scrollHeight : null
+      const offsetHeight = containerEl ? containerEl.current?.offsetHeight : null
+      const scrollHeight = containerEl ? containerEl.current?.scrollHeight : null
 
       if (!pageIsFull && remainingRows.length > 0) {
         if (offsetHeight < scrollHeight) {
