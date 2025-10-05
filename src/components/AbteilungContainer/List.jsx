@@ -3,7 +3,7 @@ import { List } from 'react-window'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 
-import ErrorBoundary from '../shared/ErrorBoundary.jsx'
+import { ErrorBoundary } from '../shared/ErrorBoundary.jsx'
 import { ListRow } from './ListRow.jsx'
 import storeContext from '../../storeContext.js'
 

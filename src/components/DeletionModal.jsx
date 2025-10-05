@@ -2,7 +2,7 @@ import React, { useContext, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
-import ErrorBoundary from './shared/ErrorBoundary.jsx'
+import { ErrorBoundary } from './shared/ErrorBoundary.jsx'
 import storeContext from '../storeContext.js'
 
 const DeletionModal = () => {
@@ -33,14 +33,25 @@ const DeletionModal = () => {
 
   return (
     <ErrorBoundary>
-      <Modal isOpen={!!store.deletionMessage} toggle={close}>
+      <Modal
+        isOpen={!!store.deletionMessage}
+        toggle={close}
+      >
         <ModalHeader toggle={close}>{store.deletionTitle}</ModalHeader>
         <ModalBody>{store.deletionMessage}</ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={remove} outline>
+          <Button
+            color="primary"
+            onClick={remove}
+            outline
+          >
             ja
           </Button>
-          <Button color="secondary" onClick={close} outline>
+          <Button
+            color="secondary"
+            onClick={close}
+            outline
+          >
             nein
           </Button>
         </ModalFooter>

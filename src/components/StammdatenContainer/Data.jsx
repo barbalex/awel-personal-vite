@@ -6,7 +6,7 @@ import findIndex from 'lodash/findIndex'
 import sortBy from 'lodash/sortBy'
 import { useParams } from 'react-router-dom'
 
-import ErrorBoundary from '../shared/ErrorBoundary.jsx'
+import { ErrorBoundary } from '../shared/ErrorBoundary.jsx'
 import Input from '../shared/Input.jsx'
 import SharedCheckbox from '../shared/Checkbox_01.jsx'
 import ifIsNumericAsNumber from '../../src/ifIsNumericAsNumber.js'

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 import { Outlet, useParams } from 'react-router-dom'
 
-import ErrorBoundary from '../shared/ErrorBoundary.jsx'
+import { ErrorBoundary } from '../shared/ErrorBoundary.jsx'
 import List from './List.jsx'
 import fetchUsers from '../../src/fetchUsers.js'
 import storeContext from '../../storeContext.js'

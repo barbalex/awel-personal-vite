@@ -16,7 +16,7 @@ import { FaSave } from 'react-icons/fa'
 import { Button, ButtonGroup } from 'reactstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import ErrorBoundary from '../shared/ErrorBoundary.jsx'
+import { ErrorBoundary } from '../shared/ErrorBoundary.jsx'
 import Input from '../shared/Input.jsx'
 import Date from '../shared/Date.jsx'
 import Select from '../shared/Select.jsx'

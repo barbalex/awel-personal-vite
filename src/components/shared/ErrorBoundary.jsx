@@ -1,5 +1,4 @@
-import React from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -32,8 +31,8 @@ const ErrorFallback = ({ error, componentStack }) => (
   </Container>
 )
 
-const MyErrorBoundary = ({ children }) => (
-  <ErrorBoundary FallbackComponent={ErrorFallback}>{children}</ErrorBoundary>
+export const ErrorBoundary = ({ children }) => (
+  <ReactErrorBoundary FallbackComponent={ErrorFallback}>
+    {children}
+  </ReactErrorBoundary>
 )
-
-export default MyErrorBoundary

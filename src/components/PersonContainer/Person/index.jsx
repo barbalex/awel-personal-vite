@@ -13,7 +13,7 @@ import sortBy from 'lodash/sortBy'
 import findIndex from 'lodash/findIndex'
 import { useParams } from 'react-router-dom'
 
-import ErrorBoundary from '../../shared/ErrorBoundary.jsx'
+import { ErrorBoundary } from '../../shared/ErrorBoundary.jsx'
 import Input from '../../shared/Input.jsx'
 import Date from '../../shared/Date.jsx'
 import Select from '../../shared/Select.jsx'

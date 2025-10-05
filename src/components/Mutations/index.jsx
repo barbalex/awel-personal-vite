@@ -6,7 +6,7 @@ import { List } from 'react-window'
 import sortBy from 'lodash/sortBy'
 import moment from 'moment'
 
-import ErrorBoundary from '../shared/ErrorBoundary.jsx'
+import { ErrorBoundary } from '../shared/ErrorBoundary.jsx'
 import fetchMutations from '../../src/fetchMutations.js'
 import Filter from './Filter.jsx'
 import storeContext from '../../storeContext.js'

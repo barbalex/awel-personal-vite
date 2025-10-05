@@ -13,7 +13,7 @@ import findIndex from 'lodash/findIndex'
 import moment from 'moment'
 import { useParams, useOutletContext } from 'react-router-dom'
 
-import ErrorBoundary from '../../shared/ErrorBoundary.jsx'
+import { ErrorBoundary } from '../../shared/ErrorBoundary.jsx'
 import Input from '../../shared/Input.jsx'
 import Select from '../../shared/Select.jsx'
 import Handlungsbedarf from '../../shared/Handlungsbedarf.jsx'

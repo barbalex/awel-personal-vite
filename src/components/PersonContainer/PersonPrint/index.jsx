@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import get from 'lodash/get'
 import { useParams } from 'react-router-dom'
 
-import ErrorBoundary from '../../shared/ErrorBoundary.jsx'
+import { ErrorBoundary } from '../../shared/ErrorBoundary.jsx'
 import storeContext from '../../../storeContext.js'
 import { InputValue } from './InputValue.jsx'
 import { Telefones } from './Telefones.jsx'
