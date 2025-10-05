@@ -52,7 +52,7 @@ const RouterComponent = () => (
           <Route path="/Personen" element={<PersonContainer />}>
             <Route path="print-preview/:report" element={<PrintPreview />} />
             <Route  path=":personId" >
-              <Route path="*" element={<PersonTab />} />
+              <Route index element={<PersonTab />} />
               <Route path="print-preview/:report" element={<PrintPreview />} />
             </Route>
           </Route>
