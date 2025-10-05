@@ -2,7 +2,7 @@ import { onPatch } from 'mobx-state-tree'
 
 import addMutation from './addMutation.js'
 
-const watchMutations = ({ store }) => {
+export const watchMutations = ({ store }) => {
   const {
     personen,
     links,
@@ -126,5 +126,3 @@ const watchMutations = ({ store }) => {
     addMutation({ tableName: 'standortWerte', patch, inversePatch, store }),
   )
 }
-
-export default watchMutations

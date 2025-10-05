@@ -3,10 +3,10 @@ import { getEnv } from 'mobx-state-tree'
 
 import App from './components/App.jsx'
 import './styles.css'
-import createStore from './store/index.js'
-import watchMutations from './src/watchMutations.js'
+import { createStore } from './store/index.js'
+import { watchMutations } from './src/watchMutations.js'
 
-import fetchUsers from './src/fetchUsers.js'
+import { fetchUsers } from './src/fetchUsers.js'
 import fetchPersonen from './src/fetchPersonen.js'
 import fetchAemter from './src/fetchAemter.js'
 import fetchAbteilungen from './src/fetchAbteilungen.js'
@@ -33,12 +33,7 @@ const run = async () => {
   // Failed to find the environment of UndoManager@/history
   // manually set the targetStore to the store instead
   // https://github.com/coolsoftwaretyler/mst-middlewares/issues/22#issuecomment-2800127997
-  const store = createStore().create(
-    {},
-    {
-      history: { targetStore: {} },
-    },
-  )
+  const store = createStore().create({}, { history: { targetStore: {} } })
   // Now set the circular reference after the store is created
   const storeEnv = getEnv(store)
   storeEnv.history.targetStore = store

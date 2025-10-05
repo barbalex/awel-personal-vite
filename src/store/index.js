@@ -52,7 +52,7 @@ import sektionenFiltered from './sektionenFiltered.js'
 import sektionenFilteredSortedByHandelsbedarf from './sektionenFilteredSortedByHandelsbedarf.js'
 import User from './User.js'
 
-const store = () =>
+export const createStore = () =>
   types
     .model({
       dirty: types.optional(types.boolean, false),
@@ -568,8 +568,8 @@ const store = () =>
            * rebuilds self.personen. Consequence:
            * all other personen are re-added and listet as mutations of op 'add'
            */
-          store[table].splice(
-            findIndex(store[table], (p) => p.id === id),
+          createStore[table].splice(
+            findIndex(createStore[table], (p) => p.id === id),
             1,
           )
         },
@@ -821,5 +821,3 @@ export let undoManager = {}
 export const setUndoManager = (targetStore) => {
   undoManager = targetStore.history
 }
-
-export default store

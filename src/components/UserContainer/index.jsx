@@ -6,7 +6,7 @@ import { Outlet, useParams } from 'react-router-dom'
 
 import { ErrorBoundary } from '../shared/ErrorBoundary.jsx'
 import List from './List.jsx'
-import fetchUsers from '../../src/fetchUsers.js'
+import { fetchUsers } from '../../src/fetchUsers.js'
 import storeContext from '../../storeContext.js'
 import fetchUser from '../../src/fetchUser.js'
 
@@ -47,7 +47,10 @@ const UserContainer = () => {
           renderOnResizeRate={100}
           renderOnResize
         >
-          <List {...userJson} listRef={listRef} />
+          <List
+            {...userJson}
+            listRef={listRef}
+          />
         </ReflexElement>
         <ReflexSplitter />
         <StyledReflexElement showfilter={showFilter}>
