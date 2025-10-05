@@ -42,11 +42,14 @@ const Container = styled.div`
 `
 
 // TODO: when upgrading react-router to v7, prints for all persons are broken
+// that seams to be due to react-router using transitions instead of state
+// https://reactrouter.com/upgrading/v6#v7_starttransition
 const RouterComponent = () => (
   <Container>
     <HashRouter 
       future={{
         v7_relativeSplatPath: true,
+        // v7_startTransition: true,
       }}
     >
       <Routes>
