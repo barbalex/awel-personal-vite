@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Col, FormGroup, Label, FormFeedback } from 'reactstrap'
 import Select from 'react-select'

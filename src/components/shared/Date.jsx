@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { FormGroup, Label, FormFeedback, Col } from 'reactstrap'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'

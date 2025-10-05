@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useState, useEffect } from 'react'
+import { useContext, useCallback, useState, useEffect } from 'react'
 import {
   UncontrolledDropdown,
   DropdownToggle,

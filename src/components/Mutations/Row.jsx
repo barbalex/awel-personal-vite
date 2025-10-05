@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useContext, useCallback } from 'react'
+import { useContext, useCallback } from 'react'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 import moment from 'moment'

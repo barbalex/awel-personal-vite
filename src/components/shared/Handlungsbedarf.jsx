@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { Input } from 'reactstrap'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'

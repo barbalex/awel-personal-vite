@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useContext, useState, useCallback, useEffect } from 'react'
+import { useContext, useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import { observer } from 'mobx-react-lite'
 import { List } from 'react-window'
