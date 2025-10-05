@@ -41,7 +41,7 @@ const Container = styled.div`
   }
 `
 
-// TODO: when upgrading react-router to v7, prints for all persons are broken
+// TODO: when upgrading react-router to v7, prints for all persons are broken (others too?)
 // that seams to be due to react-router using transitions instead of state
 // https://reactrouter.com/upgrading/v6#v7_starttransition
 const RouterComponent = () => (
