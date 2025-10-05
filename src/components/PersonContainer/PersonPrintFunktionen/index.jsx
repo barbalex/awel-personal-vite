@@ -32,17 +32,20 @@ const Container = styled.div`
   }
 `
 
-const PersonPrintFunktionenPages = () => {
+export const PersonPrintFunktionen = observer(() => {
   const store = useContext(storeContext)
   const { pages, modal, reset, building } = store.personPages
 
-  // console.log('PersonPrintFunktionenPages', { pages, modal, reset, building })
+  // console.log('PersonPrintFunktionen', { pages, modal, reset, building })
 
   return (
     <ErrorBoundary>
       <Container className="printer-content">
         {pages.map((page, pageIndex) => (
-          <Page key={pageIndex} pageIndex={pageIndex} />
+          <Page
+            key={pageIndex}
+            pageIndex={pageIndex}
+          />
         ))}
         <Modal isOpen={building}>
           <ModalBody>
@@ -50,7 +53,11 @@ const PersonPrintFunktionenPages = () => {
             <p>{modal.textLine2}</p>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={reset} outline>
+            <Button
+              color="secondary"
+              onClick={reset}
+              outline
+            >
               abbrechen
             </Button>
           </ModalFooter>
@@ -58,6 +65,4 @@ const PersonPrintFunktionenPages = () => {
       </Container>
     </ErrorBoundary>
   )
-}
-
-export default observer(PersonPrintFunktionenPages)
+})

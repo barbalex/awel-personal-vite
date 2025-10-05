@@ -1,4 +1,5 @@
 import React, { useContext, useMemo } from 'react'
+import { observer } from 'mobx-react-lite'
 import moment from 'moment'
 import styled from 'styled-components'
 import get from 'lodash/get'
@@ -203,7 +204,7 @@ const LogoImg = styled.img`
   margin-left: -10px;
 `
 
-const PersonPrint = () => {
+export const PersonPrint = observer(() => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
@@ -284,16 +285,28 @@ const PersonPrint = () => {
                       )}
                     </AreaPBild>
                     <AreaPName>
-                      <InputValue value={person.name} label="Name" />
+                      <InputValue
+                        value={person.name}
+                        label="Name"
+                      />
                     </AreaPName>
                     <AreaPVorname>
-                      <InputValue value={person.vorname} label="Vorname" />
+                      <InputValue
+                        value={person.vorname}
+                        label="Vorname"
+                      />
                     </AreaPVorname>
                     <AreaPAnrede>
-                      <InputValue value={person.anrede} label="Anrede" />
+                      <InputValue
+                        value={person.anrede}
+                        label="Anrede"
+                      />
                     </AreaPAnrede>
                     <AreaPTitel>
-                      <InputValue value={person.titel} label="Titel" />
+                      <InputValue
+                        value={person.titel}
+                        label="Titel"
+                      />
                     </AreaPTitel>
                     <AreaPKurzzeichen>
                       <InputValue
@@ -302,19 +315,34 @@ const PersonPrint = () => {
                       />
                     </AreaPKurzzeichen>
                     <AreaPAdresse>
-                      <InputValue value={person.adresse} label="Adresse" />
+                      <InputValue
+                        value={person.adresse}
+                        label="Adresse"
+                      />
                     </AreaPAdresse>
                     <AreaPPLZ>
-                      <InputValue value={person.plz} label="PLZ" />
+                      <InputValue
+                        value={person.plz}
+                        label="PLZ"
+                      />
                     </AreaPPLZ>
                     <AreaPOrt>
-                      <InputValue value={person.ort} label="Ort" />
+                      <InputValue
+                        value={person.ort}
+                        label="Ort"
+                      />
                     </AreaPOrt>
                     <AreaPLand>
-                      <InputValue label="Land" value={person.land} />
+                      <InputValue
+                        label="Land"
+                        value={person.land}
+                      />
                     </AreaPLand>
                     <AreaPEmail>
-                      <InputValue value={person.email} label="Email" />
+                      <InputValue
+                        value={person.email}
+                        label="Email"
+                      />
                     </AreaPEmail>
                     <AreaPGeburtsdatum>
                       <InputValue
@@ -328,9 +356,18 @@ const PersonPrint = () => {
                   </AreaPersonalien>
                   <AreaAnstellung>
                     <Title>Anstellung</Title>
-                    <InputValue value={person.status} label="Status" />
-                    <InputValue value={person.eintrittDatum} label="Eintritt" />
-                    <InputValue value={person.austrittDatum} label="Austritt" />
+                    <InputValue
+                      value={person.status}
+                      label="Status"
+                    />
+                    <InputValue
+                      value={person.eintrittDatum}
+                      label="Eintritt"
+                    />
+                    <InputValue
+                      value={person.austrittDatum}
+                      label="Austritt"
+                    />
                     <InputValue
                       value={person.beschaeftigungsgrad}
                       label="Beschäftigungsgrad (%)"
@@ -339,8 +376,14 @@ const PersonPrint = () => {
                       label="Anwesenheitstage"
                       value={myAnwesenheitstage.join(', ')}
                     />
-                    <InputValue value={person.standort} label="Standort" />
-                    <InputValue value={person.bueroNr} label="Büro Nr." />
+                    <InputValue
+                      value={person.standort}
+                      label="Standort"
+                    />
+                    <InputValue
+                      value={person.bueroNr}
+                      label="Büro Nr."
+                    />
                   </AreaAnstellung>
                   <AreaFunktionen>
                     <Title>Funktionen</Title>
@@ -383,9 +426,9 @@ const PersonPrint = () => {
                     <InputValue
                       label="Vorgesetzte(r)"
                       value={
-                        personVorgesetzt
-                          ? `${personVorgesetzt.name} ${personVorgesetzt.vorname}`
-                          : ''
+                        personVorgesetzt ?
+                          `${personVorgesetzt.name} ${personVorgesetzt.vorname}`
+                        : ''
                       }
                     />
                     <InputValue
@@ -417,11 +460,11 @@ const PersonPrint = () => {
                   </AreaVerzeichnis>
                   <AreaZuletzt>
                     {`Zuletzt geändert: ${
-                      moment.unix(person.letzteMutationZeit / 1000).isValid()
-                        ? moment
-                            .unix(person.letzteMutationZeit / 1000)
-                            .format('DD.MM.YYYY H:mm:ss')
-                        : ''
+                      moment.unix(person.letzteMutationZeit / 1000).isValid() ?
+                        moment
+                          .unix(person.letzteMutationZeit / 1000)
+                          .format('DD.MM.YYYY H:mm:ss')
+                      : ''
                     }, ${person.letzteMutationUser || ''}`}
                   </AreaZuletzt>
                 </Wrapper>
@@ -433,6 +476,4 @@ const PersonPrint = () => {
       </div>
     </ErrorBoundary>
   )
-}
-
-export default PersonPrint
+})

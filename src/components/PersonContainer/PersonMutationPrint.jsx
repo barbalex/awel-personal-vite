@@ -164,7 +164,7 @@ const Field = ({ label, value }) => (
   </Row>
 )
 
-const PersonMutationPrint = () => {
+export const PersonMutationPrint = observer(() => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
@@ -254,7 +254,11 @@ const PersonMutationPrint = () => {
                       value={person.kurzzeichen}
                       label="Kurz&shy;zei&shy;chen"
                     />
-                    <Field key={`${personId}amt`} value={amtName} label="Amt" />
+                    <Field
+                      key={`${personId}amt`}
+                      value={amtName}
+                      label="Amt"
+                    />
                     <Field
                       key={`${personId}abteilung`}
                       value={abteilungName}
@@ -371,6 +375,4 @@ const PersonMutationPrint = () => {
       </div>
     </ErrorBoundary>
   )
-}
-
-export default observer(PersonMutationPrint)
+})

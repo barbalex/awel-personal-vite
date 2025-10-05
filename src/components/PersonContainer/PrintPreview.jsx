@@ -1,9 +1,9 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import PersonPrint from './PersonPrint/index.jsx'
-import PersonMutationPrint from './PersonMutationPrint.jsx'
-import PersonPrintFunktionen from './PersonPrintFunktionen/index.jsx'
+import { PersonPrint } from './PersonPrint/index.jsx'
+import { PersonMutationPrint } from './PersonMutationPrint.jsx'
+import { PersonPrintFunktionen } from './PersonPrintFunktionen/index.jsx'
 import PersonPrintPensionierte from './PersonPrintPensionierte/index.jsx'
 import PersonPrintKader from './PersonPrintKader/index.jsx'
 import PersonPrintVerzTel from './PersonPrintVerzTel/index.jsx'
