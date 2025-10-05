@@ -1,6 +1,7 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
 
 import storeContext from '../../../storeContext.js'
 
@@ -42,7 +43,7 @@ const Bemerkungen = styled.div`
   font-size: smaller;
 `
 
-const Telefones = () => {
+export const Telefones = observer(() => {
   const { personId } = useParams()
 
   const store = useContext(storeContext)
@@ -59,7 +60,10 @@ const Telefones = () => {
         <Bemerkungen>Bemerkungen</Bemerkungen>
       </TitleRow>
       {telefones.map((telefon, index) => (
-        <Row key={telefon.id} index={index}>
+        <Row
+          key={telefon.id}
+          index={index}
+        >
           <Nr>
             <Value>{telefon.nr}</Value>
           </Nr>
@@ -73,6 +77,4 @@ const Telefones = () => {
       ))}
     </>
   )
-}
-
-export default Telefones
+})

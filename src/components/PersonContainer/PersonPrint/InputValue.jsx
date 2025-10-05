@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 const Content = styled.div``
@@ -11,7 +10,7 @@ const Value = styled.p`
   margin-bottom: 2px;
 `
 
-const InputValue = ({ label, value }) => {
+export const InputValue = ({ label, value }) => {
   if (!value && value !== 0) return null
   return (
     <Content>
@@ -20,5 +19,3 @@ const InputValue = ({ label, value }) => {
     </Content>
   )
 }
-
-export default InputValue

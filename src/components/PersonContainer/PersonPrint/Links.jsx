@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
 
 import storeContext from '../../../storeContext.js'
 
@@ -17,7 +18,7 @@ const Row = styled.div`
   border-top: ${(props) => (props.index === 0 ? 'thin solid #dedede' : 'none')};
 `
 
-const Links = () => {
+export const Links = observer(() => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
@@ -30,12 +31,13 @@ const Links = () => {
     <>
       <Label>Datei-Links</Label>
       {myLinks.map((link, index) => (
-        <Row key={link.id} index={index}>
+        <Row
+          key={link.id}
+          index={index}
+        >
           <Value>{link.url}</Value>
         </Row>
       ))}
     </>
   )
-}
-
-export default Links
+})

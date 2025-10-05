@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
 
 import storeContext from '../../../storeContext.js'
 
@@ -46,7 +47,7 @@ const Nr = styled.div`
   font-size: smaller;
 `
 
-const Schluessels = () => {
+export const Schluessels = observer(() => {
   const { personId = 0 } = useParams()
 
   const store = useContext(storeContext)
@@ -64,7 +65,10 @@ const Schluessels = () => {
         <Nr>Nr.</Nr>
       </TitleRow>
       {schluessels.map((schluessel, index) => (
-        <Row key={schluessel.id} index={index}>
+        <Row
+          key={schluessel.id}
+          index={index}
+        >
           <Typ>
             <Value>{schluessel.typ}</Value>
           </Typ>
@@ -81,6 +85,4 @@ const Schluessels = () => {
       ))}
     </>
   )
-}
-
-export default Schluessels
+})
