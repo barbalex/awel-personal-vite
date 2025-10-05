@@ -75,9 +75,8 @@ const RouterComponent = () => (
           <Route path="/Abteilungen" element={<AbteilungContainer />}>
             <Route path=":abteilungId" element={<Abteilung />} />
           </Route>
-          <Route path="/Werte/*" element={<StammdatenContainer />}>
-            <Route path=":tableName"  >
-              <Route path="*" element={<StammdatenContainer />} />
+          <Route path="/Werte">
+            <Route path=":tableName"  element={<StammdatenContainer />} >
               <Route
                 path=":tableId"
                 element={<StammdatenContainer />}
