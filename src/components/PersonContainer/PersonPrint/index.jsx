@@ -34,7 +34,7 @@ const Container = styled.div`
   }
 
   @media print {
-    /* remove grey backgrond set for nice UI */
+    /* remove grey background set for nice UI */
     background-color: #fff;
     /* with overflow auto an empty page is inserted between each page */
     overflow-y: visible;
