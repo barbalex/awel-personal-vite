@@ -32,7 +32,7 @@ const Container = styled.div`
   }
 `
 
-const PersonPrintPensioniertePages = () => {
+export const PersonPrintPensionierte = observer( () => {
   const store = useContext(storeContext)
   const { pages, modal, reset, building } = store.personPages
 
@@ -56,6 +56,5 @@ const PersonPrintPensioniertePages = () => {
       </Container>
     </ErrorBoundary>
   )
-}
+})
 
-export default observer(PersonPrintPensioniertePages)

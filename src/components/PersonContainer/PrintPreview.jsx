@@ -4,11 +4,11 @@ import { useParams } from 'react-router-dom'
 import { PersonPrint } from './PersonPrint/index.jsx'
 import { PersonMutationPrint } from './PersonMutationPrint.jsx'
 import { PersonPrintFunktionen } from './PersonPrintFunktionen/index.jsx'
-import PersonPrintPensionierte from './PersonPrintPensionierte/index.jsx'
-import PersonPrintKader from './PersonPrintKader/index.jsx'
-import PersonPrintVerzTel from './PersonPrintVerzTel/index.jsx'
-import PersonPrintVerzMobiltel from './PersonPrintVerzMobiltel/index.jsx'
-import PersonPrintVerzKurzzeichen from './PersonPrintVerzKurzzeichen/index.jsx'
+import { PersonPrintPensionierte } from './PersonPrintPensionierte/index.jsx'
+import { PersonPrintKader } from './PersonPrintKader/index.jsx'
+import { PersonPrintVerzTel } from './PersonPrintVerzTel/index.jsx'
+import { PersonPrintVerzMobiltel } from './PersonPrintVerzMobiltel/index.jsx'
+import { PersonPrintVerzKurzzeichen } from './PersonPrintVerzKurzzeichen/index.jsx'
 
 const PersonPrintPreview = () => {
   const { report } = useParams()

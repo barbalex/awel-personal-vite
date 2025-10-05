@@ -7,11 +7,11 @@ import storeContext from '../storeContext.js'
 import { PersonPrint } from './PersonContainer/PersonPrint/index.jsx'
 import { PersonMutationPrint } from './PersonContainer/PersonMutationPrint.jsx'
 import { PersonPrintFunktionen } from './PersonContainer/PersonPrintFunktionen/index.jsx'
-import PersonPrintPensionierte from './PersonContainer/PersonPrintPensionierte/index.jsx'
-import PersonPrintKader from './PersonContainer/PersonPrintKader/index.jsx'
-import PersonPrintVerzTel from './PersonContainer/PersonPrintVerzTel/index.jsx'
-import PersonPrintVerzMobiltel from './PersonContainer/PersonPrintVerzMobiltel/index.jsx'
-import PersonPrintVerzKurzzeichen from './PersonContainer/PersonPrintVerzKurzzeichen/index.jsx'
+import { PersonPrintPensionierte } from './PersonContainer/PersonPrintPensionierte/index.jsx'
+import { PersonPrintKader } from './PersonContainer/PersonPrintKader/index.jsx'
+import { PersonPrintVerzTel } from './PersonContainer/PersonPrintVerzTel/index.jsx'
+import { PersonPrintVerzMobiltel } from './PersonContainer/PersonPrintVerzMobiltel/index.jsx'
+import { PersonPrintVerzKurzzeichen } from './PersonContainer/PersonPrintVerzKurzzeichen/index.jsx'
 
 const A4Portrait = createGlobalStyle`
   @page {
