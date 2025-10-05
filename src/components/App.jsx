@@ -41,14 +41,19 @@ const Container = styled.div`
   }
 `
 
+// TODO: when upgrading react-router to v7, prints for all persons are broken
 const RouterComponent = () => (
   <Container>
-    <HashRouter>
+    <HashRouter 
+      future={{
+        v7_relativeSplatPath: true,
+      }}
+    >
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/Personen/print/:report" element={<Print />} />
+        <Route path="/Personen/print/:report/:personId" element={<Print />} />
         <Route element={<Layout />}>
-          <Route path="/Personen/print/:report" element={<Print />} />
-          <Route path="/Personen/print/:report/:personId" element={<Print />} />
           <Route path="/Personen" element={<PersonContainer />}>
             <Route path="print-preview/:report" element={<PrintPreview />} />
             <Route  path=":personId" >
